@@ -2,22 +2,34 @@ import ModelBase from 'App/ModelBase';
 import useApiQuery from 'Helpers/Hooks/useApiQuery';
 
 export interface OrganizePreviewModel extends ModelBase {
-  seriesId: number;
-  seasonNumber: number;
-  episodeNumbers: number[];
-  episodeFileId: number;
+  seriesId?: number;
+  movieId?: number;
+  seasonNumber?: number;
+  episodeNumbers?: number[];
+  episodeFileId?: number;
+  movieFileId?: number;
   existingPath: string;
   newPath: string;
 }
 
 const DEFAULT_ORGANIZE_PREVIEW: OrganizePreviewModel[] = [];
 
-const useOrganizePreview = (seriesId: number, seasonNumber?: number) => {
-  const queryParams: { seriesId: number; seasonNumber?: number } = { seriesId };
+interface OrganizePreviewParams {
+  seriesId?: number;
+  movieId?: number;
+  seasonNumber?: number;
+}
 
-  if (seasonNumber != null) {
-    queryParams.seasonNumber = seasonNumber;
-  }
+const useOrganizePreview = ({
+  seriesId,
+  movieId,
+  seasonNumber,
+}: OrganizePreviewParams) => {
+  const queryParams = {
+    seriesId,
+    movieId,
+    ...(seasonNumber != null ? { seasonNumber } : {}),
+  };
 
   const { data, ...result } = useApiQuery<OrganizePreviewModel[]>({
     path: '/rename',

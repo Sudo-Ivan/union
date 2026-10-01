@@ -1,12 +1,12 @@
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import AppState from 'App/State/AppState';
-import FilterModal from 'Components/Filter/FilterModal';
+import { SetFilter } from 'Components/Filter/Filter';
+import FilterModal, { FilterModalProps } from 'Components/Filter/FilterModal';
 import { setMovieCollectionsFilter } from 'Store/Actions/movieCollectionActions';
+import MovieCollection from 'typings/MovieCollection';
 
-interface MovieCollectionFilterModalProps {
-  isOpen: boolean;
-}
+type MovieCollectionFilterModalProps = FilterModalProps<MovieCollection>;
 
 export default function MovieCollectionFilterModal(
   props: MovieCollectionFilterModalProps
@@ -21,7 +21,7 @@ export default function MovieCollectionFilterModal(
   const dispatch = useDispatch();
 
   const dispatchSetFilter = useCallback(
-    (payload: { selectedFilterKey: string | number }) => {
+    (payload: SetFilter) => {
       dispatch(setMovieCollectionsFilter(payload));
     },
     [dispatch]

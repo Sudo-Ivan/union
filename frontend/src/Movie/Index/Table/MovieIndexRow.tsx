@@ -227,8 +227,7 @@ function MovieIndexRow(props: MovieIndexRowProps) {
 
         if (name === 'added') {
           return (
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore ts(2739)
+            
             <RelativeDateCell
               key={name}
               className={styles[name]}
@@ -248,8 +247,7 @@ function MovieIndexRow(props: MovieIndexRowProps) {
 
         if (name === 'inCinemas') {
           return (
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore ts(2739)
+            
             <RelativeDateCell
               key={name}
               className={styles[name]}
@@ -262,8 +260,7 @@ function MovieIndexRow(props: MovieIndexRowProps) {
 
         if (name === 'digitalRelease') {
           return (
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore ts(2739)
+            
             <RelativeDateCell
               key={name}
               className={styles[name]}
@@ -276,8 +273,7 @@ function MovieIndexRow(props: MovieIndexRowProps) {
 
         if (name === 'physicalRelease') {
           return (
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore ts(2739)
+            
             <RelativeDateCell
               key={name}
               className={styles[name]}
@@ -290,8 +286,7 @@ function MovieIndexRow(props: MovieIndexRowProps) {
 
         if (name === 'releaseDate') {
           return (
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore ts(2739)
+            
             <RelativeDateCell
               key={name}
               className={styles[name]}

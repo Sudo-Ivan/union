@@ -204,9 +204,12 @@ const filterExistingFilesStore = create<boolean>(() => false);
 export interface InteractiveImportModalContentProps {
   downloadIds?: string[];
   seriesId?: number;
+  movieId?: number;
   seasonNumber?: number;
   showSeries?: boolean;
   allowSeriesChange?: boolean;
+  showMovie?: boolean;
+  allowMovieChange?: boolean;
   showDelete?: boolean;
   showImportMode?: boolean;
   showFilterExistingFiles?: boolean;
@@ -226,6 +229,7 @@ function InteractiveImportModalContentInner(
   const {
     downloadIds,
     seriesId,
+    movieId,
     seasonNumber,
     allowSeriesChange = true,
     showSeries = true,
@@ -254,6 +258,7 @@ function InteractiveImportModalContentInner(
   } = useInteractiveImport({
     downloadIds,
     seriesId,
+    movieId,
     seasonNumber,
     folder,
     filterExistingFiles,
@@ -1081,10 +1086,11 @@ function InteractiveImportModalContent(
 ) {
   const filterExistingFiles = filterExistingFilesStore((state) => state);
 
-  const { downloadIds, seriesId, seasonNumber, folder } = props;
+  const { downloadIds, seriesId, movieId, seasonNumber, folder } = props;
   const { data } = useInteractiveImport({
     downloadIds,
     seriesId,
+    movieId,
     seasonNumber,
     folder,
     filterExistingFiles,

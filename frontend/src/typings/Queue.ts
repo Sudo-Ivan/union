@@ -30,6 +30,7 @@ interface Queue extends ModelBase {
   size: number;
   title: string;
   sizeLeft: number;
+  sizeleft?: number;
   timeLeft: string;
   estimatedCompletionTime: string;
   added?: string;
@@ -47,6 +48,7 @@ interface Queue extends ModelBase {
   episodesWithFilesCountBySeason: Record<number, number>;
   isMultiSeason: boolean;
   seriesId?: number;
+  movieId?: number;
   episodeIds: number[];
   seasonNumbers: number[];
   downloadClientHasPostImportCategory: boolean;

@@ -20,7 +20,7 @@ export interface ParsedMovieInfo {
   imdbId?: string;
 }
 
-export interface ParseModel extends ModelBase {
+export interface MovieParseModel extends ModelBase {
   title: string;
   parsedMovieInfo: ParsedMovieInfo;
   movie?: Movie;
@@ -29,6 +29,6 @@ export interface ParseModel extends ModelBase {
   customFormatScore?: number;
 }
 
-type ParseAppState = AppSectionItemState<ParseModel>;
+type ParseAppState = AppSectionItemState<MovieParseModel>;
 
 export default ParseAppState;

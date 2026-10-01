@@ -1,11 +1,8 @@
-import Series from 'Series/Series';
-
 const STARTS_WITH_NUMBER_REGEX = /^\d/;
 
-export default function getIndexOfFirstCharacter(
-  items: Series[],
-  character: string
-) {
+export default function getIndexOfFirstCharacter<
+  T extends { sortTitle: string }
+>(items: T[], character: string) {
   return items.findIndex((item) => {
     const firstCharacter = item.sortTitle.charAt(0);
 

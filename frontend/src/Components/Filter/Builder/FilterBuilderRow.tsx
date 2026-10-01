@@ -18,6 +18,7 @@ import HistoryEventTypeFilterBuilderRowValue from './HistoryEventTypeFilterBuild
 import IndexerFilterBuilderRowValue from './IndexerFilterBuilderRowValue';
 import LanguageFilterBuilderRowValue from './LanguageFilterBuilderRowValue';
 import MonitoredStatusFilterBuilderRowValue from './MonitoredStatusFilterBuilderRowValue';
+import MovieFilterBuilderRowValue from './MovieFilterBuilderRowValue';
 import ProtocolFilterBuilderRowValue from './ProtocolFilterBuilderRowValue';
 import QualityFilterBuilderRowValue from './QualityFilterBuilderRowValue';
 import QualityProfileFilterBuilderRowValue from './QualityProfileFilterBuilderRowValue';
@@ -113,6 +114,9 @@ function getRowValueConnector<T>(
 
     case filterBuilderValueTypes.MONITORED_STATUS:
       return MonitoredStatusFilterBuilderRowValue;
+
+    case filterBuilderValueTypes.MOVIE:
+      return MovieFilterBuilderRowValue;
 
     case filterBuilderValueTypes.RELEASE_TYPES:
       return ReleaseTypeFilterBuilderRowValue;

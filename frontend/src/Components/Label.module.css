@@ -111,6 +111,11 @@
   opacity: 1;
 }
 
+.queue::before {
+  background-color: var(--purple);
+  opacity: 1;
+}
+
 .danger {
   color: var(--ink);
 }
@@ -132,6 +137,10 @@
 }
 
 .purple {
+  color: var(--ink);
+}
+
+.queue {
   color: var(--ink);
 }
 

@@ -15,6 +15,7 @@ const DEFAULT_ITEMS: InteractiveImport[] = [];
 interface InteractiveImportParams {
   downloadIds?: string[];
   seriesId?: number;
+  movieId?: number;
   seasonNumber?: number;
   folder?: string;
   filterExistingFiles?: boolean;

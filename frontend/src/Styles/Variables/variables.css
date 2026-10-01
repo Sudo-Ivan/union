@@ -54,6 +54,8 @@
   --seriesIndexOverviewInfoRowHeight: 21px;
 
   /* Movie index */
+  --movieIndexColumnPadding: 16px;
+  --movieIndexColumnPaddingSmallScreen: 8px;
   --movieIndexOverviewInfoRowHeight: 21px;
 
   /* Font families */

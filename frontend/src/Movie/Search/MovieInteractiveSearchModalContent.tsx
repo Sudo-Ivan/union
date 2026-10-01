@@ -48,7 +48,7 @@ function MovieInteractiveSearchModalContent({
       </ModalHeader>
 
       <ModalBody scrollDirection={scrollDirections.BOTH}>
-        <InteractiveSearch searchPayload={{ movieId }} />
+        <InteractiveSearch type="movie" searchPayload={{ movieId }} />
       </ModalBody>
 
       <ModalFooter>

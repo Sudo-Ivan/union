@@ -40,6 +40,13 @@ export const shortcuts = {
     },
   },
 
+  focusMovieSearchInput: {
+    key: 'm',
+    get name() {
+      return translate('KeyboardShortcutsFocusSearchBox');
+    },
+  },
+
   saveSettings: {
     key: 'mod+s',
     get name() {

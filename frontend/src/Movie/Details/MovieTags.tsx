@@ -2,7 +2,7 @@ import React from 'react';
 import Label from 'Components/Label';
 import { kinds, sizes } from 'Helpers/Props';
 import useMovie from 'Movie/useMovie';
-import useTags from 'Tags/useTags';
+import { useTagList } from 'Tags/useTags';
 import sortByProp from 'Utilities/Array/sortByProp';
 
 interface MovieTagsProps {
@@ -11,7 +11,7 @@ interface MovieTagsProps {
 
 function MovieTags({ movieId }: MovieTagsProps) {
   const movie = useMovie(movieId)!;
-  const tagList = useTags();
+  const tagList = useTagList();
 
   const tags = movie.tags
     .map((tagId) => tagList.find((tag) => tag.id === tagId))

@@ -18,6 +18,15 @@
   transition: width 0.6s ease;
 }
 
+.default {
+  background-color: var(--darkGray);
+}
+
+.inverse {
+  background-color: var(--inverseLabelColor);
+  color: var(--inverseLabelTextColor);
+}
+
 .primary {
   background-color: color-mix(in oklab, var(--accent) 80%, oklch(0% 0 0));
 }

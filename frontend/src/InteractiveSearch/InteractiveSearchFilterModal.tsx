@@ -25,9 +25,14 @@ export default function InteractiveSearchFilterModal({
           'episodeSelectedFilterKey',
           selectedFilter.selectedFilterKey
         );
-      } else {
+      } else if (type === 'season') {
         setReleaseOption(
           'seasonSelectedFilterKey',
+          selectedFilter.selectedFilterKey
+        );
+      } else {
+        setReleaseOption(
+          'movieSelectedFilterKey',
           selectedFilter.selectedFilterKey
         );
       }

@@ -10,6 +10,9 @@ const EXAMPLES_PATH = '/settings/naming/examples';
 
 export interface NamingSettingsModel {
   renameEpisodes: boolean;
+  renameMovies?: boolean;
+  movieFormat?: string;
+  movieFolderFormat?: string;
   replaceIllegalCharacters: boolean;
   colonReplacementFormat: number;
   customColonReplacementFormat: string;

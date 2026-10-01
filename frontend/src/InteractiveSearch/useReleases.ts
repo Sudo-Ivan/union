@@ -381,13 +381,20 @@ const THIRTY_MINUTES = 30 * 60 * 1000;
 
 const useReleases = (payload: InteractiveSearchPayload) => {
   const customFilters = useCustomFiltersList('releases');
-  const { episodeSelectedFilterKey, seasonSelectedFilterKey } =
-    useReleaseOptions();
+  const {
+    episodeSelectedFilterKey,
+    seasonSelectedFilterKey,
+    movieSelectedFilterKey,
+  } = useReleaseOptions();
 
   const { sortKey, sortDirection } = releaseStore();
 
   const selectedFilterKey =
-    'seriesId' in payload ? seasonSelectedFilterKey : episodeSelectedFilterKey;
+    'movieId' in payload
+      ? movieSelectedFilterKey
+      : 'seriesId' in payload
+      ? seasonSelectedFilterKey
+      : episodeSelectedFilterKey;
 
   const { data, queryKey, ...result } = useApiQuery<Release[]>({
     path: '/release',

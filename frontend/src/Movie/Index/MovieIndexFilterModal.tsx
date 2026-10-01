@@ -2,7 +2,9 @@ import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createSelector } from 'reselect';
 import AppState from 'App/State/AppState';
-import FilterModal from 'Components/Filter/FilterModal';
+import { SetFilter } from 'Components/Filter/Filter';
+import FilterModal, { FilterModalProps } from 'Components/Filter/FilterModal';
+import Movie from 'Movie/Movie';
 import { setMovieFilter } from 'Store/Actions/movieIndexActions';
 
 function createMovieSelector() {
@@ -23,9 +25,7 @@ function createFilterBuilderPropsSelector() {
   );
 }
 
-interface MovieIndexFilterModalProps {
-  isOpen: boolean;
-}
+type MovieIndexFilterModalProps = FilterModalProps<Movie>;
 
 export default function MovieIndexFilterModal(
   props: MovieIndexFilterModalProps
@@ -37,7 +37,7 @@ export default function MovieIndexFilterModal(
   const dispatch = useDispatch();
 
   const dispatchSetFilter = useCallback(
-    (payload: unknown) => {
+    (payload: SetFilter) => {
       dispatch(setMovieFilter(payload));
     },
     [dispatch]

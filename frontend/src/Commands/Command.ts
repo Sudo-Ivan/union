@@ -26,6 +26,8 @@ export interface BaseCommandBody {
   lastStartTime: string;
   trigger: string;
   suppressMessages: boolean;
+  movieId?: number;
+  movieIds?: number[];
 }
 
 // Specific command body interfaces
@@ -89,6 +91,8 @@ export interface NewCommandBody {
   priority?: CommandPriority;
   seriesId?: number;
   seriesIds?: number[];
+  movieId?: number;
+  movieIds?: number[];
   seasonNumber?: number;
   episodeIds?: number[];
   files?: number[] | InteractiveImportCommandOptions[];

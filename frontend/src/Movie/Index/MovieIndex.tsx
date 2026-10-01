@@ -75,7 +75,7 @@ interface MovieIndexProps {
   initialScrollTop?: number;
 }
 
-const MovieIndex = withScrollPosition((props: MovieIndexProps) => {
+const MovieIndex = withScrollPosition((_props: MovieIndexProps) => {
   const {
     isFetching,
     isPopulated,
@@ -233,7 +233,7 @@ const MovieIndex = withScrollPosition((props: MovieIndexProps) => {
 
   return (
     <SelectProvider items={items}>
-      <PageContent>
+      <PageContent title={translate('Movies')}>
         <PageToolbar>
           <PageToolbarSection>
             <MovieIndexRefreshMovieButton
@@ -340,7 +340,7 @@ const MovieIndex = withScrollPosition((props: MovieIndexProps) => {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             innerClassName={styles[`${view}InnerContentBody`]}
-            initialScrollTop={props.initialScrollTop}
+            scrollPositionKey="movieIndex"
             onScroll={onScroll}
           >
             {isFetching && !isPopulated ? <LoadingIndicator /> : null}

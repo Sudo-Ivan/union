@@ -42,8 +42,10 @@ function InteractiveSearch({ type, searchPayload }: InteractiveSearchProps) {
     (selectedFilterKey: string | number) => {
       if (type === 'episode') {
         setReleaseOption('episodeSelectedFilterKey', selectedFilterKey);
-      } else {
+      } else if (type === 'season') {
         setReleaseOption('seasonSelectedFilterKey', selectedFilterKey);
+      } else {
+        setReleaseOption('movieSelectedFilterKey', selectedFilterKey);
       }
     },
     [type]

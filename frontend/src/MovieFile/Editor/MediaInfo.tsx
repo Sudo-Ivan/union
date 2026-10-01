@@ -13,7 +13,7 @@ function MediaInfo(props: MediaInfoProps) {
           .replace(/([A-Z])/g, ' $1')
           .replace(/^./, (str) => str.toUpperCase());
 
-        if (!value) {
+        if (!value || Array.isArray(value)) {
           return null;
         }
 

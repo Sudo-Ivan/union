@@ -13,6 +13,7 @@ import ModalFooter from 'Components/Modal/ModalFooter';
 import ModalHeader from 'Components/Modal/ModalHeader';
 import { kinds } from 'Helpers/Props';
 import formatSeason from 'Season/formatSeason';
+import useMovie from 'Movie/useMovie';
 import { useSingleSeries } from 'Series/useSeries';
 import { useNamingSettings } from 'Settings/MediaManagement/Naming/useNamingSettings';
 import { CheckInputChanged } from 'typings/inputs';
@@ -32,13 +33,15 @@ function getValue(allSelected: boolean, allUnselected: boolean) {
 }
 
 export interface OrganizePreviewModalContentProps {
-  seriesId: number;
+  seriesId?: number;
+  movieId?: number;
   seasonNumber?: number;
   onModalClose: () => void;
 }
 
 function OrganizePreviewModalContentInner({
   seriesId,
+  movieId,
   seasonNumber,
   onModalClose,
 }: OrganizePreviewModalContentProps) {
@@ -48,7 +51,7 @@ function OrganizePreviewModalContentInner({
     isFetching: isPreviewFetching,
     isFetched: isPreviewFetched,
     error: previewError,
-  } = useOrganizePreview(seriesId, seasonNumber);
+  } = useOrganizePreview({ seriesId, movieId, seasonNumber });
 
   const {
     isFetching: isNamingFetching,
@@ -57,7 +60,8 @@ function OrganizePreviewModalContentInner({
     data: naming,
   } = useNamingSettings();
 
-  const series = useSingleSeries(seriesId)!;
+  const series = useSingleSeries(seriesId);
+  const movie = useMovie(movieId);
 
   const { allSelected, allUnselected, getSelectedIds, selectAll, unselectAll } =
     useSelect<OrganizePreviewModel>();
@@ -65,8 +69,13 @@ function OrganizePreviewModalContentInner({
   const isFetching = isPreviewFetching || isNamingFetching;
   const isPopulated = isPreviewFetched && isNamingFetched;
   const error = previewError || namingError;
-  const { renameEpisodes } = naming;
-  const episodeFormat = naming[`${series.seriesType}EpisodeFormat`];
+  const renameFiles = movieId != null ? naming.renameMovies : naming.renameEpisodes;
+  const fileFormat =
+    movieId != null
+      ? naming.movieFormat
+      : series
+      ? naming[`${series.seriesType}EpisodeFormat`]
+      : undefined;
 
   const selectAllValue = getValue(allSelected, allUnselected);
 
@@ -88,10 +97,11 @@ function OrganizePreviewModalContentInner({
       name: CommandNames.RenameFiles,
       files,
       seriesId,
+      movieId,
     });
 
     onModalClose();
-  }, [seriesId, getSelectedIds, executeCommand, onModalClose]);
+  }, [seriesId, movieId, getSelectedIds, executeCommand, onModalClose]);
 
   return (
     <ModalContent onModalClose={onModalClose}>
@@ -112,7 +122,7 @@ function OrganizePreviewModalContentInner({
 
         {!isFetching && isPopulated && !items.length ? (
           <div>
-            {renameEpisodes ? (
+            {renameFiles ? (
               <div>{translate('OrganizeNothingToRename')}</div>
             ) : (
               <div>{translate('OrganizeRenamingDisabled')}</div>
@@ -126,7 +136,7 @@ function OrganizePreviewModalContentInner({
               <div>
                 <InlineMarkdown
                   data={translate('OrganizeRelativePaths', {
-                    path: series.path,
+                    path: series?.path ?? movie?.path ?? '',
                   })}
                   blockClassName={styles.path}
                 />
@@ -134,7 +144,9 @@ function OrganizePreviewModalContentInner({
 
               <div>
                 <InlineMarkdown
-                  data={translate('OrganizeNamingPattern', { episodeFormat })}
+                  data={translate('OrganizeNamingPattern', {
+                    episodeFormat: fileFormat ?? '',
+                  })}
                   blockClassName={styles.episodeFormat}
                 />
               </div>
@@ -142,10 +154,12 @@ function OrganizePreviewModalContentInner({
 
             <div className={styles.previews}>
               {items.map((item) => {
+                const fileId = item.episodeFileId ?? item.movieFileId ?? item.id;
+
                 return (
                   <OrganizePreviewRow
-                    key={item.episodeFileId}
-                    id={item.episodeFileId}
+                    key={fileId}
+                    id={fileId}
                     existingPath={item.existingPath}
                     newPath={item.newPath}
                   />
@@ -180,15 +194,17 @@ function OrganizePreviewModalContentInner({
 
 function OrganizePreviewModalContent({
   seriesId,
+  movieId,
   seasonNumber,
   onModalClose,
 }: OrganizePreviewModalContentProps) {
-  const { items } = useOrganizePreview(seriesId, seasonNumber);
+  const { items } = useOrganizePreview({ seriesId, movieId, seasonNumber });
 
   return (
     <SelectProvider<OrganizePreviewModel> items={items}>
       <OrganizePreviewModalContentInner
         seriesId={seriesId}
+        movieId={movieId}
         seasonNumber={seasonNumber}
         onModalClose={onModalClose}
       />

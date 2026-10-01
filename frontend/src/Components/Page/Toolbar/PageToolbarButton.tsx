@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React from 'react';
+import React, { ElementType } from 'react';
 import Icon, { IconName } from 'Components/Icon';
 import Link, { LinkProps } from 'Components/Link/Link';
 import { icons } from 'Helpers/Props';
@@ -8,6 +8,7 @@ import styles from './PageToolbarButton.module.css';
 export interface PageToolbarButtonProps extends LinkProps {
   label: string;
   iconName: IconName;
+  overflowComponent?: ElementType;
   spinningName?: IconName;
   isSpinning?: boolean;
   isDisabled?: boolean;
@@ -19,6 +20,7 @@ function PageToolbarButton({
   spinningName = icons.SPINNER,
   isDisabled = false,
   isSpinning = false,
+  overflowComponent: _overflowComponent,
   ...otherProps
 }: PageToolbarButtonProps) {
   return (

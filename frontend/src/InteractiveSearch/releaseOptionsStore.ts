@@ -16,6 +16,7 @@ export interface ReleaseOptions
   > {
   episodeSelectedFilterKey: SelectedFilterKey;
   seasonSelectedFilterKey: SelectedFilterKey;
+  movieSelectedFilterKey: SelectedFilterKey;
   rejectionFilterTags: FilterBuilderTag<string, string>[];
 }
 
@@ -24,6 +25,7 @@ const { useOptions, useOption, getOptions, getOption, setOptions, setOption } =
     return {
       episodeSelectedFilterKey: 'all',
       seasonSelectedFilterKey: 'season-pack',
+      movieSelectedFilterKey: 'all',
       rejectionFilterTags: [],
       columns: [
         {

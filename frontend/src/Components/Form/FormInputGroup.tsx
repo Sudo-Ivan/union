@@ -17,6 +17,9 @@ import NumberInput, { NumberInputProps } from './NumberInput';
 import OAuthInput, { OAuthInputProps } from './OAuthInput';
 import PasswordInput from './PasswordInput';
 import PathInput, { PathInputProps } from './PathInput';
+import AvailabilitySelectInput, {
+  AvailabilitySelectInputProps,
+} from './Select/AvailabilitySelectInput';
 import DownloadClientSelectInput, {
   DownloadClientSelectInputProps,
 } from './Select/DownloadClientSelectInput';
@@ -35,6 +38,9 @@ import LanguageSelectInput, {
 import MonitorEpisodesSelectInput, {
   MonitorEpisodesSelectInputProps,
 } from './Select/MonitorEpisodesSelectInput';
+import MonitorMoviesSelectInput, {
+  MonitorMoviesSelectInputProps,
+} from './Select/MonitorMoviesSelectInput';
 import MonitorNewItemsSelectInput, {
   MonitorNewItemsSelectInputProps,
 } from './Select/MonitorNewItemsSelectInput';
@@ -61,6 +67,7 @@ import styles from './FormInputGroup.module.css';
 
 const componentMap: Record<InputType, ElementType> = {
   autoComplete: AutoCompleteInput,
+  availabilitySelect: AvailabilitySelectInput,
   captcha: CaptchaInput,
   check: CheckInput,
   date: TextInput,
@@ -74,6 +81,7 @@ const componentMap: Record<InputType, ElementType> = {
   keyValueList: KeyValueListInput,
   languageSelect: LanguageSelectInput,
   monitorEpisodesSelect: MonitorEpisodesSelectInput,
+  monitorMoviesSelect: MonitorMoviesSelectInput,
   monitorNewItemsSelect: MonitorNewItemsSelectInput,
   number: NumberInput,
   oauth: OAuthInput,
@@ -104,6 +112,8 @@ type PickProps<V, C extends InputType> = C extends 'text'
   ? CheckInputProps
   : C extends 'date'
   ? TextInputProps
+  : C extends 'availabilitySelect'
+  ? AvailabilitySelectInputProps
   : C extends 'device'
   ? DeviceInputProps
   : C extends 'downloadClientSelect'
@@ -124,6 +134,8 @@ type PickProps<V, C extends InputType> = C extends 'text'
   ? LanguageSelectInputProps
   : C extends 'monitorEpisodesSelect'
   ? MonitorEpisodesSelectInputProps
+  : C extends 'monitorMoviesSelect'
+  ? MonitorMoviesSelectInputProps
   : C extends 'monitorNewItemsSelect'
   ? MonitorNewItemsSelectInputProps
   : C extends 'number'

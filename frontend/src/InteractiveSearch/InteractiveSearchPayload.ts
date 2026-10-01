@@ -7,6 +7,13 @@ interface SeasonSearchPayload {
   seasonNumber: number;
 }
 
-type InteractiveSearchPayload = EpisodeSearchPayload | SeasonSearchPayload;
+interface MovieSearchPayload {
+  movieId: number;
+}
+
+type InteractiveSearchPayload =
+  | EpisodeSearchPayload
+  | SeasonSearchPayload
+  | MovieSearchPayload;
 
 export default InteractiveSearchPayload;

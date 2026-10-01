@@ -32,7 +32,7 @@ function MovieStatus({ movieId, movieFileId }: MovieStatusProps) {
   const isQueued = !!queueItem;
 
   if (isQueued) {
-    const { sizeleft, size } = queueItem;
+    const { sizeleft = 0, size } = queueItem;
 
     const progress = size ? 100 - (sizeleft / size) * 100 : 0;
 

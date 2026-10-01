@@ -119,12 +119,12 @@ function MovieHistoryRow({
       />
 
       <HistoryDetailsModal
+        id={id}
         isOpen={isDetailsModalOpen}
         eventType={eventType}
         sourceTitle={sourceTitle}
         data={data}
         downloadId={downloadId}
-        onMarkAsFailedPress={handleMarkAsFailedPress}
         onModalClose={handleDetailsModalClose}
       />
     </TableRow>

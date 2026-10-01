@@ -25,37 +25,12 @@ import SystemAppState from './SystemAppState';
 import TagsAppState from './TagsAppState';
 import WantedAppState from './WantedAppState';
 
-interface FilterBuilderPropOption {
-  id: string;
-  name: string;
-}
-
-export interface FilterBuilderProp<T> {
-  name: string;
-  label: string;
-  type: string;
-  valueType?: string;
-  optionsSelector?: (items: T[]) => FilterBuilderPropOption[];
-}
-
-export interface PropertyFilter {
-  key: string;
-  value: boolean | string | number | string[] | number[];
-  type: string;
-}
-
-export interface Filter {
-  key: string;
-  label: string | (() => string);
-  filters: PropertyFilter[];
-}
-
-export interface CustomFilter {
-  id: number;
-  type: string;
-  label: string;
-  filters: PropertyFilter[];
-}
+export type {
+  CustomFilter,
+  Filter,
+  FilterBuilderProp,
+  PropertyFilter,
+} from 'Filters/Filter';
 
 export interface AppSectionState {
   isUpdated: boolean;
