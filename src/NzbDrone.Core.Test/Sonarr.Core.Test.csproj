@@ -11,10 +11,6 @@
     <ProjectReference Include="..\NzbDrone.Core\Sonarr.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\Logo\1024.png">
-      <Link>Files\1024.png</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Update="Files\**\*.*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
