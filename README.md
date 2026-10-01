@@ -1,42 +1,44 @@
-# Sonarr
+# Union
 
-Sonarr is a PVR for Usenet and BitTorrent users. It monitors multiple RSS feeds for new episodes of your favorite shows and will grab, sort and rename them. It can also be configured to automatically upgrade the quality of files already downloaded when a better quality format becomes available.
+One app for movies and TV. Union merges Radarr and Sonarr into a single process: one database, one web UI, one API host, shared indexers, download clients, and notifications. It monitors RSS feeds, grabs releases, sorts and renames files, and upgrades quality when something better shows up.
 
-This is a hard fork of the upstream Sonarr project with telemetry and Sentry removed, plus additional features listed below.
+Forked from upstream Sonarr and Radarr with telemetry and Sentry removed.
 
-## Fork changes
+## What it looks like
 
-- Multi-season release support for user-initiated grabs (interactive and user-invoked search, plus externally added download client items). RSS and automatic search releases stay rejected
-- Per-season queue counts and a multi-season indicator in interactive search results
-- Sentry error reporting, analytics and piwik tracking removed, including the anonymous user hash sent on startup
-- Self-contained multi-arch Docker image published to ghcr.io, cosign signed and trivy scanned
+- Single process on port 8989, single SQLite database
+- Movies and series in the same UI. Movies live under /movies, with collections and discover included
+- Movie API endpoints stay scoped under /api/v3/movie, everything else uses the usual /api/v3 paths
+- One combined migration chain, verified against a fresh database
 
 ## Features
 
-- Support for major platforms: Windows, Linux, macOS, Raspberry Pi, etc.
-- Automatically detects new episodes
-- Scans your existing library and downloads missing episodes
-- Automatic quality upgrades when better releases appear
-- Automatic failed download handling
-- Manual search
-- Fully configurable episode renaming
-- Full integration with SABnzbd, NZBGet, qBittorrent, Deluge, rTorrent, Transmission, uTorrent and other clients
+- Usenet and BitTorrent: SABnzbd, NZBGet, qBittorrent, Deluge, rTorrent, Transmission, uTorrent, and more
+- Major indexers for both movies and series
+- Automatic failed download handling and quality upgrades
+- Manual and interactive search
+- Movie import lists, collections, and discovery
+- Configurable renaming for episodes and movies
+- Windows, Linux, macOS, ARM
 
 ## Docker
 
 ```sh
 docker run -d \
   -p 8989:8989 \
-  -v sonarr-config:/config \
+  -v union-config:/config \
   -v /media:/media \
-  ghcr.io/sudo-ivan/sonarr:latest
+  ghcr.io/sudo-ivan/union:latest
 ```
 
-Multi-arch image: linux/amd64 and linux/arm64, zstd compressed, non-root, cosign keyless signed.
+Multi-arch image for amd64 and arm64. zstd compressed layers, non-root, cosign keyless signed, SBOM attached, trivy and grype scanned in CI.
 
 ## Building
 
+You need the .NET 10 SDK and Node 24.
+
 ```sh
-dotnet build src/NzbDrone.Console/Sonarr.Console.csproj
 yarn install --frozen-lockfile && yarn build
+dotnet build src/NzbDrone.Console/Sonarr.Console.csproj -c Release
+dotnet _output/net10.0/Union.dll -nobrowser -data /path/to/config
 ```
