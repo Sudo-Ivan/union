@@ -8,13 +8,9 @@ namespace NzbDrone.Core.Datastore.Migration
     {
         protected override void MainDbUpgrade()
         {
-            try
+            if (Schema.Table("DownloadClients").Exists() && Schema.Table("DownloadClients").Column("Implementation").Exists())
             {
             Execute.Sql("UPDATE \"DownloadClients\" SET \"Implementation\" = 'TorrentDownloadStation' WHERE \"Implementation\" = 'DownloadStation';");
-            }
-            catch (System.Exception e)
-            {
-                _logger.Debug(e, "Union: skipping data migration step, schema shape differs");
             }
         }
     }

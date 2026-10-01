@@ -15,7 +15,7 @@ namespace NzbDrone.Core.Datastore.Migration
             // Union: CustomFormats may be sonarr-shaped without FormatTags, the
             // existence check happens inside ConvertExistingFormatTags at execution
             // time so seed-time column adds still get converted.
-            Execute.WithConnection(ConvertExistingFormatTags);
+            WithConnectionGuarded(ConvertExistingFormatTags);
         }
 
         private void ConvertExistingFormatTags(IDbConnection conn, IDbTransaction tran)

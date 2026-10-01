@@ -16,7 +16,7 @@ namespace NzbDrone.Core.Datastore.Migration
         {
             try
             {
-            Execute.WithConnection(FixStevenLuListsLink);
+            WithConnectionGuarded(FixStevenLuListsLink);
             }
             catch (System.Exception e)
             {

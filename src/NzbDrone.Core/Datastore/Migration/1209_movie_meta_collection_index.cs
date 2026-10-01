@@ -10,12 +10,18 @@ namespace NzbDrone.Core.Datastore.Migration
         {
             if (!Schema.Table("MovieMetadata").Index("IX_MovieMetadata_CollectionTmdbId").Exists())
             {
+            if (Schema.Table("MovieMetadata").Column("CollectionTmdbId").Exists())
+            {
             Create.Index("IX_MovieMetadata_CollectionTmdbId").OnTable("MovieMetadata").OnColumn("CollectionTmdbId");
+            }
             }
 
             if (!Schema.Table("MovieTranslations").Index("IX_MovieTranslations_MovieMetadataId").Exists())
             {
+            if (Schema.Table("MovieTranslations").Column("MovieMetadataId").Exists())
+            {
             Create.Index("IX_MovieTranslations_MovieMetadataId").OnTable("MovieTranslations").OnColumn("MovieMetadataId");
+            }
             }
         }
     }

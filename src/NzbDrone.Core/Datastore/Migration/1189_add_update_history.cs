@@ -10,10 +10,13 @@ namespace NzbDrone.Core.Datastore.Migration
         {
             if (!Schema.Table("UpdateHistory").Exists())
             {
+            if (!Schema.Table("UpdateHistory").Exists())
+            {
             Create.TableForModel("UpdateHistory")
                   .WithColumn("Date").AsDateTime().NotNullable().Indexed()
                   .WithColumn("Version").AsString().NotNullable()
                   .WithColumn("EventType").AsInt32().NotNullable();
+            }
             }
         }
     }

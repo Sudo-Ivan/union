@@ -13,12 +13,15 @@ namespace NzbDrone.Core.Datastore.Migration
         {
             if (!Schema.Table("QualityDefinitions").Column("PreferredSize").Exists())
             {
+            if (!Schema.Table("QualityDefinitions").Column("PreferredSize").Exists())
+            {
             Alter.Table("QualityDefinitions").AddColumn("PreferredSize").AsDouble().Nullable();
+            }
             }
 
             try
             {
-            Execute.WithConnection(UpdateQualityDefinitions);
+            WithConnectionGuarded(UpdateQualityDefinitions);
             }
             catch (System.Exception e)
             {

@@ -8,6 +8,16 @@ namespace NzbDrone.Core.Datastore.Migration
     {
         protected override void MainDbUpgrade()
         {
+            // Union: this migration only applies to radarr-lineage databases where
+            // Movies still carries the legacy metadata columns. Unioned and
+            // sonarr-upgraded databases already have the final shape.
+            if (!Schema.Table("Movies").Column("Title").Exists())
+            {
+                return;
+            }
+
+            if (!Schema.Table("MovieMetadata").Exists())
+            {
             if (!Schema.Table("MovieMetadata").Exists())
             {
             Create.TableForModel("MovieMetadata")
@@ -39,140 +49,119 @@ namespace NzbDrone.Core.Datastore.Migration
                 .WithColumn("Website").AsString().Nullable()
                 .WithColumn("Popularity").AsFloat().Nullable();
             }
+            }
 
             // Transfer metadata from Movies to MovieMetadata
-            try
-            {
             Execute.Sql(@"INSERT INTO ""MovieMetadata"" (""TmdbId"", ""ImdbId"", ""Title"", ""SortTitle"", ""CleanTitle"", ""OriginalTitle"", ""CleanOriginalTitle"", ""OriginalLanguage"", ""Overview"", ""Status"", ""LastInfoSync"", ""Images"", ""Genres"", ""Ratings"", ""Runtime"", ""InCinemas"", ""PhysicalRelease"", ""DigitalRelease"", ""Year"", ""SecondaryYear"", ""Recommendations"", ""Certification"", ""YouTubeTrailerId"", ""Studio"", ""Collection"", ""Website"")
                           SELECT ""TmdbId"", ""ImdbId"", ""Title"", ""SortTitle"", ""CleanTitle"", ""OriginalTitle"", ""CleanTitle"", ""OriginalLanguage"", ""Overview"", ""Status"", ""LastInfoSync"", ""Images"", ""Genres"", ""Ratings"", ""Runtime"", ""InCinemas"", ""PhysicalRelease"", ""DigitalRelease"", ""Year"", ""SecondaryYear"", ""Recommendations"", ""Certification"", ""YouTubeTrailerId"", ""Studio"", ""Collection"", ""Website""
                           FROM ""Movies""");
-            }
-            catch (System.Exception e)
-            {
-                _logger.Debug(e, "Union: skipping data migration step, schema shape differs");
-            }
 
             // Transfer metadata from ImportListMovies to MovieMetadata if not already in
-            try
-            {
             Execute.Sql(@"INSERT INTO ""MovieMetadata"" (""TmdbId"", ""ImdbId"", ""Title"", ""SortTitle"", ""CleanTitle"", ""OriginalTitle"", ""CleanOriginalTitle"", ""OriginalLanguage"", ""Overview"", ""Status"", ""LastInfoSync"", ""Images"", ""Genres"", ""Ratings"", ""Runtime"", ""InCinemas"", ""PhysicalRelease"", ""DigitalRelease"", ""Year"", ""Recommendations"", ""Certification"", ""YouTubeTrailerId"", ""Studio"", ""Collection"", ""Website"")
                           SELECT ""TmdbId"", ""ImdbId"", ""Title"", ""SortTitle"", ""Title"", ""OriginalTitle"", ""OriginalTitle"", 1, ""Overview"", ""Status"", ""LastInfoSync"", ""Images"", ""Genres"", ""Ratings"", ""Runtime"", ""InCinemas"", ""PhysicalRelease"", ""DigitalRelease"", ""Year"", '[]', ""Certification"", ""YouTubeTrailerId"", ""Studio"", ""Collection"", ""Website""
                           FROM ""ImportListMovies""
                           WHERE ""ImportListMovies"".""TmdbId"" NOT IN ( SELECT ""MovieMetadata"".""TmdbId"" FROM ""MovieMetadata"" )
                           AND ""ImportListMovies"".""Id"" IN ( SELECT MIN(""Id"") FROM ""ImportListMovies"" GROUP BY ""TmdbId"" )");
-            }
-            catch (System.Exception e)
-            {
-                _logger.Debug(e, "Union: skipping data migration step, schema shape differs");
-            }
 
             // Add an MovieMetadataId column to Movies
             if (!Schema.Table("Movies").Column("MovieMetadataId").Exists())
             {
+            if (!Schema.Table("Movies").Column("MovieMetadataId").Exists())
+            {
             Alter.Table("Movies").AddColumn("MovieMetadataId").AsInt32().WithDefaultValue(0);
+            }
             }
 
             if (!Schema.Table("AlternativeTitles").Column("MovieMetadataId").Exists())
             {
+            if (!Schema.Table("AlternativeTitles").Column("MovieMetadataId").Exists())
+            {
             Alter.Table("AlternativeTitles").AddColumn("MovieMetadataId").AsInt32().WithDefaultValue(0);
+            }
             }
 
             if (!Schema.Table("Credits").Column("MovieMetadataId").Exists())
             {
+            if (!Schema.Table("Credits").Column("MovieMetadataId").Exists())
+            {
             Alter.Table("Credits").AddColumn("MovieMetadataId").AsInt32().WithDefaultValue(0);
+            }
             }
 
             if (!Schema.Table("MovieTranslations").Column("MovieMetadataId").Exists())
             {
+            if (!Schema.Table("MovieTranslations").Column("MovieMetadataId").Exists())
+            {
             Alter.Table("MovieTranslations").AddColumn("MovieMetadataId").AsInt32().WithDefaultValue(0);
+            }
             }
 
             if (!Schema.Table("ImportListMovies").Column("MovieMetadataId").Exists())
             {
+            if (!Schema.Table("ImportListMovies").Column("MovieMetadataId").Exists())
+            {
             Alter.Table("ImportListMovies").AddColumn("MovieMetadataId").AsInt32().WithDefaultValue(0).Indexed();
+            }
             }
 
             // Update MovieMetadataId
-            try
-            {
             Execute.Sql(@"UPDATE ""Movies""
                           SET ""MovieMetadataId"" = (SELECT ""MovieMetadata"".""Id""
                                                   FROM ""MovieMetadata""
                                                   WHERE ""MovieMetadata"".""TmdbId"" = ""Movies"".""TmdbId"")");
-            }
-            catch (System.Exception e)
-            {
-                _logger.Debug(e, "Union: skipping data migration step, schema shape differs");
-            }
 
-            try
-            {
             Execute.Sql(@"UPDATE ""AlternativeTitles""
                           SET ""MovieMetadataId"" = (SELECT ""Movies"".""MovieMetadataId""
                                                   FROM ""Movies""
                                                   WHERE ""Movies"".""Id"" = ""AlternativeTitles"".""MovieId"")");
-            }
-            catch (System.Exception e)
-            {
-                _logger.Debug(e, "Union: skipping data migration step, schema shape differs");
-            }
 
-            try
-            {
             Execute.Sql(@"UPDATE ""Credits""
                           SET ""MovieMetadataId"" = (SELECT ""Movies"".""MovieMetadataId""
                                                   FROM ""Movies""
                                                   WHERE ""Movies"".""Id"" = ""Credits"".""MovieId"")");
-            }
-            catch (System.Exception e)
-            {
-                _logger.Debug(e, "Union: skipping data migration step, schema shape differs");
-            }
 
-            try
-            {
             Execute.Sql(@"UPDATE ""MovieTranslations""
                           SET ""MovieMetadataId"" = (SELECT ""Movies"".""MovieMetadataId""
                                                   FROM ""Movies""
                                                   WHERE ""Movies"".""Id"" = ""MovieTranslations"".""MovieId"")");
-            }
-            catch (System.Exception e)
-            {
-                _logger.Debug(e, "Union: skipping data migration step, schema shape differs");
-            }
 
-            try
-            {
             Execute.Sql(@"UPDATE ""ImportListMovies""
                           SET ""MovieMetadataId"" = (SELECT ""MovieMetadata"".""Id""
                                                   FROM ""MovieMetadata""
                                                   WHERE ""MovieMetadata"".""TmdbId"" = ""ImportListMovies"".""TmdbId"")");
-            }
-            catch (System.Exception e)
-            {
-                _logger.Debug(e, "Union: skipping data migration step, schema shape differs");
-            }
 
             // Alter MovieMetadataId column to be unique on Movies
             if (Schema.Table("Movies").Column("MovieMetadataId").Exists())
             {
+            if (Schema.Table("Movies").Column("MovieMetadataId").Exists())
+            {
             Alter.Table("Movies").AlterColumn("MovieMetadataId").AsInt32().Unique();
+            }
             }
 
             // Remove Movie Link from Metadata Tables
             if (Schema.Table("AlternativeTitles").Column("MovieId").Exists())
             {
+            if (Schema.Table("AlternativeTitles").Column("MovieId").Exists())
+            {
             Delete.Column("MovieId").FromTable("AlternativeTitles");
+            }
             }
 
             if (Schema.Table("Credits").Column("MovieId").Exists())
             {
+            if (Schema.Table("Credits").Column("MovieId").Exists())
+            {
             Delete.Column("MovieId").FromTable("Credits");
+            }
             }
 
             if (Schema.Table("MovieTranslations").Column("MovieId").Exists())
             {
+            if (Schema.Table("MovieTranslations").Column("MovieId").Exists())
+            {
             Delete.Column("MovieId").FromTable("MovieTranslations");
+            }
             }
 
             // Remove the columns in Movies now in MovieMetadata

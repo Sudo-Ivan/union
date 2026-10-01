@@ -10,17 +10,16 @@ namespace NzbDrone.Core.Datastore.Migration
         {
             if (!Schema.Table("ImportLists").Column("Tags").Exists())
             {
+            if (!Schema.Table("ImportLists").Column("Tags").Exists())
+            {
             Alter.Table("ImportLists")
                  .AddColumn("Tags").AsString().Nullable();
             }
+            }
 
-            try
+            if (Schema.Table("ImportLists").Exists() && Schema.Table("ImportLists").Column("Tags").Exists())
             {
             Execute.Sql("UPDATE \"ImportLists\" SET \"Tags\" = '[]'");
-            }
-            catch (System.Exception e)
-            {
-                _logger.Debug(e, "Union: skipping data migration step, schema shape differs");
             }
         }
     }

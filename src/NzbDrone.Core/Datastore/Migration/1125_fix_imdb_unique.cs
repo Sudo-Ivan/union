@@ -11,7 +11,7 @@ namespace NzbDrone.Core.Datastore.Migration
         {
             try
             {
-            Execute.WithConnection(DeleteUniqueIndex);
+            WithConnectionGuarded(DeleteUniqueIndex);
             }
             catch (System.Exception e)
             {

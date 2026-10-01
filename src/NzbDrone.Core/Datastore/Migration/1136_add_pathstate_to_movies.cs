@@ -10,7 +10,10 @@ namespace NzbDrone.Core.Datastore.Migration
         {
             if (!Schema.Table("Movies").Column("PathState").Exists())
             {
+            if (!Schema.Table("Movies").Column("PathState").Exists())
+            {
             Alter.Table("Movies").AddColumn("PathState").AsInt32().WithDefaultValue(2);
+            }
             }
         }
     }

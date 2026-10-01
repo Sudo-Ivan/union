@@ -11,7 +11,7 @@ namespace NzbDrone.Core.Datastore.Migration
         {
             try
             {
-            Execute.WithConnection(RemoveDuplicateAlternateTitles);
+            WithConnectionGuarded(RemoveDuplicateAlternateTitles);
             }
             catch (System.Exception e)
             {
@@ -20,7 +20,10 @@ namespace NzbDrone.Core.Datastore.Migration
 
             if (Schema.Table("AlternativeTitles").Column("CleanTitle").Exists())
             {
+            if (Schema.Table("AlternativeTitles").Column("CleanTitle").Exists())
+            {
             Alter.Table("AlternativeTitles").AlterColumn("CleanTitle").AsString().Unique();
+            }
             }
         }
 

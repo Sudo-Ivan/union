@@ -16,17 +16,23 @@ namespace NzbDrone.Core.Datastore.Migration
         {
             if (!Schema.Table("QualityProfiles").Column("MinFormatScore").Exists())
             {
+            if (!Schema.Table("QualityProfiles").Column("MinFormatScore").Exists())
+            {
             Alter.Table("QualityProfiles").AddColumn("MinFormatScore").AsInt32().WithDefaultValue(0);
+            }
             }
 
             if (!Schema.Table("QualityProfiles").Column("CutoffFormatScore").Exists())
             {
+            if (!Schema.Table("QualityProfiles").Column("CutoffFormatScore").Exists())
+            {
             Alter.Table("QualityProfiles").AddColumn("CutoffFormatScore").AsInt32().WithDefaultValue(0);
+            }
             }
 
             try
             {
-            Execute.WithConnection(MigrateOrderToScores);
+            WithConnectionGuarded(MigrateOrderToScores);
             }
             catch (System.Exception e)
             {
@@ -35,12 +41,18 @@ namespace NzbDrone.Core.Datastore.Migration
 
             if (Schema.Table("QualityProfiles").Column("FormatCutoff").Exists())
             {
+            if (Schema.Table("QualityProfiles").Column("FormatCutoff").Exists())
+            {
             Delete.Column("FormatCutoff").FromTable("QualityProfiles");
+            }
             }
 
             if (!Schema.Table("CustomFormats").Column("IncludeCustomFormatWhenRenaming").Exists())
             {
+            if (!Schema.Table("CustomFormats").Column("IncludeCustomFormatWhenRenaming").Exists())
+            {
             Alter.Table("CustomFormats").AddColumn("IncludeCustomFormatWhenRenaming").AsBoolean().WithDefaultValue(false);
+            }
             }
         }
 

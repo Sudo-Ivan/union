@@ -142,7 +142,7 @@ namespace NzbDrone.Core.RootFolders
             _cache.Clear();
         }
 
-        private List<UnmappedFolder> GetUnmappedFolders(string path, Dictionary<int, string> mediaPaths)
+        private List<UnmappedFolder> GetUnmappedFolders(string path, HashSet<string> mediaPaths)
         {
             _logger.Debug("Generating list of unmapped folders");
 
@@ -173,7 +173,7 @@ namespace NzbDrone.Core.RootFolders
                 }
             }
 
-            var unmappedFolders = possibleMediaFolders.Except(mediaPaths.Select(s => s.Value), PathEqualityComparer.Instance).ToList();
+            var unmappedFolders = possibleMediaFolders.Except(mediaPaths, PathEqualityComparer.Instance).ToList();
 
             var recycleBinPath = _configService.RecycleBin;
 
@@ -217,16 +217,17 @@ namespace NzbDrone.Core.RootFolders
             return _cache.Get(path, () => GetBestRootFolderPathInternal(path, rootFolders), TimeSpan.FromDays(1));
         }
 
-        private Dictionary<int, string> GetAllMediaPaths()
+        private HashSet<string> GetAllMediaPaths()
         {
-            // Union of series and movie paths, deduplicated by path value
+            // Union of series and movie paths. Keys are bare entity ids and a
+            // movie id can collide with a series id, so only keep the paths.
             return _seriesRepository.AllSeriesPaths()
-                .Concat(_movieRepository.AllMoviePaths())
-                .GroupBy(p => p.Value, PathEqualityComparer.Instance)
-                .ToDictionary(g => g.First().Key, g => g.Key);
+                .Select(p => p.Value)
+                .Concat(_movieRepository.AllMoviePaths().Select(p => p.Value))
+                .ToHashSet(PathEqualityComparer.Instance);
         }
 
-        private void GetDetails(RootFolder rootFolder, Dictionary<int, string> mediaPaths, bool timeout)
+        private void GetDetails(RootFolder rootFolder, HashSet<string> mediaPaths, bool timeout)
         {
             Task.Run(() =>
             {

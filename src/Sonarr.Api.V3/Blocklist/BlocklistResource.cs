@@ -46,13 +46,15 @@ namespace Sonarr.Api.V3.Blocklist
                 SourceTitle = model.SourceTitle,
                 Languages = model.Languages,
                 Quality = model.Quality,
-                CustomFormats = formatCalculator.ParseCustomFormat(model, model.Series).ToResource(false),
+                CustomFormats = model.MovieId > 0 && model.Movie != null
+                    ? formatCalculator.ParseCustomFormat(model, model.Movie).ToResource(false)
+                    : formatCalculator.ParseCustomFormat(model, model.Series).ToResource(false),
                 Date = model.Date,
                 Protocol = model.Protocol,
                 Indexer = model.Indexer,
                 Message = model.Message,
 
-                Series = model.Series.ToResource()
+                Series = model.Series?.ToResource()
             };
         }
     }

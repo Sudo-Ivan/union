@@ -10,17 +10,26 @@ namespace NzbDrone.Core.Datastore.Migration
         {
             if (Schema.Table("Notifications").Column("OnDelete").Exists() && !Schema.Table("Notifications").Column("OnMovieDelete").Exists())
             {
+            if (Schema.Table("Notifications").Column("OnDelete").Exists() && !Schema.Table("Notifications").Column("OnMovieDelete").Exists())
+            {
             Rename.Column("OnDelete").OnTable("Notifications").To("OnMovieDelete");
+            }
             }
 
             if (!Schema.Table("Notifications").Column("OnMovieFileDelete").Exists())
             {
+            if (!Schema.Table("Notifications").Column("OnMovieFileDelete").Exists())
+            {
             Alter.Table("Notifications").AddColumn("OnMovieFileDelete").AsBoolean().WithDefaultValue(false);
+            }
             }
 
             if (!Schema.Table("Notifications").Column("OnMovieFileDeleteForUpgrade").Exists())
             {
+            if (!Schema.Table("Notifications").Column("OnMovieFileDeleteForUpgrade").Exists())
+            {
             Alter.Table("Notifications").AddColumn("OnMovieFileDeleteForUpgrade").AsBoolean().WithDefaultValue(false);
+            }
             }
         }
     }

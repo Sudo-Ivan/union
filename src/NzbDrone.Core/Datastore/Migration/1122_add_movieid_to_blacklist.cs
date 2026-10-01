@@ -10,17 +10,26 @@ namespace NzbDrone.Core.Datastore.Migration
         {
             if (!Schema.Table("Blocklist").Column("MovieId").Exists())
             {
+            if (!Schema.Table("Blocklist").Column("MovieId").Exists())
+            {
             Alter.Table("Blocklist").AddColumn("MovieId").AsInt32().Nullable().WithDefaultValue(0);
+            }
             }
 
             if (Schema.Table("Blocklist").Column("SeriesId").Exists() && !Schema.Table("Blocklist").Index("IX_Blocklist_QualityId").Exists())
             {
+            if (Schema.Table("Blocklist").Column("SeriesId").Exists())
+            {
             Alter.Table("Blocklist").AlterColumn("SeriesId").AsInt32().Nullable();
+            }
             }
 
             if (Schema.Table("Blocklist").Column("EpisodeIds").Exists() && !Schema.Table("Blocklist").Index("IX_Blocklist_QualityId").Exists())
             {
+            if (Schema.Table("Blocklist").Column("EpisodeIds").Exists())
+            {
             Alter.Table("Blocklist").AlterColumn("EpisodeIds").AsString().Nullable();
+            }
             }
         }
     }

@@ -10,7 +10,10 @@ namespace NzbDrone.Core.Datastore.Migration
         {
             if (Schema.Table("Blacklist").Exists() && !Schema.Table("Blocklist").Exists())
             {
+            if (Schema.Table("Blacklist").Exists() && !Schema.Table("Blocklist").Exists())
+            {
             Rename.Table("Blacklist").To("Blocklist");
+            }
             }
         }
     }

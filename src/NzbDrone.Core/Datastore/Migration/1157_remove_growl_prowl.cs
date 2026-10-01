@@ -8,7 +8,10 @@ namespace NzbDrone.Core.Datastore.Migration
     {
         protected override void MainDbUpgrade()
         {
+            if (Schema.Table("Notifications").Exists())
+            {
             Delete.FromTable("Notifications").Row(new { Implementation = "Growl" });
+            }
 
             // Prowl Added back
             // Delete.FromTable("Notifications").Row(new { Implementation = "Prowl" });

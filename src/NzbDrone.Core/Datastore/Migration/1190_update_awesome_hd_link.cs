@@ -8,22 +8,14 @@ namespace NzbDrone.Core.Datastore.Migration
     {
         protected override void MainDbUpgrade()
         {
-            try
+            if (Schema.Table("Indexers").Exists() && Schema.Table("Indexers").Column("Settings").Exists())
             {
             Execute.Sql("UPDATE \"Indexers\" SET \"Settings\" = Replace(\"Settings\", 'https://awesome-hd.net', 'https://awesome-hd.club') WHERE \"Implementation\" = 'AwesomeHD';");
             }
-            catch (System.Exception e)
-            {
-                _logger.Debug(e, "Union: skipping data migration step, schema shape differs");
-            }
 
-            try
+            if (Schema.Table("Indexers").Exists() && Schema.Table("Indexers").Column("Settings").Exists())
             {
             Execute.Sql("UPDATE \"Indexers\" SET \"Settings\" = Replace(\"Settings\", 'https://awesome-hd.me', 'https://awesome-hd.club') WHERE \"Implementation\" = 'AwesomeHD';");
-            }
-            catch (System.Exception e)
-            {
-                _logger.Debug(e, "Union: skipping data migration step, schema shape differs");
             }
         }
     }

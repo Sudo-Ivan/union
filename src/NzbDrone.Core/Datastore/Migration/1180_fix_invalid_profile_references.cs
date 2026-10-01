@@ -17,7 +17,7 @@ namespace NzbDrone.Core.Datastore.Migration
         {
             try
             {
-            Execute.WithConnection(FixMovies);
+            WithConnectionGuarded(FixMovies);
             }
             catch (System.Exception e)
             {

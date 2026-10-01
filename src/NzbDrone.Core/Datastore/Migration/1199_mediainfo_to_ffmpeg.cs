@@ -45,7 +45,7 @@ namespace NzbDrone.Core.Datastore.Migration
         {
             try
             {
-            Execute.WithConnection(MigrateToFfprobe);
+            WithConnectionGuarded(MigrateToFfprobe);
             }
             catch (System.Exception e)
             {

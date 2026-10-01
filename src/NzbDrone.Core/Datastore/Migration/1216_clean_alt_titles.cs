@@ -10,22 +10,34 @@ namespace NzbDrone.Core.Datastore.Migration
         {
             if (Schema.Table("AlternativeTitles").Column("Language").Exists())
             {
+            if (Schema.Table("AlternativeTitles").Column("Language").Exists())
+            {
             Delete.Column("Language").FromTable("AlternativeTitles");
+            }
             }
 
             if (Schema.Table("AlternativeTitles").Column("Votes").Exists())
             {
+            if (Schema.Table("AlternativeTitles").Column("Votes").Exists())
+            {
             Delete.Column("Votes").FromTable("AlternativeTitles");
+            }
             }
 
             if (Schema.Table("AlternativeTitles").Column("VoteCount").Exists())
             {
+            if (Schema.Table("AlternativeTitles").Column("VoteCount").Exists())
+            {
             Delete.Column("VoteCount").FromTable("AlternativeTitles");
+            }
             }
 
             if (Schema.Table("AlternativeTitles").Column("SourceId").Exists())
             {
+            if (Schema.Table("AlternativeTitles").Column("SourceId").Exists())
+            {
             Delete.Column("SourceId").FromTable("AlternativeTitles");
+            }
             }
         }
     }

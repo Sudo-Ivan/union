@@ -10,6 +10,8 @@ namespace NzbDrone.Core.Datastore.Migration
         {
             if (!Schema.Table("ImportListStatus").Exists())
             {
+            if (!Schema.Table("ImportListStatus").Exists())
+            {
             Create.TableForModel("ImportListStatus")
                 .WithColumn("ProviderId").AsInt32().NotNullable().Unique()
                 .WithColumn("InitialFailure").AsDateTime().Nullable()
@@ -17,6 +19,7 @@ namespace NzbDrone.Core.Datastore.Migration
                 .WithColumn("EscalationLevel").AsInt32().NotNullable()
                 .WithColumn("DisabledTill").AsDateTime().Nullable()
                 .WithColumn("LastSyncListInfo").AsString().Nullable();
+            }
             }
         }
     }

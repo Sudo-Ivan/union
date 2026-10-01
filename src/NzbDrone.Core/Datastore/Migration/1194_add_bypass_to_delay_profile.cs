@@ -10,11 +10,17 @@ namespace NzbDrone.Core.Datastore.Migration
         {
             if (!Schema.Table("DelayProfiles").Column("BypassIfHighestQuality").Exists())
             {
+            if (!Schema.Table("DelayProfiles").Column("BypassIfHighestQuality").Exists())
+            {
             Alter.Table("DelayProfiles").AddColumn("BypassIfHighestQuality").AsBoolean().WithDefaultValue(false);
+            }
             }
 
             // Set to true for existing Delay Profiles to keep behavior the same.
+            if (Schema.Table("DelayProfiles").Column("BypassIfHighestQuality").Exists())
+            {
             Update.Table("DelayProfiles").Set(new { BypassIfHighestQuality = true }).AllRows();
+            }
         }
     }
 }

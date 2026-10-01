@@ -10,7 +10,10 @@ namespace NzbDrone.Core.Datastore.Migration
         {
             if (!Schema.Table("ScheduledTasks").Column("LastStartTime").Exists())
             {
+            if (!Schema.Table("ScheduledTasks").Column("LastStartTime").Exists())
+            {
             Alter.Table("ScheduledTasks").AddColumn("LastStartTime").AsDateTime().Nullable();
+            }
             }
         }
     }

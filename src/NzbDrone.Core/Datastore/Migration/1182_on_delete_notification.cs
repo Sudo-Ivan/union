@@ -10,7 +10,10 @@ namespace NzbDrone.Core.Datastore.Migration
         {
             if (!Schema.Table("Notifications").Column("OnDelete").Exists())
             {
+            if (!Schema.Table("Notifications").Column("OnDelete").Exists())
+            {
             Alter.Table("Notifications").AddColumn("OnDelete").AsBoolean().WithDefaultValue(false);
+            }
             }
         }
     }

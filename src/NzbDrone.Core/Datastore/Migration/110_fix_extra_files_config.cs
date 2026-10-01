@@ -10,7 +10,7 @@ namespace NzbDrone.Core.Datastore.Migration
     {
         protected override void MainDbUpgrade()
         {
-            Execute.WithConnection(FixExtraFilesConfig);
+            WithConnectionGuarded(FixExtraFilesConfig);
         }
 
         private void FixExtraFilesConfig(IDbConnection conn, IDbTransaction tran)

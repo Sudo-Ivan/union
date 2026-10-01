@@ -35,7 +35,7 @@ namespace NzbDrone.Core.Datastore.Migration
         {
             try
             {
-            Execute.WithConnection(RenameTMDbListType);
+            WithConnectionGuarded(RenameTMDbListType);
             }
             catch (System.Exception e)
             {
@@ -44,7 +44,7 @@ namespace NzbDrone.Core.Datastore.Migration
 
             try
             {
-            Execute.WithConnection(RenameTraktListType);
+            WithConnectionGuarded(RenameTraktListType);
             }
             catch (System.Exception e)
             {
@@ -53,7 +53,7 @@ namespace NzbDrone.Core.Datastore.Migration
 
             try
             {
-            Execute.WithConnection(FixConfig);
+            WithConnectionGuarded(FixConfig);
             }
             catch (System.Exception e)
             {

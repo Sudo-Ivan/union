@@ -11,14 +11,17 @@ namespace NzbDrone.Core.Datastore.Migration
         {
             if (!Schema.Table("DownloadClients").Column("RemoveCompletedDownloads").Exists())
             {
+            if (!Schema.Table("DownloadClients").Column("RemoveCompletedDownloads").Exists())
+            {
             Alter.Table("DownloadClients")
                  .AddColumn("RemoveCompletedDownloads").AsBoolean().NotNullable().WithDefaultValue(true)
                  .AddColumn("RemoveFailedDownloads").AsBoolean().NotNullable().WithDefaultValue(true);
             }
+            }
 
             try
             {
-            Execute.WithConnection(MoveRemoveSettings);
+            WithConnectionGuarded(MoveRemoveSettings);
             }
             catch (System.Exception e)
             {

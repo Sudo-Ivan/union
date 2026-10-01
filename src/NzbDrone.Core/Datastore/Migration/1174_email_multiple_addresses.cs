@@ -31,7 +31,7 @@ namespace NzbDrone.Core.Datastore.Migration
         {
             try
             {
-            Execute.WithConnection(ChangeEmailAddressType);
+            WithConnectionGuarded(ChangeEmailAddressType);
             }
             catch (System.Exception e)
             {

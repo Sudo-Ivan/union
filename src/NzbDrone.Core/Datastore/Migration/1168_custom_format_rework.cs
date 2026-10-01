@@ -25,16 +25,22 @@ namespace NzbDrone.Core.Datastore.Migration
         {
             if (!Schema.Table("CustomFormats").Column("Specifications").Exists())
             {
+            if (!Schema.Table("CustomFormats").Column("Specifications").Exists())
+            {
             Alter.Table("CustomFormats").AddColumn("Specifications").AsString().WithDefaultValue("[]");
+            }
             }
 
             // Union: CustomFormats may be sonarr-shaped without FormatTags, the
             // existence check happens inside UpdateCustomFormats at execution time.
-            Execute.WithConnection(UpdateCustomFormats);
+            WithConnectionGuarded(UpdateCustomFormats);
 
             if (Schema.Table("CustomFormats").Column("FormatTags").Exists())
             {
+            if (Schema.Table("CustomFormats").Column("FormatTags").Exists())
+            {
             Delete.Column("FormatTags").FromTable("CustomFormats");
+            }
             }
         }
 

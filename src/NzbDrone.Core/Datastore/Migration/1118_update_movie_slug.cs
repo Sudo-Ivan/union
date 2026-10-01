@@ -11,7 +11,7 @@ namespace NzbDrone.Core.Datastore.Migration
         {
             try
             {
-            Execute.WithConnection(SetTitleSlug);
+            WithConnectionGuarded(SetTitleSlug);
             }
             catch (System.Exception e)
             {

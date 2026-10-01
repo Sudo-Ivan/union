@@ -8,40 +8,24 @@ namespace NzbDrone.Core.Datastore.Migration
     {
         protected override void MainDbUpgrade()
         {
-            try
+            if (Schema.Table("DownloadHistory").Exists() && Schema.Table("DownloadHistory").Column("Release").Exists())
             {
             Execute.Sql("UPDATE \"DownloadHistory\" SET \"Release\" = REPLACE(REPLACE(\"Release\", 'hdB_Internal', 'g_Internal'), 'ahD_Internal', 'g_Internal') WHERE \"Release\" IS NOT NULL");
             }
-            catch (System.Exception e)
-            {
-                _logger.Debug(e, "Union: skipping data migration step, schema shape differs");
-            }
 
-            try
+            if (Schema.Table("IndexerStatus").Exists() && Schema.Table("IndexerStatus").Column("LastRssSyncReleaseInfo").Exists())
             {
             Execute.Sql("UPDATE \"IndexerStatus\" SET \"LastRssSyncReleaseInfo\" = REPLACE(REPLACE(\"LastRssSyncReleaseInfo\", 'hdB_Internal', 'g_Internal'), 'ahD_Internal', 'g_Internal') WHERE \"LastRssSyncReleaseInfo\" IS NOT NULL");
             }
-            catch (System.Exception e)
-            {
-                _logger.Debug(e, "Union: skipping data migration step, schema shape differs");
-            }
 
-            try
+            if (Schema.Table("PendingReleases").Exists() && Schema.Table("PendingReleases").Column("Release").Exists())
             {
             Execute.Sql("UPDATE \"PendingReleases\" SET \"Release\" = REPLACE(REPLACE(\"Release\", 'hdB_Internal', 'g_Internal'), 'ahD_Internal', 'g_Internal') WHERE \"Release\" IS NOT NULL");
             }
-            catch (System.Exception e)
-            {
-                _logger.Debug(e, "Union: skipping data migration step, schema shape differs");
-            }
 
-            try
+            if (Schema.Table("History").Exists() && Schema.Table("History").Column("Data").Exists())
             {
             Execute.Sql("UPDATE \"History\" SET \"Data\" = REPLACE(REPLACE(\"Data\", 'HDB_Internal', 'G_Internal'), 'AHD_Internal', 'G_Internal') WHERE \"Data\" IS NOT NULL");
-            }
-            catch (System.Exception e)
-            {
-                _logger.Debug(e, "Union: skipping data migration step, schema shape differs");
             }
         }
     }

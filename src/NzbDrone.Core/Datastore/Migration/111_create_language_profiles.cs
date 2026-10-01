@@ -21,7 +21,7 @@ namespace NzbDrone.Core.Datastore.Migration
 
             Alter.Table("Series").AddColumn("LanguageProfileId").AsInt32().WithDefaultValue(1);
 
-            Execute.WithConnection(InsertDefaultLanguages);
+            WithConnectionGuarded(InsertDefaultLanguages);
 
             Delete.Column("Language").FromTable("Profiles");
         }

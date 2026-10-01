@@ -9,22 +9,28 @@ namespace NzbDrone.Core.Datastore.Migration
     {
         protected override void MainDbUpgrade()
         {
-            // Execute.WithConnection(RenameUrlToBaseUrl);
+            // WithConnectionGuarded(RenameUrlToBaseUrl);
+            if (!Schema.Table("CustomFormats").Exists())
+            {
             if (!Schema.Table("CustomFormats").Exists())
             {
             Create.TableForModel("CustomFormats")
                 .WithColumn("Name").AsString().Unique()
                 .WithColumn("FormatTags").AsString();
             }
+            }
 
+            if (!Schema.Table("QualityProfiles").Column("FormatItems").Exists())
+            {
             if (!Schema.Table("QualityProfiles").Column("FormatItems").Exists())
             {
             Alter.Table("QualityProfiles").AddColumn("FormatItems").AsString().WithDefaultValue("[{format:0, allowed:true}]").AddColumn("FormatCutoff").AsInt32().WithDefaultValue(0);
             }
+            }
 
             try
             {
-            Execute.WithConnection(AddCustomFormatsToProfile);
+            WithConnectionGuarded(AddCustomFormatsToProfile);
             }
             catch (System.Exception e)
             {

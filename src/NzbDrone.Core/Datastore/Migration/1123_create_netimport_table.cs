@@ -10,6 +10,8 @@ namespace NzbDrone.Core.Datastore.Migration
         {
             if (!Schema.Table("ImportLists").Exists())
             {
+                if (!Schema.Table("ImportLists").Exists())
+                {
                 Create.TableForModel("ImportLists")
                     .WithColumn("Enabled").AsBoolean()
                     .WithColumn("Name").AsString().Unique()
@@ -20,6 +22,7 @@ namespace NzbDrone.Core.Datastore.Migration
                     .WithColumn("RootFolderPath").AsString()
                     .WithColumn("ShouldMonitor").AsBoolean()
                     .WithColumn("ProfileId").AsInt32();
+                }
             }
             else
             {
@@ -27,12 +30,18 @@ namespace NzbDrone.Core.Datastore.Migration
                 // movie-domain columns the merged entity maps.
                 if (!Schema.Table("ImportLists").Column("Enabled").Exists())
                 {
+            if (!Schema.Table("ImportLists").Column("Enabled").Exists())
+            {
                     Alter.Table("ImportLists").AddColumn("Enabled").AsBoolean().WithDefaultValue(true);
+            }
                 }
 
                 if (!Schema.Table("ImportLists").Column("EnableAuto").Exists())
                 {
+            if (!Schema.Table("ImportLists").Column("EnableAuto").Exists())
+            {
                     Alter.Table("ImportLists").AddColumn("EnableAuto").AsBoolean().WithDefaultValue(false);
+            }
                 }
             }
         }

@@ -12,41 +12,82 @@ namespace NzbDrone.Core.Datastore.Migration
 
             if (!Schema.Table("ExtraFiles").Column("MovieId").Exists())
             {
+            if (!Schema.Table("ExtraFiles").Column("MovieId").Exists())
+            {
                 Alter.Table("ExtraFiles").AddColumn("MovieId").AsInt32().Nullable();
+            }
             }
 
             if (!Schema.Table("ExtraFiles").Column("MovieFileId").Exists())
             {
+            if (!Schema.Table("ExtraFiles").Column("MovieFileId").Exists())
+            {
                 Alter.Table("ExtraFiles").AddColumn("MovieFileId").AsInt32().Nullable();
+            }
             }
 
             if (!Schema.Table("SubtitleFiles").Column("MovieId").Exists())
             {
+            if (!Schema.Table("SubtitleFiles").Column("MovieId").Exists())
+            {
                 Alter.Table("SubtitleFiles").AddColumn("MovieId").AsInt32().Nullable();
+            }
             }
 
             if (!Schema.Table("SubtitleFiles").Column("MovieFileId").Exists())
             {
+            if (!Schema.Table("SubtitleFiles").Column("MovieFileId").Exists())
+            {
                 Alter.Table("SubtitleFiles").AddColumn("MovieFileId").AsInt32().Nullable();
+            }
             }
 
             if (!Schema.Table("MetadataFiles").Column("MovieId").Exists())
             {
+            if (!Schema.Table("MetadataFiles").Column("MovieId").Exists())
+            {
                 Alter.Table("MetadataFiles").AddColumn("MovieId").AsInt32().Nullable();
+            }
             }
 
             if (!Schema.Table("MetadataFiles").Column("MovieFileId").Exists())
             {
+            if (!Schema.Table("MetadataFiles").Column("MovieFileId").Exists())
+            {
                 Alter.Table("MetadataFiles").AddColumn("MovieFileId").AsInt32().Nullable();
+            }
             }
 
             // Union: movie rows have no series-side ids, so relax the constraints
+            if (Schema.Table("ExtraFiles").Column("SeriesId").Exists())
+            {
             Alter.Table("ExtraFiles").AlterColumn("SeriesId").AsInt32().Nullable();
+            }
+
+            if (Schema.Table("ExtraFiles").Column("EpisodeFileId").Exists())
+            {
             Alter.Table("ExtraFiles").AlterColumn("EpisodeFileId").AsInt32().Nullable();
+            }
+
+            if (Schema.Table("SubtitleFiles").Column("SeriesId").Exists())
+            {
             Alter.Table("SubtitleFiles").AlterColumn("SeriesId").AsInt32().Nullable();
+            }
+
+            if (Schema.Table("SubtitleFiles").Column("EpisodeFileId").Exists())
+            {
             Alter.Table("SubtitleFiles").AlterColumn("EpisodeFileId").AsInt32().Nullable();
+            }
+
+            if (Schema.Table("MetadataFiles").Column("SeriesId").Exists())
+            {
             Alter.Table("MetadataFiles").AlterColumn("SeriesId").AsInt32().Nullable();
+            }
+
+            if (Schema.Table("MetadataFiles").Column("EpisodeFileId").Exists())
+            {
             Alter.Table("MetadataFiles").AlterColumn("EpisodeFileId").AsInt32().Nullable();
+            }
         }
     }
 }

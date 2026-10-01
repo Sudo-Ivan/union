@@ -252,7 +252,7 @@ namespace NzbDrone.Core.Datastore.Migration.Framework
                 Index = end + 1;
                 identifier.Append(Buffer.AsSpan(start, end - start));
 
-                if (Buffer[Index] != escape)
+                if (Index >= Buffer.Length || Buffer[Index] != escape)
                 {
                     break;
                 }

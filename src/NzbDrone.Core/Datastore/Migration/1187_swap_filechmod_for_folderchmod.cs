@@ -14,7 +14,7 @@ namespace NzbDrone.Core.Datastore.Migration
             // Reverts part of migration 140, note that the v1 of migration140 also removed chowngroup
             try
             {
-            Execute.WithConnection(ConvertFileChmodToFolderChmod);
+            WithConnectionGuarded(ConvertFileChmodToFolderChmod);
             }
             catch (System.Exception e)
             {

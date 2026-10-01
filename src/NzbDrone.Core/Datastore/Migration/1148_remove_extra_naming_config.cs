@@ -9,13 +9,9 @@ namespace NzbDrone.Core.Datastore.Migration
         protected override void MainDbUpgrade()
         {
             // Remove all but 1 NamingConfig
-            try
+            if (Schema.Table("NamingConfig").Exists())
             {
             Execute.Sql("DELETE FROM \"NamingConfig\" WHERE \"Id\" NOT IN(SELECT \"Id\" FROM \"NamingConfig\" LIMIT 1)");
-            }
-            catch (System.Exception e)
-            {
-                _logger.Debug(e, "Union: skipping data migration step, schema shape differs");
             }
         }
     }

@@ -37,7 +37,7 @@ namespace NzbDrone.Core.Datastore.Migration
         {
             try
             {
-            Execute.WithConnection(FixRadarrLists);
+            WithConnectionGuarded(FixRadarrLists);
             }
             catch (System.Exception e)
             {
@@ -46,7 +46,7 @@ namespace NzbDrone.Core.Datastore.Migration
 
             try
             {
-            Execute.WithConnection(FixStevenLuLists);
+            WithConnectionGuarded(FixStevenLuLists);
             }
             catch (System.Exception e)
             {

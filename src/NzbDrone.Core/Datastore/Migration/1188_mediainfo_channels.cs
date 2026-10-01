@@ -8,22 +8,14 @@ namespace NzbDrone.Core.Datastore.Migration
     {
         protected override void MainDbUpgrade()
         {
-            try
+            if (Schema.Table("MovieFiles").Exists() && Schema.Table("MovieFiles").Column("MediaInfo").Exists())
             {
             Execute.Sql("UPDATE \"MovieFiles\" SET \"MediaInfo\" = Replace(\"MediaInfo\", '\"audioChannels\"', '\"audioChannelsContainer\"');");
             }
-            catch (System.Exception e)
-            {
-                _logger.Debug(e, "Union: skipping data migration step, schema shape differs");
-            }
 
-            try
+            if (Schema.Table("MovieFiles").Exists() && Schema.Table("MovieFiles").Column("MediaInfo").Exists())
             {
             Execute.Sql("UPDATE \"MovieFiles\" SET \"MediaInfo\" = Replace(\"MediaInfo\", '\"audioChannelPositionsText\"', '\"audioChannelPositionsTextContainer\"');");
-            }
-            catch (System.Exception e)
-            {
-                _logger.Debug(e, "Union: skipping data migration step, schema shape differs");
             }
 
             // Change List Interval from Min to Hour

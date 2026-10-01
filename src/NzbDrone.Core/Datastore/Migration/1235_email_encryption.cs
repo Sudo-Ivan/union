@@ -15,7 +15,7 @@ namespace NzbDrone.Core.Datastore.Migration
         {
             try
             {
-            Execute.WithConnection(ChangeEncryption);
+            WithConnectionGuarded(ChangeEncryption);
             }
             catch (System.Exception e)
             {

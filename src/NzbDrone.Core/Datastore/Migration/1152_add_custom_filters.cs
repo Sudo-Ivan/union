@@ -10,10 +10,13 @@ namespace NzbDrone.Core.Datastore.Migration
         {
             if (!Schema.Table("CustomFilters").Exists())
             {
+            if (!Schema.Table("CustomFilters").Exists())
+            {
             Create.TableForModel("CustomFilters")
                   .WithColumn("Type").AsString().NotNullable()
                   .WithColumn("Label").AsString().NotNullable()
                   .WithColumn("Filters").AsString().NotNullable();
+            }
             }
         }
     }

@@ -33,7 +33,7 @@ namespace NzbDrone.Core.Datastore.Migration
         {
             try
             {
-            Execute.WithConnection(MigrateDiscordFromSlack);
+            WithConnectionGuarded(MigrateDiscordFromSlack);
             }
             catch (System.Exception e)
             {

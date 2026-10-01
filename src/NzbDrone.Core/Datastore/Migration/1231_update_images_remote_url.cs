@@ -8,31 +8,19 @@ namespace NzbDrone.Core.Datastore.Migration
     {
         protected override void MainDbUpgrade()
         {
-            try
+            if (Schema.Table("MovieMetadata").Exists() && Schema.Table("MovieMetadata").Column("Images").Exists())
             {
             Execute.Sql("UPDATE \"MovieMetadata\" SET \"Images\" = REPLACE(\"Images\", '\"url\"', '\"remoteUrl\"')");
             }
-            catch (System.Exception e)
-            {
-                _logger.Debug(e, "Union: skipping data migration step, schema shape differs");
-            }
 
-            try
+            if (Schema.Table("Credits").Exists() && Schema.Table("Credits").Column("Images").Exists())
             {
             Execute.Sql("UPDATE \"Credits\" SET \"Images\" = REPLACE(\"Images\", '\"url\"', '\"remoteUrl\"')");
             }
-            catch (System.Exception e)
-            {
-                _logger.Debug(e, "Union: skipping data migration step, schema shape differs");
-            }
 
-            try
+            if (Schema.Table("Collections").Exists() && Schema.Table("Collections").Column("Images").Exists())
             {
             Execute.Sql("UPDATE \"Collections\" SET \"Images\" = REPLACE(\"Images\", '\"url\"', '\"remoteUrl\"')");
-            }
-            catch (System.Exception e)
-            {
-                _logger.Debug(e, "Union: skipping data migration step, schema shape differs");
             }
         }
     }

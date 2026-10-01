@@ -33,7 +33,7 @@ namespace NzbDrone.Core.Datastore.Migration
         {
             try
             {
-            Execute.WithConnection(FixTraktConfig);
+            WithConnectionGuarded(FixTraktConfig);
             }
             catch (System.Exception e)
             {
@@ -42,20 +42,16 @@ namespace NzbDrone.Core.Datastore.Migration
 
             try
             {
-            Execute.WithConnection(RenameRadarrListType);
+            WithConnectionGuarded(RenameRadarrListType);
             }
             catch (System.Exception e)
             {
                 _logger.Debug(e, "Union: skipping data migration step, schema shape differs");
             }
 
-            try
+            if (Schema.Table("Config").Exists())
             {
             Execute.Sql("DELETE FROM \"Config\" WHERE \"Key\" IN ('TraktAuthToken', 'TraktRefreshToken', 'TraktTokenExpiry', 'NewTraktAuthToken', 'NewTraktRefreshToken', 'NewTraktTokenExpiry')");
-            }
-            catch (System.Exception e)
-            {
-                _logger.Debug(e, "Union: skipping data migration step, schema shape differs");
             }
         }
 

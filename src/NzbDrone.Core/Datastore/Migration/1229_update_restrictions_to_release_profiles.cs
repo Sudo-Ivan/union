@@ -16,39 +16,57 @@ namespace NzbDrone.Core.Datastore.Migration
         {
             if (Schema.Table("Restrictions").Exists() && !Schema.Table("ReleaseProfiles").Exists())
             {
+            if (Schema.Table("Restrictions").Exists() && !Schema.Table("ReleaseProfiles").Exists())
+            {
             Rename.Table("Restrictions").To("ReleaseProfiles");
+            }
             }
 
             if (!Schema.Table("ReleaseProfiles").Column("Name").Exists())
             {
+            if (!Schema.Table("ReleaseProfiles").Column("Name").Exists())
+            {
             Alter.Table("ReleaseProfiles").AddColumn("Name").AsString().Nullable().WithDefaultValue(null);
+            }
             }
 
             if (!Schema.Table("ReleaseProfiles").Column("Enabled").Exists())
             {
+            if (!Schema.Table("ReleaseProfiles").Column("Enabled").Exists())
+            {
             Alter.Table("ReleaseProfiles").AddColumn("Enabled").AsBoolean().WithDefaultValue(true);
+            }
             }
 
             if (!Schema.Table("ReleaseProfiles").Column("IndexerId").Exists())
             {
+            if (!Schema.Table("ReleaseProfiles").Column("IndexerId").Exists())
+            {
             Alter.Table("ReleaseProfiles").AddColumn("IndexerId").AsInt32().WithDefaultValue(0);
+            }
             }
 
             if (Schema.Table("ReleaseProfiles").Column("Preferred").Exists())
             {
+            if (Schema.Table("ReleaseProfiles").Column("Preferred").Exists())
+            {
             Delete.Column("Preferred").FromTable("ReleaseProfiles");
+            }
             }
 
             try
             {
-            Execute.WithConnection(ChangeRequiredIgnoredTypes);
+            WithConnectionGuarded(ChangeRequiredIgnoredTypes);
             }
             catch (System.Exception e)
             {
                 _logger.Debug(e, "Union: skipping data migration step, schema shape differs");
             }
 
+            if (Schema.Table("ReleaseProfiles").Exists())
+            {
             Delete.FromTable("ReleaseProfiles").Row(new { Required = "[]", Ignored = "[]" });
+            }
         }
 
         // Update the Required and Ignored columns to be JSON arrays instead of comma separated strings

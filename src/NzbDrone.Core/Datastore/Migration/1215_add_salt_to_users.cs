@@ -10,9 +10,12 @@ namespace NzbDrone.Core.Datastore.Migration
         {
             if (!Schema.Table("Users").Column("Salt").Exists())
             {
+            if (!Schema.Table("Users").Column("Salt").Exists())
+            {
             Alter.Table("Users")
                 .AddColumn("Salt").AsString().Nullable()
                 .AddColumn("Iterations").AsInt32().Nullable();
+            }
             }
         }
     }

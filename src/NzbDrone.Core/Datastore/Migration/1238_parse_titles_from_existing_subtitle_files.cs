@@ -23,17 +23,23 @@ namespace NzbDrone.Core.Datastore.Migration
         {
             if (!Schema.Table("SubtitleFiles").Column("Title").Exists())
             {
+            if (!Schema.Table("SubtitleFiles").Column("Title").Exists())
+            {
             Alter.Table("SubtitleFiles").AddColumn("Title").AsString().Nullable();
+            }
             }
 
             if (!Schema.Table("SubtitleFiles").Column("Copy").Exists())
             {
+            if (!Schema.Table("SubtitleFiles").Column("Copy").Exists())
+            {
             Alter.Table("SubtitleFiles").AddColumn("Copy").AsInt32().WithDefaultValue(0);
+            }
             }
 
             try
             {
-            Execute.WithConnection(UpdateTitles);
+            WithConnectionGuarded(UpdateTitles);
             }
             catch (System.Exception e)
             {

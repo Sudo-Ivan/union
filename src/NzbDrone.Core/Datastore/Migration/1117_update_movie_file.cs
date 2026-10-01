@@ -9,9 +9,12 @@ namespace NzbDrone.Core.Datastore.Migration
     {
         protected override void MainDbUpgrade()
         {
+            if (!Schema.Table("MovieFiles").Column("Edition").Exists())
+            {
             Create.Column("Edition").OnTable("MovieFiles").AsString().Nullable();
+            }
 
-            // Execute.WithConnection(SetSortTitles);
+            // WithConnectionGuarded(SetSortTitles);
         }
 
         private void SetSortTitles(IDbConnection conn, IDbTransaction tran)

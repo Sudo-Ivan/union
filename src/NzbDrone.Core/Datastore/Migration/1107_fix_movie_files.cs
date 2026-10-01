@@ -8,7 +8,10 @@ namespace NzbDrone.Core.Datastore.Migration
     {
         protected override void MainDbUpgrade()
         {
+            if (Schema.Table("MovieFiles").Column("Path").Exists())
+            {
             Alter.Table("MovieFiles").AlterColumn("Path").AsString().Nullable(); // Should be deleted, but to much work, ¯\_(ツ)_/¯
+            }
         }
     }
 }

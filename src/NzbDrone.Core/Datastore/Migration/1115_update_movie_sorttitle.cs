@@ -12,7 +12,7 @@ namespace NzbDrone.Core.Datastore.Migration
             // Create.Column("SortTitle").OnTable("Series").AsString().Nullable();
             try
             {
-            Execute.WithConnection(SetSortTitles);
+            WithConnectionGuarded(SetSortTitles);
             }
             catch (System.Exception e)
             {

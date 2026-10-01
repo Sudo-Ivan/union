@@ -23,23 +23,32 @@ namespace NzbDrone.Core.Datastore.Migration
         {
             if (!Schema.Table("MovieFiles").Column("Languages").Exists())
             {
+            if (!Schema.Table("MovieFiles").Column("Languages").Exists())
+            {
             Alter.Table("MovieFiles")
                  .AddColumn("Languages").AsString().NotNullable().WithDefaultValue("[]");
             }
+            }
 
+            if (!Schema.Table("History").Column("Languages").Exists())
+            {
             if (!Schema.Table("History").Column("Languages").Exists())
             {
             Alter.Table("History")
                  .AddColumn("Languages").AsString().NotNullable().WithDefaultValue("[]");
             }
+            }
 
+            if (!Schema.Table("Blocklist").Column("Languages").Exists())
+            {
             if (!Schema.Table("Blocklist").Column("Languages").Exists())
             {
             Alter.Table("Blocklist")
                  .AddColumn("Languages").AsString().NotNullable().WithDefaultValue("[]");
             }
+            }
 
-            Execute.WithConnection(UpdateLanguage);
+            WithConnectionGuarded(UpdateLanguage);
         }
 
         private void UpdateLanguage(IDbConnection conn, IDbTransaction tran)

@@ -14,6 +14,8 @@ namespace NzbDrone.Core.Datastore.Migration
         {
             if (!Schema.Table("DownloadHistory").Exists())
             {
+            if (!Schema.Table("DownloadHistory").Exists())
+            {
             Create.TableForModel("DownloadHistory")
                   .WithColumn("EventType").AsInt32().NotNullable()
                   .WithColumn("MovieId").AsInt32().NotNullable()
@@ -26,25 +28,38 @@ namespace NzbDrone.Core.Datastore.Migration
                   .WithColumn("Release").AsString().Nullable()
                   .WithColumn("Data").AsString().Nullable();
             }
+            }
 
             if (!Schema.Table("DownloadHistory").Index("IX_DownloadHistory_EventType").Exists())
             {
+            if (Schema.Table("DownloadHistory").Column("EventType").Exists())
+            {
             Create.Index().OnTable("DownloadHistory").OnColumn("EventType");
+            }
             }
 
             if (!Schema.Table("DownloadHistory").Column("MovieId").Exists())
             {
+            if (!Schema.Table("DownloadHistory").Column("MovieId").Exists())
+            {
                 Alter.Table("DownloadHistory").AddColumn("MovieId").AsInt32().Nullable();
+            }
             }
 
             if (!Schema.Table("DownloadHistory").Index("IX_DownloadHistory_MovieId").Exists())
             {
+            if (Schema.Table("DownloadHistory").Column("MovieId").Exists())
+            {
             Create.Index().OnTable("DownloadHistory").OnColumn("MovieId");
+            }
             }
 
             if (!Schema.Table("DownloadHistory").Index("IX_DownloadHistory_DownloadId").Exists())
             {
+            if (Schema.Table("DownloadHistory").Column("DownloadId").Exists())
+            {
             Create.Index().OnTable("DownloadHistory").OnColumn("DownloadId");
+            }
             }
 
             IfDatabase("sqlite").Execute.WithConnection(InitialImportedDownloadHistory);

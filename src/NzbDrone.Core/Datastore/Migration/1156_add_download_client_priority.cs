@@ -20,12 +20,15 @@ namespace NzbDrone.Core.Datastore.Migration
         {
             if (!Schema.Table("DownloadClients").Column("Priority").Exists())
             {
+            if (!Schema.Table("DownloadClients").Column("Priority").Exists())
+            {
             Alter.Table("DownloadClients").AddColumn("Priority").AsInt32().WithDefaultValue(1);
+            }
             }
 
             try
             {
-            Execute.WithConnection(InitPriorityForBackwardCompatibility);
+            WithConnectionGuarded(InitPriorityForBackwardCompatibility);
             }
             catch (System.Exception e)
             {

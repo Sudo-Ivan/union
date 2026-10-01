@@ -10,11 +10,17 @@ namespace NzbDrone.Core.Datastore.Migration
         {
             if (!Schema.Table("QualityProfiles").Column("UpgradeAllowed").Exists())
             {
+            if (!Schema.Table("QualityProfiles").Column("UpgradeAllowed").Exists())
+            {
             Alter.Table("QualityProfiles").AddColumn("UpgradeAllowed").AsBoolean().Nullable();
+            }
             }
 
             // Set upgrade allowed for existing profiles (default will be false for new profiles)
+            if (Schema.Table("QualityProfiles").Column("UpgradeAllowed").Exists())
+            {
             Update.Table("QualityProfiles").Set(new { UpgradeAllowed = true }).AllRows();
+            }
         }
     }
 }

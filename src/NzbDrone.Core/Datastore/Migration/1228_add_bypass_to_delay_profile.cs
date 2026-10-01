@@ -10,12 +10,18 @@ namespace NzbDrone.Core.Datastore.Migration
         {
             if (!Schema.Table("DelayProfiles").Column("BypassIfAboveCustomFormatScore").Exists())
             {
+            if (!Schema.Table("DelayProfiles").Column("BypassIfAboveCustomFormatScore").Exists())
+            {
             Alter.Table("DelayProfiles").AddColumn("BypassIfAboveCustomFormatScore").AsBoolean().WithDefaultValue(false);
+            }
             }
 
             if (!Schema.Table("DelayProfiles").Column("MinimumCustomFormatScore").Exists())
             {
+            if (!Schema.Table("DelayProfiles").Column("MinimumCustomFormatScore").Exists())
+            {
             Alter.Table("DelayProfiles").AddColumn("MinimumCustomFormatScore").AsInt32().Nullable();
+            }
             }
         }
     }

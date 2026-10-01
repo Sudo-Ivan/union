@@ -10,7 +10,10 @@ namespace NzbDrone.Core.Datastore.Migration
         {
             if (!Schema.Table("Notifications").Column("OnManualInteractionRequired").Exists())
             {
+            if (!Schema.Table("Notifications").Column("OnManualInteractionRequired").Exists())
+            {
             Alter.Table("Notifications").AddColumn("OnManualInteractionRequired").AsBoolean().WithDefaultValue(false);
+            }
             }
         }
     }

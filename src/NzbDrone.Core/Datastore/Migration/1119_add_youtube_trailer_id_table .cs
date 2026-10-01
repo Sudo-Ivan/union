@@ -10,7 +10,10 @@ namespace NzbDrone.Core.Datastore.Migration
         {
             if (!Schema.Table("Movies").Column("YouTubeTrailerId").Exists())
             {
+            if (!Schema.Table("Movies").Column("YouTubeTrailerId").Exists())
+            {
             Alter.Table("Movies").AddColumn("YouTubeTrailerId").AsString().Nullable();
+            }
             }
         }
     }

@@ -13,7 +13,10 @@ namespace NzbDrone.Core.Datastore.Migration
             {
                 if (!Schema.Table("ImportLists").Column("MinimumAvailability").Exists())
                 {
+            if (!Schema.Table("ImportLists").Column("MinimumAvailability").Exists())
+            {
                 Alter.Table("ImportLists").AddColumn("MinimumAvailability").AsInt32().WithDefaultValue((int)MovieStatusType.Released);
+            }
                 }
             }
 
@@ -21,7 +24,10 @@ namespace NzbDrone.Core.Datastore.Migration
             {
                 if (!Schema.Table("Movies").Column("MinimumAvailability").Exists())
                 {
+            if (!Schema.Table("Movies").Column("MinimumAvailability").Exists())
+            {
                 Alter.Table("Movies").AddColumn("MinimumAvailability").AsInt32().WithDefaultValue((int)MovieStatusType.Released);
+            }
                 }
             }
         }

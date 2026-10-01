@@ -12,6 +12,8 @@ namespace NzbDrone.Core.Datastore.Migration
             {
             if (!Schema.Table("MovieFiles").Exists())
             {
+            if (!Schema.Table("MovieFiles").Exists())
+            {
             Create.TableForModel("MovieFiles")
                   .WithColumn("MovieId").AsInt32()
                   .WithColumn("Path").AsString().Unique()
@@ -24,12 +26,16 @@ namespace NzbDrone.Core.Datastore.Migration
                   .WithColumn("RelativePath").AsString().Nullable();
             }
             }
+            }
 
             if (!Schema.Table("Movies").Column("MovieFileId").Exists())
             {
             if (!Schema.Table("Movies").Column("MovieFileId").Exists())
             {
+            if (!Schema.Table("Movies").Column("MovieFileId").Exists())
+            {
             Alter.Table("Movies").AddColumn("MovieFileId").AsInt32().WithDefaultValue(0);
+            }
             }
             }
         }

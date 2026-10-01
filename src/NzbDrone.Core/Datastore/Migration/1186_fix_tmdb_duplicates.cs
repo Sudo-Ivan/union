@@ -15,7 +15,7 @@ namespace NzbDrone.Core.Datastore.Migration
         {
             try
             {
-            Execute.WithConnection(FixMovies);
+            WithConnectionGuarded(FixMovies);
             }
             catch (System.Exception e)
             {
@@ -25,7 +25,10 @@ namespace NzbDrone.Core.Datastore.Migration
             Delete.Index("IX_Movies_TmdbId").OnTable("Movies");
             if (Schema.Table("Movies").Column("TmdbId").Exists())
             {
+            if (Schema.Table("Movies").Column("TmdbId").Exists())
+            {
             Alter.Table("Movies").AlterColumn("TmdbId").AsInt32().Unique();
+            }
             }
         }
 

@@ -8,7 +8,10 @@ namespace NzbDrone.Core.Datastore.Migration
     {
         protected override void MainDbUpgrade()
         {
+            if (Schema.Table("Indexers").Exists())
+            {
             Delete.FromTable("Indexers").Row(new { Implementation = "AwesomeHD" });
+            }
         }
     }
 }

@@ -14,7 +14,7 @@ namespace NzbDrone.Core.Datastore.Migration
         {
             try
             {
-            Execute.WithConnection(RenameUrlToBaseUrl);
+            WithConnectionGuarded(RenameUrlToBaseUrl);
             }
             catch (System.Exception e)
             {

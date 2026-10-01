@@ -10,7 +10,10 @@ namespace NzbDrone.Core.Datastore.Migration
         {
             if (!Schema.Table("Movies").Column("PhysicalRelease").Exists())
             {
+            if (!Schema.Table("Movies").Column("PhysicalRelease").Exists())
+            {
             Alter.Table("Movies").AddColumn("PhysicalRelease").AsDateTime().Nullable();
+            }
             }
         }
     }

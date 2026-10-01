@@ -10,7 +10,10 @@ namespace NzbDrone.Core.Datastore.Migration
         {
             if (!Schema.Table("SubtitleFiles").Column("LanguageTags").Exists())
             {
+            if (!Schema.Table("SubtitleFiles").Column("LanguageTags").Exists())
+            {
             Alter.Table("SubtitleFiles").AddColumn("LanguageTags").AsString().Nullable();
+            }
             }
         }
     }

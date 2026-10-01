@@ -10,28 +10,35 @@ namespace NzbDrone.Core.Datastore.Migration
         {
             if (Schema.Table("ImportLists").Exists() && !Schema.Table("ImportLists").Exists())
             {
+            if (Schema.Table("ImportLists").Exists() && !Schema.Table("ImportLists").Exists())
+            {
             Rename.Table("ImportLists").To("ImportLists");
+            }
             }
 
             if (Schema.Table("ImportListStatus").Exists() && !Schema.Table("ImportListStatus").Exists())
             {
+            if (Schema.Table("ImportListStatus").Exists() && !Schema.Table("ImportListStatus").Exists())
+            {
             Rename.Table("ImportListStatus").To("ImportListStatus");
             }
+            }
 
-            try
+            if (Schema.Table("Config").Exists() && Schema.Table("Config").Column("Key").Exists())
             {
             Execute.Sql("UPDATE \"Config\" SET \"Key\" = 'importlistsyncinterval' WHERE \"Key\" = 'netimportsyncinterval'");
-            }
-            catch (System.Exception e)
-            {
-                _logger.Debug(e, "Union: skipping data migration step, schema shape differs");
             }
 
             if (!Schema.Table("ImportLists").Column("SearchOnAdd").Exists())
             {
+            if (!Schema.Table("ImportLists").Column("SearchOnAdd").Exists())
+            {
             Alter.Table("ImportLists").AddColumn("SearchOnAdd").AsBoolean().WithDefaultValue(false);
             }
+            }
 
+            if (!Schema.Table("ImportListMovies").Exists())
+            {
             if (!Schema.Table("ImportListMovies").Exists())
             {
             Create.TableForModel("ImportListMovies")
@@ -58,6 +65,7 @@ namespace NzbDrone.Core.Datastore.Migration
                 .WithColumn("Studio").AsString().Nullable()
                 .WithColumn("YouTubeTrailerId").AsString().Nullable()
                 .WithColumn("DigitalRelease").AsDateTime().Nullable();
+            }
             }
         }
     }

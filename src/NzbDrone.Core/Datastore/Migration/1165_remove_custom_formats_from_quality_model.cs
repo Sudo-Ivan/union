@@ -19,18 +19,24 @@ namespace NzbDrone.Core.Datastore.Migration
         {
             if (!Schema.Table("Blocklist").Column("IndexerFlags").Exists())
             {
+            if (!Schema.Table("Blocklist").Column("IndexerFlags").Exists())
+            {
             Alter.Table("Blocklist").AddColumn("IndexerFlags").AsInt32().WithDefaultValue(0);
+            }
             }
 
             if (!Schema.Table("MovieFiles").Column("IndexerFlags").Exists())
             {
+            if (!Schema.Table("MovieFiles").Column("IndexerFlags").Exists())
+            {
             Alter.Table("MovieFiles").AddColumn("IndexerFlags").AsInt32().WithDefaultValue(0);
+            }
             }
 
             // Switch Quality and Language to int in pending releases, remove custom formats
             try
             {
-            Execute.WithConnection(FixPendingReleases);
+            WithConnectionGuarded(FixPendingReleases);
             }
             catch (System.Exception e)
             {
@@ -41,7 +47,7 @@ namespace NzbDrone.Core.Datastore.Migration
             SqlMapper.AddTypeHandler(new EmbeddedDocumentConverter<QualityModel165>());
             try
             {
-            Execute.WithConnection((conn, tran) => RemoveCustomFormatFromQuality(conn, tran, "Blocklist"));
+            WithConnectionGuarded((conn, tran) => RemoveCustomFormatFromQuality(conn, tran, "Blocklist"));
             }
             catch (System.Exception e)
             {
@@ -50,7 +56,7 @@ namespace NzbDrone.Core.Datastore.Migration
 
             try
             {
-            Execute.WithConnection((conn, tran) => RemoveCustomFormatFromQuality(conn, tran, "History"));
+            WithConnectionGuarded((conn, tran) => RemoveCustomFormatFromQuality(conn, tran, "History"));
             }
             catch (System.Exception e)
             {
@@ -59,7 +65,7 @@ namespace NzbDrone.Core.Datastore.Migration
 
             try
             {
-            Execute.WithConnection((conn, tran) => RemoveCustomFormatFromQuality(conn, tran, "MovieFiles"));
+            WithConnectionGuarded((conn, tran) => RemoveCustomFormatFromQuality(conn, tran, "MovieFiles"));
             }
             catch (System.Exception e)
             {
@@ -69,7 +75,7 @@ namespace NzbDrone.Core.Datastore.Migration
             // Fish out indexer flags from history
             try
             {
-            Execute.WithConnection(AddIndexerFlagsToBlacklist);
+            WithConnectionGuarded(AddIndexerFlagsToBlacklist);
             }
             catch (System.Exception e)
             {
@@ -78,7 +84,7 @@ namespace NzbDrone.Core.Datastore.Migration
 
             try
             {
-            Execute.WithConnection(AddIndexerFlagsToMovieFiles);
+            WithConnectionGuarded(AddIndexerFlagsToMovieFiles);
             }
             catch (System.Exception e)
             {

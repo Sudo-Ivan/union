@@ -28,19 +28,20 @@ namespace NzbDrone.Core.Datastore.Migration
 
         protected override void MainDbUpgrade()
         {
-            try
+            if (Schema.Table("CustomFilters").Exists() && Schema.Table("CustomFilters").Column("Filters").Exists())
             {
             Execute.Sql("UPDATE \"CustomFilters\" SET \"Filters\" = Replace(\"Filters\", 'ratings', 'tmdbRating') WHERE \"Type\" = 'discoverMovie';");
             }
-            catch (System.Exception e)
-            {
-                _logger.Debug(e, "Union: skipping data migration step, schema shape differs");
-            }
 
-            try
+            if (Schema.Table("CustomFilters").Exists() && Schema.Table("CustomFilters").Column("Filters").Exists())
             {
             Execute.Sql("UPDATE \"CustomFilters\" SET \"Filters\" = Replace(\"Filters\", 'ratings', 'tmdbRating') WHERE \"Type\" = 'movieIndex';");
             }
+
+            try
+            {
+            WithConnectionGuarded((conn, tran) => FixRatings(conn, tran, "Movies"));
+            }
             catch (System.Exception e)
             {
                 _logger.Debug(e, "Union: skipping data migration step, schema shape differs");
@@ -48,16 +49,7 @@ namespace NzbDrone.Core.Datastore.Migration
 
             try
             {
-            Execute.WithConnection((conn, tran) => FixRatings(conn, tran, "Movies"));
-            }
-            catch (System.Exception e)
-            {
-                _logger.Debug(e, "Union: skipping data migration step, schema shape differs");
-            }
-
-            try
-            {
-            Execute.WithConnection((conn, tran) => FixRatings(conn, tran, "ImportListMovies"));
+            WithConnectionGuarded((conn, tran) => FixRatings(conn, tran, "ImportListMovies"));
             }
             catch (System.Exception e)
             {

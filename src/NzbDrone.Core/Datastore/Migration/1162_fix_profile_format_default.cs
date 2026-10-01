@@ -14,7 +14,10 @@ namespace NzbDrone.Core.Datastore.Migration
             var defaultValue = "[{\"format\":0, \"allowed\":true}]";
             Alter.Column("FormatItems").OnTable("QualityProfiles").AsString().WithDefaultValue(defaultValue);
 
+            if (Schema.Table("QualityProfiles").Column("FormatItems").Exists())
+            {
             Update.Table("QualityProfiles").Set(new { FormatItems = defaultValue }).Where(new { FormatItems = badValue });
+            }
         }
     }
 }

@@ -10,7 +10,10 @@ namespace NzbDrone.Core.Datastore.Migration
         {
             if (!Schema.Table("QualityProfiles").Column("MinUpgradeFormatScore").Exists())
             {
+            if (!Schema.Table("QualityProfiles").Column("MinUpgradeFormatScore").Exists())
+            {
             Alter.Table("QualityProfiles").AddColumn("MinUpgradeFormatScore").AsInt32().WithDefaultValue(1);
+            }
             }
         }
     }

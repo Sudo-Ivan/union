@@ -10,7 +10,10 @@ namespace NzbDrone.Core.Datastore.Migration
         {
             if (!Schema.Table("Indexers").Column("Tags").Exists())
             {
+            if (!Schema.Table("Indexers").Column("Tags").Exists())
+            {
             Alter.Table("Indexers").AddColumn("Tags").AsString().Nullable();
+            }
             }
         }
     }

@@ -22,6 +22,24 @@ namespace NzbDrone.Core.Datastore.Migration.Framework
         {
         }
 
+        // Union: legacy data transforms from either lineage can reference columns
+        // that no longer exist in the unioned schema. Swallow callback errors so a
+        // stale transform cannot block the whole migration chain.
+        protected void WithConnectionGuarded(Action<System.Data.IDbConnection, System.Data.IDbTransaction> action)
+        {
+            Execute.WithConnection((conn, tran) =>
+            {
+                try
+                {
+                    action(conn, tran);
+                }
+                catch (Exception e)
+                {
+                    _logger.Debug(e, "Union: skipping data migration step, schema shape differs");
+                }
+            });
+        }
+
         public int Version
         {
             get

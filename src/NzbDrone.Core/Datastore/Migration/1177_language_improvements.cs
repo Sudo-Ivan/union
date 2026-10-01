@@ -34,33 +34,51 @@ namespace NzbDrone.Core.Datastore.Migration
             // Set all to English (1) on migration to ensure default behavior persists until refresh
             if (!Schema.Table("Movies").Column("OriginalLanguage").Exists())
             {
+            if (!Schema.Table("Movies").Column("OriginalLanguage").Exists())
+            {
             Alter.Table("Movies").AddColumn("OriginalLanguage").AsInt32().WithDefaultValue((int)Language.English);
+            }
             }
 
             if (!Schema.Table("Movies").Column("OriginalTitle").Exists())
             {
+            if (!Schema.Table("Movies").Column("OriginalTitle").Exists())
+            {
             Alter.Table("Movies").AddColumn("OriginalTitle").AsString().Nullable();
+            }
             }
 
             if (!Schema.Table("Movies").Column("DigitalRelease").Exists())
             {
+            if (!Schema.Table("Movies").Column("DigitalRelease").Exists())
+            {
             Alter.Table("Movies").AddColumn("DigitalRelease").AsDateTime().Nullable();
+            }
             }
 
             // Column not used
             if (Schema.Table("Movies").Column("PhysicalReleaseNote").Exists())
             {
+            if (Schema.Table("Movies").Column("PhysicalReleaseNote").Exists())
+            {
             Delete.Column("PhysicalReleaseNote").FromTable("Movies");
+            }
             }
 
             if (Schema.Table("Movies").Column("SecondaryYearSourceId").Exists())
             {
+            if (Schema.Table("Movies").Column("SecondaryYearSourceId").Exists())
+            {
             Delete.Column("SecondaryYearSourceId").FromTable("Movies");
+            }
             }
 
             if (!Schema.Table("NamingConfig").Column("RenameMovies").Exists())
             {
+            if (!Schema.Table("NamingConfig").Column("RenameMovies").Exists())
+            {
             Alter.Table("NamingConfig").AddColumn("RenameMovies").AsBoolean().WithDefaultValue(false);
+            }
             }
 
             try
@@ -73,28 +91,33 @@ namespace NzbDrone.Core.Datastore.Migration
             }
 
             // Manual SQL, Fluent Migrator doesn't support multi-column unique constraint on table creation, SQLite doesn't support adding it after creation
-            IfDatabase("sqlite").Execute.Sql("CREATE TABLE \"MovieTranslations\"(" +
-                "\"Id\" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
-                "\"MovieId\" INTEGER NOT NULL, " +
-                "\"Title\" TEXT, " +
-                "\"CleanTitle\" TEXT, " +
-                "\"Overview\" TEXT, " +
-                "\"Language\" INTEGER NOT NULL, " +
-                "Unique(\"MovieId\", \"Language\"));");
+            if (!Schema.Table("MovieTranslations").Exists())
+            {
+                IfDatabase("sqlite").Execute.Sql("CREATE TABLE \"MovieTranslations\"(" +
+                    "\"Id\" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
+                    "\"MovieId\" INTEGER NOT NULL, " +
+                    "\"Title\" TEXT, " +
+                    "\"CleanTitle\" TEXT, " +
+                    "\"Overview\" TEXT, " +
+                    "\"Language\" INTEGER NOT NULL, " +
+                    "Unique(\"MovieId\", \"Language\"));");
 
-            IfDatabase("postgres").Execute.Sql("CREATE TABLE \"MovieTranslations\"(" +
-                "\"Id\" SERIAL PRIMARY KEY , " +
-                "\"MovieId\" INTEGER NOT NULL, " +
-                "\"Title\" TEXT, " +
-                "\"CleanTitle\" TEXT, " +
-                "\"Overview\" TEXT, " +
-                "\"Language\" INTEGER NOT NULL, " +
-                "Unique(\"MovieId\", \"Language\"));");
+                IfDatabase("postgres").Execute.Sql("CREATE TABLE \"MovieTranslations\"(" +
+                    "\"Id\" SERIAL PRIMARY KEY , " +
+                    "\"MovieId\" INTEGER NOT NULL, " +
+                    "\"Title\" TEXT, " +
+                    "\"CleanTitle\" TEXT, " +
+                    "\"Overview\" TEXT, " +
+                    "\"Language\" INTEGER NOT NULL, " +
+                    "Unique(\"MovieId\", \"Language\"));");
+            }
 
             // Prevent failure if two movies have same alt titles
-            try
-            {
             Execute.Sql("DROP INDEX IF EXISTS \"IX_AlternativeTitles_CleanTitle\"");
+
+            try
+            {
+            WithConnectionGuarded(FixLanguagesMoveFile);
             }
             catch (System.Exception e)
             {
@@ -103,16 +126,7 @@ namespace NzbDrone.Core.Datastore.Migration
 
             try
             {
-            Execute.WithConnection(FixLanguagesMoveFile);
-            }
-            catch (System.Exception e)
-            {
-                _logger.Debug(e, "Union: skipping data migration step, schema shape differs");
-            }
-
-            try
-            {
-            Execute.WithConnection(FixLanguagesHistory);
+            WithConnectionGuarded(FixLanguagesHistory);
             }
             catch (System.Exception e)
             {
@@ -120,13 +134,19 @@ namespace NzbDrone.Core.Datastore.Migration
             }
 
             // Force refresh all movies in library
+            if (Schema.Table("ScheduledTasks").Column("LastExecution").Exists())
+            {
             Update.Table("ScheduledTasks")
                 .Set(new { LastExecution = "2014-01-01 00:00:00" })
                 .Where(new { TypeName = "NzbDrone.Core.Movies.Commands.RefreshMovieCommand" });
+            }
 
+            if (Schema.Table("Movies").Column("LastInfoSync").Exists())
+            {
             Update.Table("Movies")
                 .Set(new { LastInfoSync = "2014-01-01 00:00:00" })
                 .AllRows();
+            }
         }
 
         private void FixLanguagesMoveFile(IDbConnection conn, IDbTransaction tran)

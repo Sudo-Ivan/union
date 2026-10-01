@@ -18,6 +18,8 @@ namespace NzbDrone.Core.Datastore.Migration
         {
             if (!Schema.Table("Collections").Exists())
             {
+            if (!Schema.Table("Collections").Exists())
+            {
             Create.TableForModel("Collections")
                 .WithColumn("TmdbId").AsInt32().Unique()
                 .WithColumn("QualityProfileId").AsInt32()
@@ -33,21 +35,28 @@ namespace NzbDrone.Core.Datastore.Migration
                 .WithColumn("LastInfoSync").AsDateTime().Nullable()
                 .WithColumn("Added").AsDateTime().Nullable();
             }
+            }
 
+            if (!Schema.Table("MovieMetadata").Column("CollectionTmdbId").Exists())
+            {
             if (!Schema.Table("MovieMetadata").Column("CollectionTmdbId").Exists())
             {
             Alter.Table("MovieMetadata").AddColumn("CollectionTmdbId").AsInt32().Nullable()
                                         .AddColumn("CollectionTitle").AsString().Nullable();
             }
+            }
 
+            if (!Schema.Table("ImportLists").Column("Monitor").Exists())
+            {
             if (!Schema.Table("ImportLists").Column("Monitor").Exists())
             {
             Alter.Table("ImportLists").AddColumn("Monitor").AsInt32().Nullable();
             }
+            }
 
             try
             {
-            Execute.WithConnection(MigrateCollections);
+            WithConnectionGuarded(MigrateCollections);
             }
             catch (System.Exception e)
             {
@@ -56,7 +65,7 @@ namespace NzbDrone.Core.Datastore.Migration
 
             try
             {
-            Execute.WithConnection(MigrateCollectionMonitorStatus);
+            WithConnectionGuarded(MigrateCollectionMonitorStatus);
             }
             catch (System.Exception e)
             {
@@ -65,7 +74,7 @@ namespace NzbDrone.Core.Datastore.Migration
 
             try
             {
-            Execute.WithConnection(MapCollections);
+            WithConnectionGuarded(MapCollections);
             }
             catch (System.Exception e)
             {
@@ -74,7 +83,7 @@ namespace NzbDrone.Core.Datastore.Migration
 
             try
             {
-            Execute.WithConnection(MigrateListMonitor);
+            WithConnectionGuarded(MigrateListMonitor);
             }
             catch (System.Exception e)
             {
@@ -83,15 +92,25 @@ namespace NzbDrone.Core.Datastore.Migration
 
             if (Schema.Table("ImportLists").Column("Monitor").Exists())
             {
+            if (Schema.Table("ImportLists").Column("Monitor").Exists())
+            {
             Alter.Table("ImportLists").AlterColumn("Monitor").AsInt32().NotNullable();
+            }
             }
 
             // Union: keep ImportLists.ShouldMonitor, the merged entity still maps the
             // series-domain monitor column alongside the movie-domain Monitor column.
+            if (Schema.Table("ImportLists").Exists())
+            {
             Delete.FromTable("ImportLists").Row(new { Implementation = "TMDbCollectionImport" });
+            }
+
+            if (Schema.Table("MovieMetadata").Column("Collection").Exists())
+            {
             if (Schema.Table("MovieMetadata").Column("Collection").Exists())
             {
             Delete.Column("Collection").FromTable("MovieMetadata");
+            }
             }
         }
 

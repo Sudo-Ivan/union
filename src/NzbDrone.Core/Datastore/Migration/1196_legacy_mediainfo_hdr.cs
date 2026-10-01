@@ -8,13 +8,9 @@ namespace NzbDrone.Core.Datastore.Migration
     {
         protected override void MainDbUpgrade()
         {
-            try
+            if (Schema.Table("NamingConfig").Exists() && Schema.Table("NamingConfig").Column("StandardMovieFormat").Exists())
             {
             Execute.Sql("UPDATE \"NamingConfig\" SET \"StandardMovieFormat\" = Replace(\"StandardMovieFormat\", '{MediaInfo HDR}', '{MediaInfo VideoDynamicRange}');");
-            }
-            catch (System.Exception e)
-            {
-                _logger.Debug(e, "Union: skipping data migration step, schema shape differs");
             }
         }
     }

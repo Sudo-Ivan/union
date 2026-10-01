@@ -11,17 +11,23 @@ namespace NzbDrone.Core.Datastore.Migration
         {
             if (!Schema.Table("NamingConfig").Column("StandardMovieFormat").Exists())
             {
+            if (!Schema.Table("NamingConfig").Column("StandardMovieFormat").Exists())
+            {
             Alter.Table("NamingConfig").AddColumn("StandardMovieFormat").AsString().Nullable();
+            }
             }
 
             if (!Schema.Table("NamingConfig").Column("MovieFolderFormat").Exists())
             {
+            if (!Schema.Table("NamingConfig").Column("MovieFolderFormat").Exists())
+            {
             Alter.Table("NamingConfig").AddColumn("MovieFolderFormat").AsString().Nullable();
+            }
             }
 
             try
             {
-            Execute.WithConnection(ConvertConfig);
+            WithConnectionGuarded(ConvertConfig);
             }
             catch (System.Exception e)
             {

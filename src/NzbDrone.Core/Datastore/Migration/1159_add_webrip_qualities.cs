@@ -15,7 +15,7 @@ namespace NzbDrone.Core.Datastore.Migration
         {
             try
             {
-            Execute.WithConnection(ConvertProfile);
+            WithConnectionGuarded(ConvertProfile);
             }
             catch (System.Exception e)
             {
