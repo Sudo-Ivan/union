@@ -3,9 +3,9 @@
 FROM node:26.10.0-bookworm-slim@sha256:662933cf47f013bc8e4beb31a6116448427a82057ba7c42c97e4c5ba766504c2 AS ui
 WORKDIR /build
 COPY package.json yarn.lock ./
-RUN corepack enable && corepack yarn install --frozen-lockfile
+RUN npm install -g yarn@1.22.22 && yarn install --frozen-lockfile
 COPY . .
-RUN corepack yarn build
+RUN yarn build
 
 FROM mcr.microsoft.com/dotnet/sdk:10.0.401@sha256:35d40304542c8689331f8cab17c65926cdf48fe711e289321d71924b230a7d29 AS backend
 ARG TARGETARCH
