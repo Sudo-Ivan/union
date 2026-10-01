@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM node:24.19.0-bookworm-slim@sha256:a9f5f7c91a432850b2a8a7797adf5eadb6c733ceed61167806cee7ea7fbc29df AS ui
+FROM node:26.10.0-bookworm-slim@sha256:662933cf47f013bc8e4beb31a6116448427a82057ba7c42c97e4c5ba766504c2 AS ui
 WORKDIR /build
 COPY package.json yarn.lock ./
 RUN corepack enable && corepack yarn install --frozen-lockfile
