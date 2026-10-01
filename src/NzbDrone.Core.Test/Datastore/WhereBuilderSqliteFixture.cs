@@ -385,6 +385,5 @@ namespace NzbDrone.Core.Test.Datastore
 
             _subject.ToString().Should().Be($"(\"MovieMetadata\".\"Status\" IN @Clause1_P1)");
         }
-
 }
 }

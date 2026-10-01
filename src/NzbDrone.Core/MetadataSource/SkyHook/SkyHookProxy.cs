@@ -937,7 +937,6 @@ namespace NzbDrone.Core.MetadataSource.SkyHook
             return newAlternativeTitle;
         }
 
-
         private static Tv.Ratings MapRatings(RatingResource rating)
         {
             if (rating == null)
@@ -1022,7 +1021,6 @@ namespace NzbDrone.Core.MetadataSource.SkyHook
                 CoverType = MapCoverType(arg.CoverType)
             };
         }
-
 
         private static MediaCoverTypes MapCoverType(string coverType)
         {

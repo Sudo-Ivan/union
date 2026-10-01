@@ -184,6 +184,5 @@ namespace NzbDrone.Core.Test.NotificationTests
             Mocker.GetMock<ISynologyIndexerProxy>()
                   .Verify(v => v.UpdateFolder(@"C:\Test\".AsOsAgnostic()), Times.Once());
         }
-
 }
 }

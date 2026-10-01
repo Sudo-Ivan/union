@@ -238,6 +238,5 @@ namespace NzbDrone.Core.Test.Housekeeping.Housekeepers
             Subject.Clean();
             AllStoredModels.Should().HaveCount(0);
         }
-
 }
 }

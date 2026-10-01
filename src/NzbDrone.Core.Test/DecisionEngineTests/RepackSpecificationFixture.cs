@@ -422,6 +422,5 @@ namespace NzbDrone.Core.Test.DecisionEngineTests
 
             Subject.IsSatisfiedBy(remoteMovie, new()).Accepted.Should().BeTrue();
         }
-
 }
 }

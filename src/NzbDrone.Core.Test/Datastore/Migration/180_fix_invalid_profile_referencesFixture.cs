@@ -4,7 +4,6 @@ using FluentAssertions;
 using NUnit.Framework;
 using NzbDrone.Common.Serializer;
 using NzbDrone.Core.Datastore.Migration;
-using NzbDrone.Core.Languages;
 using NzbDrone.Core.Movies;
 using NzbDrone.Core.Profiles;
 using NzbDrone.Core.Qualities;

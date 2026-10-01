@@ -1,4 +1,4 @@
-﻿namespace NzbDrone.Core.Tv
+namespace NzbDrone.Core.Tv
 {
     public class AddSeriesOptions : MonitoringOptions
     {

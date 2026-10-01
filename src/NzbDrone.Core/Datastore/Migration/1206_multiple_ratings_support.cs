@@ -36,6 +36,7 @@ namespace NzbDrone.Core.Datastore.Migration
             {
                 _logger.Debug(e, "Union: skipping data migration step, schema shape differs");
             }
+
             try
             {
             Execute.Sql("UPDATE \"CustomFilters\" SET \"Filters\" = Replace(\"Filters\", 'ratings', 'tmdbRating') WHERE \"Type\" = 'movieIndex';");
@@ -53,6 +54,7 @@ namespace NzbDrone.Core.Datastore.Migration
             {
                 _logger.Debug(e, "Union: skipping data migration step, schema shape differs");
             }
+
             try
             {
             Execute.WithConnection((conn, tran) => FixRatings(conn, tran, "ImportListMovies"));

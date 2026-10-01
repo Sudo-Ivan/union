@@ -1,4 +1,4 @@
-﻿using Sonarr.Api.V5.Series;
+using Sonarr.Api.V5.Series;
 
 namespace Sonarr.Api.V5.SeasonPass;
 

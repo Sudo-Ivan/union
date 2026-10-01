@@ -85,8 +85,6 @@ namespace NzbDrone.Core.Test.Messaging.Events
         {
             var eventA = new EventA();
 
-
-
             var handlers = new List<IHandleAsync<EventA>>
                 {
                     AsyncHandlerA1.Object,
@@ -107,7 +105,6 @@ namespace NzbDrone.Core.Test.Messaging.Events
                   .Returns(handlers);
 
             var counter = new ConcurrencyCounter(handlers.Count);
-
 
             AsyncHandlerA1.Setup(c => c.HandleAsync(It.IsAny<EventA>()))
                 .Callback<EventA>(c =>

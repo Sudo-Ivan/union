@@ -273,7 +273,6 @@ namespace NzbDrone.Core.Download.Clients.QBittorrent
 
         public override string Name => "qBittorrent";
 
-
         protected override string AddFromMagnetLink(RemoteMovie remoteMovie, string hash, string magnetLink)
         {
             if (!Proxy.GetConfig(Settings).DhtEnabled && !magnetLink.Contains("&tr="))

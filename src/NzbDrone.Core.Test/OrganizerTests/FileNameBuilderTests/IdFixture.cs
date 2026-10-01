@@ -145,6 +145,5 @@ namespace NzbDrone.Core.Test.OrganizerTests.FileNameBuilderTests
             Subject.GetMovieFolder(_movie)
                 .Should().Be($"Movie Title {{{{tmdb-{_movie.TmdbId}}}}}");
         }
-
 }
 }

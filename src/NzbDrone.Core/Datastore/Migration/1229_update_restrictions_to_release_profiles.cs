@@ -23,14 +23,17 @@ namespace NzbDrone.Core.Datastore.Migration
             {
             Alter.Table("ReleaseProfiles").AddColumn("Name").AsString().Nullable().WithDefaultValue(null);
             }
+
             if (!Schema.Table("ReleaseProfiles").Column("Enabled").Exists())
             {
             Alter.Table("ReleaseProfiles").AddColumn("Enabled").AsBoolean().WithDefaultValue(true);
             }
+
             if (!Schema.Table("ReleaseProfiles").Column("IndexerId").Exists())
             {
             Alter.Table("ReleaseProfiles").AddColumn("IndexerId").AsInt32().WithDefaultValue(0);
             }
+
             if (Schema.Table("ReleaseProfiles").Column("Preferred").Exists())
             {
             Delete.Column("Preferred").FromTable("ReleaseProfiles");
@@ -54,28 +57,28 @@ namespace NzbDrone.Core.Datastore.Migration
             try
             {
                 var updatedReleaseProfiles = new List<object>();
-    
+
                 using (var getEmailCmd = conn.CreateCommand())
                 {
                     getEmailCmd.Transaction = tran;
                     getEmailCmd.CommandText = "SELECT \"Id\", \"Required\", \"Ignored\" FROM \"ReleaseProfiles\"";
-    
+
                     using var reader = getEmailCmd.ExecuteReader();
-    
+
                     while (reader.Read())
                     {
                         var id = reader.GetInt32(0);
                         var requiredObj = reader.GetValue(1);
                         var ignoredObj = reader.GetValue(2);
-    
+
                         var required = requiredObj == DBNull.Value
                             ? Enumerable.Empty<string>()
                             : requiredObj.ToString().Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-    
+
                         var ignored = ignoredObj == DBNull.Value
                             ? Enumerable.Empty<string>()
                             : ignoredObj.ToString().Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-    
+
                         updatedReleaseProfiles.Add(new
                         {
                             Id = id,
@@ -84,7 +87,7 @@ namespace NzbDrone.Core.Datastore.Migration
                         });
                     }
                 }
-    
+
                 var updateReleaseProfilesSql = "UPDATE \"ReleaseProfiles\" SET \"Required\" = @Required, \"Ignored\" = @Ignored WHERE \"Id\" = @Id";
                 conn.Execute(updateReleaseProfilesSql, updatedReleaseProfiles, transaction: tran);
             }

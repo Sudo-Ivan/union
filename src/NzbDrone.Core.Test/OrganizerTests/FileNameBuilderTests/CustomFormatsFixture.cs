@@ -262,6 +262,5 @@ namespace NzbDrone.Core.Test.OrganizerTests.FileNameBuilderTests
             Subject.BuildFileName(_movie, _movieFile, customFormats: new List<CustomFormat>())
                    .Should().Be(expected);
         }
-
 }
 }

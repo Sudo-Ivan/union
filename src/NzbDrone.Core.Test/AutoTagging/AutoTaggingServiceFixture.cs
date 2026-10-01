@@ -240,6 +240,5 @@ namespace NzbDrone.Core.Test.AutoTagging
             result.TagsToAdd.Should().Contain(1);
             result.TagsToRemove.Should().BeEmpty();
         }
-
 }
 }

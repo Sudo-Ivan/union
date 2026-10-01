@@ -31,6 +31,7 @@ namespace NzbDrone.Core.Datastore.Migration
             {
             Rename.Column("EnableSearch").OnTable("Indexers").To("EnableAutomaticSearch");
             }
+
             if (!Schema.Table("Indexers").Column("EnableInteractiveSearch").Exists())
             {
             Alter.Table("Indexers").AddColumn("EnableInteractiveSearch").AsBoolean().Nullable();

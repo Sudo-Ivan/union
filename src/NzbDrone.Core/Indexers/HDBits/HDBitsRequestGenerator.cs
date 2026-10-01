@@ -138,7 +138,6 @@ namespace NzbDrone.Core.Indexers.HDBits
             return pageableRequests;
         }
 
-
         public virtual IndexerPageableRequestChain GetSearchRequests(MovieSearchCriteria searchCriteria)
         {
             var pageableRequests = new IndexerPageableRequestChain();

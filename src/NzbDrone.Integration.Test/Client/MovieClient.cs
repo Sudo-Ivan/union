@@ -32,5 +32,4 @@ namespace NzbDrone.Integration.Test.Client
             return Get<MovieResource>(request, statusCode);
         }
     }
-
 }

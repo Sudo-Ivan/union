@@ -53,6 +53,7 @@ namespace NzbDrone.Core.Datastore.Migration
             {
                 _logger.Debug(e, "Union: skipping data migration step, schema shape differs");
             }
+
             try
             {
             Execute.WithConnection(MigrateCollectionMonitorStatus);
@@ -61,6 +62,7 @@ namespace NzbDrone.Core.Datastore.Migration
             {
                 _logger.Debug(e, "Union: skipping data migration step, schema shape differs");
             }
+
             try
             {
             Execute.WithConnection(MapCollections);
@@ -69,6 +71,7 @@ namespace NzbDrone.Core.Datastore.Migration
             {
                 _logger.Debug(e, "Union: skipping data migration step, schema shape differs");
             }
+
             try
             {
             Execute.WithConnection(MigrateListMonitor);
@@ -101,7 +104,7 @@ namespace NzbDrone.Core.Datastore.Migration
                 {
                     getRootFolders.Transaction = tran;
                     getRootFolders.CommandText = @"SELECT ""Path"" FROM ""RootFolders""";
-    
+
                     using (var definitionsReader = getRootFolders.ExecuteReader())
                     {
                         while (definitionsReader.Read())
@@ -111,16 +114,16 @@ namespace NzbDrone.Core.Datastore.Migration
                         }
                     }
                 }
-    
+
                 var newCollections = new List<MovieCollection208>();
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.Transaction = tran;
                     cmd.CommandText = "SELECT \"Collection\", \"ProfileId\", \"MinimumAvailability\", \"Path\" FROM \"Movies\" JOIN \"MovieMetadata\" ON \"Movies\".\"MovieMetadataId\" = \"MovieMetadata\".\"Id\" WHERE \"Collection\" IS NOT NULL";
-    
+
                     var addedCollections = new List<int>();
                     var added = DateTime.UtcNow;
-    
+
                     using (var reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
@@ -130,28 +133,28 @@ namespace NzbDrone.Core.Datastore.Migration
                             var minimumAvailability = reader.GetInt32(2);
                             var moviePath = reader.GetString(3);
                             var data = STJson.Deserialize<MovieCollection207>(collection);
-    
+
                             if (data.TmdbId == 0 || newCollections.Any(d => d.TmdbId == data.TmdbId))
                             {
                                 continue;
                             }
-    
+
                             var rootFolderPath = rootPaths.Where(r => r.IsParentPath(moviePath))
                                               .OrderByDescending(r => r.Length)
                                               .FirstOrDefault();
-    
+
                             if (rootFolderPath == null)
                             {
                                 rootFolderPath = rootPaths.FirstOrDefault();
                             }
-    
+
                             if (rootFolderPath == null)
                             {
                                 rootFolderPath = moviePath.GetParentPath();
                             }
-    
+
                             var collectionName = data.Name ?? $"Collection {data.TmdbId}";
-    
+
                             newCollections.Add(new MovieCollection208
                             {
                                 TmdbId = data.TmdbId,
@@ -167,7 +170,7 @@ namespace NzbDrone.Core.Datastore.Migration
                         }
                     }
                 }
-    
+
                 var updateSql = "INSERT INTO \"Collections\" (\"TmdbId\", \"Title\", \"CleanTitle\", \"SortTitle\", \"Added\", \"QualityProfileId\", \"RootFolderPath\", \"SearchOnAdd\", \"MinimumAvailability\") VALUES (@TmdbId, @Title, @CleanTitle, @SortTitle, @Added, @QualityProfileId, @RootFolderPath, @SearchOnAdd, @MinimumAvailability)";
                 conn.Execute(updateSql, newCollections, transaction: tran);
             }
@@ -186,7 +189,7 @@ namespace NzbDrone.Core.Datastore.Migration
                 {
                     cmd.Transaction = tran;
                     cmd.CommandText = "SELECT \"Enabled\", \"EnableAuto\", \"Settings\", \"ShouldMonitor\", \"Id\" FROM \"ImportLists\" WHERE \"Implementation\" = 'TMDbCollectionImport'";
-    
+
                     using (var reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
@@ -197,12 +200,12 @@ namespace NzbDrone.Core.Datastore.Migration
                             var shouldMonitor = reader.GetBoolean(3);
                             var listId = reader.GetInt32(4);
                             var data = STJson.Deserialize<TmdbCollectionSettings206>(settings);
-    
+
                             if (!enabled || !enabledAutoAdd || !int.TryParse(data.CollectionId, out var collectionId))
                             {
                                 continue;
                             }
-    
+
                             updatedCollections.Add(new MovieCollection208
                             {
                                 TmdbId = collectionId,
@@ -211,7 +214,7 @@ namespace NzbDrone.Core.Datastore.Migration
                         }
                     }
                 }
-    
+
                 var updateSql = "UPDATE \"Collections\" SET \"Monitored\" = @Monitored WHERE \"TmdbId\" = @TmdbId";
                 conn.Execute(updateSql, updatedCollections, transaction: tran);
             }
@@ -230,14 +233,14 @@ namespace NzbDrone.Core.Datastore.Migration
                 {
                     cmd.Transaction = tran;
                     cmd.CommandText = "SELECT \"ShouldMonitor\", \"Id\" FROM \"ImportLists\"";
-    
+
                     using (var reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
                         {
                             var shouldMonitor = reader.GetBoolean(0);
                             var listId = reader.GetInt32(1);
-    
+
                             updatedLists.Add(new ImportList208
                             {
                                 Monitor = shouldMonitor ? 0 : 2,
@@ -246,7 +249,7 @@ namespace NzbDrone.Core.Datastore.Migration
                         }
                     }
                 }
-    
+
                 var updateSql = "UPDATE \"ImportLists\" SET \"Monitor\" = @Monitor WHERE \"Id\" = @Id";
                 conn.Execute(updateSql, updatedLists, transaction: tran);
             }
@@ -261,12 +264,12 @@ namespace NzbDrone.Core.Datastore.Migration
             try
             {
                 var updatedMeta = new List<MovieMetadata208>();
-    
+
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.Transaction = tran;
                     cmd.CommandText = "SELECT \"Id\", \"Collection\" FROM \"MovieMetadata\" WHERE \"Collection\" IS NOT NULL";
-    
+
                     using (var reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
@@ -274,10 +277,10 @@ namespace NzbDrone.Core.Datastore.Migration
                             var id = reader.GetInt32(0);
                             var collection = reader.GetString(1);
                             var data = STJson.Deserialize<MovieCollection207>(collection);
-    
+
                             var collectionId = data.TmdbId;
                             var collectionTitle = data.Name;
-    
+
                             updatedMeta.Add(new MovieMetadata208
                             {
                                 CollectionTitle = collectionTitle,
@@ -287,7 +290,7 @@ namespace NzbDrone.Core.Datastore.Migration
                         }
                     }
                 }
-    
+
                 var updateSql = "UPDATE \"MovieMetadata\" SET \"CollectionTmdbId\" = @CollectionTmdbId, \"CollectionTitle\" = @CollectionTitle WHERE \"Id\" = @Id";
                 conn.Execute(updateSql, updatedMeta, transaction: tran);
             }

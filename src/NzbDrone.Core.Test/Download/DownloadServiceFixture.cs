@@ -464,6 +464,5 @@ namespace NzbDrone.Core.Test.Download
             mockTorrent.Verify(c => c.Download(It.IsAny<RemoteMovie>(), It.IsAny<IIndexer>()), Times.Once());
             mockUsenet.Verify(c => c.Download(It.IsAny<RemoteMovie>(), It.IsAny<IIndexer>()), Times.Never());
         }
-
 }
 }

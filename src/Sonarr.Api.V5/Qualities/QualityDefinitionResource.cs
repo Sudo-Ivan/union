@@ -1,4 +1,4 @@
-﻿using NzbDrone.Core.Qualities;
+using NzbDrone.Core.Qualities;
 using Sonarr.Http.REST;
 
 namespace Sonarr.Api.V5.Qualities;

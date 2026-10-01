@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
@@ -39,6 +39,7 @@ namespace NzbDrone.Common.OAuth
 
             return GetAuthorizationHeader(collection);
         }
+
 #endif
 
         public string GetAuthorizationHeader(IDictionary<string, string> parameters)
@@ -126,6 +127,7 @@ namespace NzbDrone.Common.OAuth
 
             return GetAuthorizationQuery(collection);
         }
+
 #endif
 
         public string GetAuthorizationQuery(IDictionary<string, string> parameters)

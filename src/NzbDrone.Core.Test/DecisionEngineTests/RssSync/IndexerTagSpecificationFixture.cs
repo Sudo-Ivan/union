@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using FizzWare.NBuilder;
 using FluentAssertions;
 using Moq;
@@ -6,8 +6,8 @@ using NUnit.Framework;
 using NzbDrone.Core.Datastore;
 using NzbDrone.Core.DecisionEngine;
 using NzbDrone.Core.DecisionEngine.Specifications.RssSync;
-using NzbDrone.Core.IndexerSearch.Definitions;
 using NzbDrone.Core.Indexers;
+using NzbDrone.Core.IndexerSearch.Definitions;
 using NzbDrone.Core.Movies;
 using NzbDrone.Core.Parser.Model;
 using NzbDrone.Core.Test.Framework;
@@ -242,6 +242,5 @@ namespace NzbDrone.Core.Test.DecisionEngineTests.RssSync
 
             _specification.IsSatisfiedBy(_parseResultMulti_movie, new ReleaseDecisionInformation(false, new MovieSearchCriteria { MonitoredEpisodesOnly = true })).Accepted.Should().BeTrue();
         }
-
 }
 }

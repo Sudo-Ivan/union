@@ -2,12 +2,12 @@ using System.Linq;
 using NLog;
 using NzbDrone.Core.Download.TrackedDownloads;
 using NzbDrone.Core.Indexers;
+using EpisodeImportRejectionReason = NzbDrone.Core.MediaFiles.EpisodeImport.ImportRejectionReason;
 using EpisodeImportResult = NzbDrone.Core.MediaFiles.EpisodeImport.ImportResult;
 using EpisodeImportResultType = NzbDrone.Core.MediaFiles.EpisodeImport.ImportResultType;
-using EpisodeImportRejectionReason = NzbDrone.Core.MediaFiles.EpisodeImport.ImportRejectionReason;
+using MovieImportRejectionReason = NzbDrone.Core.MediaFiles.MovieImport.ImportRejectionReason;
 using MovieImportResult = NzbDrone.Core.MediaFiles.MovieImport.ImportResult;
 using MovieImportResultType = NzbDrone.Core.MediaFiles.MovieImport.ImportResultType;
-using MovieImportRejectionReason = NzbDrone.Core.MediaFiles.MovieImport.ImportRejectionReason;
 
 namespace NzbDrone.Core.Download;
 

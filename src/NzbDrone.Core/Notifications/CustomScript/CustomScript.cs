@@ -303,7 +303,6 @@ namespace NzbDrone.Core.Notifications.CustomScript
             ExecuteScript(environmentVariables);
         }
 
-
         public override void OnMovieAdded(Movie movie)
         {
             var environmentVariables = new StringDictionary();
@@ -324,7 +323,6 @@ namespace NzbDrone.Core.Notifications.CustomScript
 
             ExecuteScript(environmentVariables);
         }
-
 
         public override void OnMovieFileDelete(MovieFileDeleteMessage deleteMessage)
         {
@@ -359,7 +357,6 @@ namespace NzbDrone.Core.Notifications.CustomScript
             ExecuteScript(environmentVariables);
         }
 
-
         public override void OnMovieDelete(MovieDeleteMessage deleteMessage)
         {
             var movie = deleteMessage.Movie;
@@ -387,7 +384,6 @@ namespace NzbDrone.Core.Notifications.CustomScript
 
             ExecuteScript(environmentVariables);
         }
-
 
         public override void OnHealthIssue(HealthCheck.HealthCheck healthCheck)
         {
@@ -562,6 +558,7 @@ namespace NzbDrone.Core.Notifications.CustomScript
             environmentVariables.Add("Sonarr_Series_Genres", string.Join("|", series.Genres));
             environmentVariables.Add("Sonarr_Series_Tags", string.Join("|", GetTagLabels(series)));
         }
+
         private void OnMovieGrab(GrabMessage message)
         {
             var movie = message.Movie;
@@ -598,7 +595,6 @@ namespace NzbDrone.Core.Notifications.CustomScript
 
             ExecuteScript(environmentVariables);
         }
-
 
         private void OnMovieDownload(DownloadMessage message)
         {
@@ -661,7 +657,6 @@ namespace NzbDrone.Core.Notifications.CustomScript
             ExecuteScript(environmentVariables);
         }
 
-
         private void OnMovieManualInteractionRequired(ManualInteractionRequiredMessage message)
         {
             var movie = message.Movie;
@@ -688,7 +683,6 @@ namespace NzbDrone.Core.Notifications.CustomScript
 
             ExecuteScript(environmentVariables);
         }
-
 
         private List<string> GetTagLabels(Movie movie)
         {

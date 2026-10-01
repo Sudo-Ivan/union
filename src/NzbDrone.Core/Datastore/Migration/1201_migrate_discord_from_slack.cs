@@ -46,14 +46,14 @@ namespace NzbDrone.Core.Datastore.Migration
             try
             {
                 var notificationRows = conn.Query<NotificationEntity201>($"SELECT \"Id\",\"ConfigContract\",\"Implementation\",\"Name\",\"Settings\" FROM \"Notifications\" WHERE \"Implementation\" = 'Slack'");
-    
+
                 var discordSlackNotifications = notificationRows.Where(n => JsonSerializer.Deserialize<SlackNotificationSettings201>(n.Settings, _serializerSettings).WebHookUrl.Contains("discord"));
-    
+
                 if (!discordSlackNotifications.Any())
                 {
                     return;
                 }
-    
+
                 foreach (var notification in discordSlackNotifications)
                 {
                     var settings = JsonSerializer.Deserialize<SlackNotificationSettings201>(notification.Settings, _serializerSettings);
@@ -65,19 +65,19 @@ namespace NzbDrone.Core.Datastore.Migration
                         Username = settings.Username,
                         WebHookUrl = settings.WebHookUrl.Replace("/slack", "")
                     };
-    
+
                     notification.ConfigContract = "DiscordSettings";
                     notification.Implementation = "Discord";
                     notification.Name = $"{notification.Name}-Slack_Migrated";
                     notification.Settings = JsonSerializer.Serialize(discordSettings, _serializerSettings);
                 }
-    
+
                 var updateSql = "UPDATE \"Notifications\" SET \"ConfigContract\" = @ConfigContract, " +
                     "\"Implementation\" = @Implementation, " +
                     "\"Name\" = @Name, " +
                     "\"Settings\" = @Settings " +
                     "WHERE \"Id\" = @Id";
-    
+
                 conn.Execute(updateSql, discordSlackNotifications, transaction: tran);
             }
             catch (System.Exception e)

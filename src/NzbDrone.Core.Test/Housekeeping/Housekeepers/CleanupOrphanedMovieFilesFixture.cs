@@ -52,7 +52,6 @@ namespace NzbDrone.Core.Test.Housekeeping.Housekeepers
         }
     }
 
-
     [TestFixture]
     public class CleanupOrphanedMovieFilesFixture : DbTest<CleanupOrphanedMovieFiles, MovieFile>
     {

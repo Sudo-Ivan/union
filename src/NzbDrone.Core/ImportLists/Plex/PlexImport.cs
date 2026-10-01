@@ -8,8 +8,8 @@ using NzbDrone.Core.Exceptions;
 using NzbDrone.Core.Localization;
 using NzbDrone.Core.Notifications.Plex.PlexTv;
 using NzbDrone.Core.Parser;
-using NzbDrone.Core.Validation;
 using NzbDrone.Core.Parser.Model;
+using NzbDrone.Core.Validation;
 
 namespace NzbDrone.Core.ImportLists.Plex
 {

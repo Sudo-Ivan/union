@@ -659,6 +659,5 @@ namespace NzbDrone.Core.Test.ImportListTests
             Mocker.GetMock<ISeriesService>()
                   .Verify(v => v.UpdateSeries(It.IsAny<List<Series>>(), true), Times.Never());
         }
-
     }
 }

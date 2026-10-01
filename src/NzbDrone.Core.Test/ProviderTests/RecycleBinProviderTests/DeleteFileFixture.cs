@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Moq;
 using NUnit.Framework;
 using NzbDrone.Common.Disk;
@@ -152,6 +152,5 @@ namespace NzbDrone.Core.Test.ProviderTests.RecycleBinProviderTests
 
             Mocker.GetMock<IDiskTransferService>().Verify(v => v.TransferFile(path, @"C:\Test\Recycle Bin\The Mask (1994)\The Mask.avi".AsOsAgnostic(), TransferMode.Move, false), Times.Once());
         }
-
 }
 }

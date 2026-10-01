@@ -1,4 +1,4 @@
-﻿using FluentValidation.TestHelper;
+using FluentValidation.TestHelper;
 using NUnit.Framework;
 using NzbDrone.Core.Qualities;
 using Sonarr.Api.V3.Qualities;

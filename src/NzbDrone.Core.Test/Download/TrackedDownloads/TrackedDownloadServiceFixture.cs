@@ -904,6 +904,5 @@ namespace NzbDrone.Core.Test.Download.TrackedDownloads
             trackedDownload.RemoteMovie.Movie.Id.Should().Be(5);
             trackedDownload.RemoteMovie.ParsedMovieInfo.Year.Should().Be(1998);
         }
-
 }
 }

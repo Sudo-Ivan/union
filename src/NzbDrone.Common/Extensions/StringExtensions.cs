@@ -109,6 +109,7 @@ namespace NzbDrone.Common.Extensions
         {
             return !string.IsNullOrWhiteSpace(text);
         }
+
         #nullable disable
 
         public static bool StartsWithIgnoreCase(this string text, string startsWith)

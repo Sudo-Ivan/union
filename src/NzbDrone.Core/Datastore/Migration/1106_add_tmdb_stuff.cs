@@ -1,4 +1,4 @@
-﻿using FluentMigrator;
+using FluentMigrator;
 using NzbDrone.Core.Datastore.Migration.Framework;
 
 namespace NzbDrone.Core.Datastore.Migration
@@ -13,16 +13,19 @@ namespace NzbDrone.Core.Datastore.Migration
             Alter.Table("Movies")
                   .AddColumn("TmdbId").AsInt32().WithDefaultValue(0);
             }
+
             if (!Schema.Table("Movies").Column("Website").Exists())
             {
             Alter.Table("Movies")
                 .AddColumn("Website").AsString().Nullable();
             }
+
             if (Schema.Table("Movies").Column("ImdbId").Exists())
             {
             Alter.Table("Movies")
                 .AlterColumn("ImdbId").AsString().Nullable();
             }
+
             if (!Schema.Table("Movies").Column("AlternativeTitles").Exists())
             {
             Alter.Table("Movies")

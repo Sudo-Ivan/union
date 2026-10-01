@@ -18,6 +18,7 @@ namespace NzbDrone.Core.Datastore.Migration
             {
             Alter.Table("QualityProfiles").AddColumn("MinFormatScore").AsInt32().WithDefaultValue(0);
             }
+
             if (!Schema.Table("QualityProfiles").Column("CutoffFormatScore").Exists())
             {
             Alter.Table("QualityProfiles").AddColumn("CutoffFormatScore").AsInt32().WithDefaultValue(0);
@@ -49,10 +50,10 @@ namespace NzbDrone.Core.Datastore.Migration
             {
                 SqlMapper.AddTypeHandler(new EmbeddedDocumentConverter<List<ProfileFormatItem168>>());
                 SqlMapper.AddTypeHandler(new EmbeddedDocumentConverter<List<ProfileFormatItem169>>());
-    
+
                 var rows = conn.Query<Profile168>("SELECT \"Id\", \"FormatCutoff\", \"FormatItems\" from \"QualityProfiles\"", transaction: tran);
                 var newRows = new List<Profile169>();
-    
+
                 foreach (var row in rows)
                 {
                     // Things ranked less than None should have a negative score
@@ -60,9 +61,9 @@ namespace NzbDrone.Core.Datastore.Migration
                     var allowedBelowNone = new List<ProfileFormatItem168>();
                     var allowedAboveNone = new List<ProfileFormatItem168>();
                     var disallowed = new List<ProfileFormatItem168>();
-    
+
                     var noneEnabled = row.FormatItems.Single(x => x.Format == 0).Allowed;
-    
+
                     // If none was disabled, we count everything as above none
                     var foundNone = !noneEnabled;
                     foreach (var item in row.FormatItems)
@@ -84,14 +85,14 @@ namespace NzbDrone.Core.Datastore.Migration
                             allowedBelowNone.Add(item);
                         }
                     }
-    
+
                     // Set up allowed with scores 1, 2, 4, 8 etc so they replicate existing ranking behaviour
                     var allowedPositive = allowedAboveNone.Select((x, index) => new ProfileFormatItem169
                     {
                         Format = x.Format,
                         Score = (int)Math.Pow(2, index)
                     }).ToList();
-    
+
                     // reverse so we have most wanted first
                     allowedBelowNone.Reverse();
                     var allowedNegative = allowedBelowNone.Select((x, index) => new ProfileFormatItem169
@@ -99,7 +100,7 @@ namespace NzbDrone.Core.Datastore.Migration
                         Format = x.Format,
                         Score = -1 * (int)Math.Pow(2, index)
                     }).ToList();
-    
+
                     // The minimum format score should be the minimum score achievable by the allowed formats
                     // By construction, if None disabled then allowedNegative is empty and min is 1
                     // If none was enabled, we could have some below None (with negative score) and
@@ -115,7 +116,7 @@ namespace NzbDrone.Core.Datastore.Migration
                     {
                         minScore = ((int)Math.Pow(2, allowedNegative.Count) * -1) + 1;
                     }
-    
+
                     // Previously anything matching a disabled format was banned from downloading
                     // To replicate this, set score negative enough that matching a disabled format
                     // must produce a score below the minimum
@@ -125,9 +126,9 @@ namespace NzbDrone.Core.Datastore.Migration
                         Format = x.Format,
                         Score = disallowedScore
                     });
-    
+
                     var newItems = newDisallowed.Concat(allowedNegative).Concat(allowedPositive).OrderBy(x => x.Score).ToList();
-    
+
                     // Set the cutoff score to be the score associated with old cutoff format.
                     // This can never be achieved by any combination of lesser formats given the 2^n scoring scheme
                     // If the cutoff is None (Id == 0) then set cutoff score to zero
@@ -136,7 +137,7 @@ namespace NzbDrone.Core.Datastore.Migration
                     {
                         cutoffScore = newItems.Single(x => x.Format == row.FormatCutoff).Score;
                     }
-    
+
                     newRows.Add(new Profile169
                     {
                         Id = row.Id,
@@ -145,9 +146,9 @@ namespace NzbDrone.Core.Datastore.Migration
                         FormatItems = newItems
                     });
                 }
-    
+
                 var sql = $"UPDATE \"QualityProfiles\" SET \"MinFormatScore\" = @MinFormatScore, \"CutoffFormatScore\" = @CutoffFormatScore, \"FormatItems\" = @FormatItems WHERE \"Id\" = @Id";
-    
+
                 conn.Execute(sql, newRows, transaction: tran);
             }
             catch (System.Exception e)

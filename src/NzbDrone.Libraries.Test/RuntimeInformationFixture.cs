@@ -1,4 +1,4 @@
-﻿using System.Runtime.InteropServices;
+using System.Runtime.InteropServices;
 using FluentAssertions;
 using NUnit.Framework;
 using NzbDrone.Common.EnvironmentInfo;

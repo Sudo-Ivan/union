@@ -36,6 +36,7 @@ namespace NzbDrone.Core.Datastore.Migration
             {
             Alter.Table("Movies").AddColumn("OriginalLanguage").AsInt32().WithDefaultValue((int)Language.English);
             }
+
             if (!Schema.Table("Movies").Column("OriginalTitle").Exists())
             {
             Alter.Table("Movies").AddColumn("OriginalTitle").AsString().Nullable();
@@ -51,6 +52,7 @@ namespace NzbDrone.Core.Datastore.Migration
             {
             Delete.Column("PhysicalReleaseNote").FromTable("Movies");
             }
+
             if (Schema.Table("Movies").Column("SecondaryYearSourceId").Exists())
             {
             Delete.Column("SecondaryYearSourceId").FromTable("Movies");
@@ -60,6 +62,7 @@ namespace NzbDrone.Core.Datastore.Migration
             {
             Alter.Table("NamingConfig").AddColumn("RenameMovies").AsBoolean().WithDefaultValue(false);
             }
+
             try
             {
             // Union: keep RenameEpisodes; add RenameMovies separately for movies
@@ -106,6 +109,7 @@ namespace NzbDrone.Core.Datastore.Migration
             {
                 _logger.Debug(e, "Union: skipping data migration step, schema shape differs");
             }
+
             try
             {
             Execute.WithConnection(FixLanguagesHistory);
@@ -130,22 +134,22 @@ namespace NzbDrone.Core.Datastore.Migration
             try
             {
                 var rows = conn.Query<LanguageEntity177>($"SELECT \"Id\", \"Languages\" FROM \"MovieFiles\"");
-    
+
                 var corrected = new List<LanguageEntity177>();
-    
+
                 foreach (var row in rows)
                 {
                     var languages = JsonSerializer.Deserialize<List<int>>(row.Languages, _serializerSettings);
-    
+
                     var newLanguages = languages.Distinct().ToList();
-    
+
                     corrected.Add(new LanguageEntity177
                     {
                         Id = row.Id,
                         Languages = JsonSerializer.Serialize(newLanguages, _serializerSettings)
                     });
                 }
-    
+
                 var updateSql = "UPDATE \"MovieFiles\" SET \"Languages\" = @Languages WHERE \"Id\" = @Id";
                 conn.Execute(updateSql, corrected, transaction: tran);
             }
@@ -160,22 +164,22 @@ namespace NzbDrone.Core.Datastore.Migration
             try
             {
                 var rows = conn.Query<LanguageEntity177>($"SELECT \"Id\", \"Languages\" FROM \"History\"");
-    
+
                 var corrected = new List<LanguageEntity177>();
-    
+
                 foreach (var row in rows)
                 {
                     var languages = JsonSerializer.Deserialize<List<int>>(row.Languages, _serializerSettings);
-    
+
                     var newLanguages = languages.Distinct().ToList();
-    
+
                     corrected.Add(new LanguageEntity177
                     {
                         Id = row.Id,
                         Languages = JsonSerializer.Serialize(newLanguages, _serializerSettings)
                     });
                 }
-    
+
                 var updateSql = "UPDATE \"History\" SET \"Languages\" = @Languages WHERE \"Id\" = @Id";
                 conn.Execute(updateSql, corrected, transaction: tran);
             }

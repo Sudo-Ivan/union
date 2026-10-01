@@ -1,4 +1,4 @@
-﻿namespace NzbDrone.Core.Profiles.Releases.TermMatchers
+namespace NzbDrone.Core.Profiles.Releases.TermMatchers
 {
     public interface ITermMatcher
     {

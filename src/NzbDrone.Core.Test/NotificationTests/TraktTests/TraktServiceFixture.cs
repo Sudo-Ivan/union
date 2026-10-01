@@ -55,7 +55,7 @@ namespace NzbDrone.Core.Test.NotificationTests
             {
                 AudioStreams = new List<MediaInfoAudioStreamModel>
                 {
-                    new () { ChannelPositions = audioChannels, Format = audioFormat }
+                    new() { ChannelPositions = audioChannels, Format = audioFormat }
                 },
                 ScanType = scanType,
                 VideoHdrFormat = hdrFormat

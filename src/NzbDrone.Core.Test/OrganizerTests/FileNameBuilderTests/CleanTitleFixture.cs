@@ -174,6 +174,5 @@ namespace NzbDrone.Core.Test.OrganizerTests.FileNameBuilderTests
             Subject.BuildFileName(_series_movie, _episodeFile_movie)
                    .Should().Be(expected);
         }
-
 }
 }

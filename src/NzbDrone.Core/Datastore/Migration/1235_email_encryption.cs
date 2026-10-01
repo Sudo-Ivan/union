@@ -32,17 +32,17 @@ namespace NzbDrone.Core.Datastore.Migration
                 {
                     getEmailCmd.Transaction = tran;
                     getEmailCmd.CommandText = "SELECT \"Id\", \"Settings\" FROM \"Notifications\" WHERE \"Implementation\" = 'Email'";
-    
+
                     using (var reader = getEmailCmd.ExecuteReader())
                     {
                         while (reader.Read())
                         {
                             var id = reader.GetInt32(0);
                             var settings = Json.Deserialize<JObject>(reader.GetString(1));
-    
+
                             settings["useEncryption"] = settings.Value<bool?>("requireEncryption") ?? false ? 1 : 0;
                             settings["requireEncryption"] = null;
-    
+
                             updated.Add(new
                             {
                                 Settings = settings.ToJson(),
@@ -51,7 +51,7 @@ namespace NzbDrone.Core.Datastore.Migration
                         }
                     }
                 }
-    
+
                 var updateSql = "UPDATE \"Notifications\" SET \"Settings\" = @Settings WHERE \"Id\" = @Id";
                 conn.Execute(updateSql, updated, transaction: tran);
             }

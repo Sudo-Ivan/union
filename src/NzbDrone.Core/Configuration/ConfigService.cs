@@ -11,9 +11,9 @@ using NzbDrone.Core.Languages;
 using NzbDrone.Core.MediaFiles;
 using NzbDrone.Core.MediaFiles.EpisodeImport;
 using NzbDrone.Core.Messaging.Events;
+using NzbDrone.Core.MetadataSource.SkyHook.Resource;
 using NzbDrone.Core.Qualities;
 using NzbDrone.Core.Security;
-using NzbDrone.Core.MetadataSource.SkyHook.Resource;
 
 namespace NzbDrone.Core.Configuration
 {
@@ -530,7 +530,6 @@ namespace NzbDrone.Core.Configuration
             }
         }
 
-
         // Movies
         public bool AutoUnmonitorPreviouslyDownloadedMovies
         {
@@ -612,6 +611,5 @@ namespace NzbDrone.Core.Configuration
 
             set { SetValue("MovieInfoLanguage", value); }
         }
-
     }
 }

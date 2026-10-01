@@ -21,6 +21,7 @@ namespace NzbDrone.Core.Datastore.Migration
             {
             Alter.Table("Blocklist").AddColumn("IndexerFlags").AsInt32().WithDefaultValue(0);
             }
+
             if (!Schema.Table("MovieFiles").Column("IndexerFlags").Exists())
             {
             Alter.Table("MovieFiles").AddColumn("IndexerFlags").AsInt32().WithDefaultValue(0);
@@ -46,6 +47,7 @@ namespace NzbDrone.Core.Datastore.Migration
             {
                 _logger.Debug(e, "Union: skipping data migration step, schema shape differs");
             }
+
             try
             {
             Execute.WithConnection((conn, tran) => RemoveCustomFormatFromQuality(conn, tran, "History"));
@@ -54,6 +56,7 @@ namespace NzbDrone.Core.Datastore.Migration
             {
                 _logger.Debug(e, "Union: skipping data migration step, schema shape differs");
             }
+
             try
             {
             Execute.WithConnection((conn, tran) => RemoveCustomFormatFromQuality(conn, tran, "MovieFiles"));
@@ -72,6 +75,7 @@ namespace NzbDrone.Core.Datastore.Migration
             {
                 _logger.Debug(e, "Union: skipping data migration step, schema shape differs");
             }
+
             try
             {
             Execute.WithConnection(AddIndexerFlagsToMovieFiles);
@@ -89,22 +93,22 @@ namespace NzbDrone.Core.Datastore.Migration
                 SqlMapper.AddTypeHandler(new EmbeddedDocumentConverter<ParsedMovieInfo164>());
                 SqlMapper.AddTypeHandler(new EmbeddedDocumentConverter<ParsedMovieInfo165>());
                 var rows = conn.Query<ParsedMovieInfoData164>("SELECT \"Id\", \"ParsedMovieInfo\" from \"PendingReleases\"");
-    
+
                 var newRows = new List<ParsedMovieInfoData165>();
-    
+
                 foreach (var row in rows)
                 {
                     var old = row.ParsedMovieInfo;
-    
+
                     var newQuality = new QualityModel165
                     {
                         Quality = old.Quality.Quality.Id,
                         Revision = old.Quality.Revision,
                         HardcodedSubs = old.Quality.HardcodedSubs
                     };
-    
+
                     var languages = old.Languages?.Select(x => (Language)x).Select(x => x.Id).ToList();
-    
+
                     var correct = new ParsedMovieInfo165
                     {
                         MovieTitle = old.MovieTitle,
@@ -117,16 +121,16 @@ namespace NzbDrone.Core.Datastore.Migration
                         Year = old.Year,
                         ImdbId = old.ImdbId
                     };
-    
+
                     newRows.Add(new ParsedMovieInfoData165
                     {
                         Id = row.Id,
                         ParsedMovieInfo = correct
                     });
                 }
-    
+
                 var sql = $"UPDATE \"PendingReleases\" SET \"ParsedMovieInfo\" = @ParsedMovieInfo WHERE \"Id\" = @Id";
-    
+
                 conn.Execute(sql, newRows, transaction: tran);
             }
             catch (System.Exception e)
@@ -152,13 +156,13 @@ namespace NzbDrone.Core.Datastore.Migration
                                                            "FROM \"Blocklist\" " +
                                                            "JOIN \"History\" ON \"Blocklist\".\"MovieId\" = \"History\".\"MovieId\" " +
                                                            "WHERE \"History\".\"EventType\" = 1");
-    
+
                 var toUpdate = new List<IndexerFlagsItem>();
-    
+
                 foreach (var item in blacklists)
                 {
                     var dict = Json.Deserialize<Dictionary<string, string>>(item.Data);
-    
+
                     if (dict.GetValueOrDefault("torrentInfoHash") == item.TorrentInfoHash &&
                         Enum.TryParse(dict.GetValueOrDefault("indexerFlags"), true, out IndexerFlags flags))
                     {
@@ -172,7 +176,7 @@ namespace NzbDrone.Core.Datastore.Migration
                         }
                     }
                 }
-    
+
                 var updateSql = "UPDATE \"Blocklist\" SET \"IndexerFlags\" = @IndexerFlags WHERE \"Id\" = @Id";
                 conn.Execute(updateSql, toUpdate, transaction: tran);
             }
@@ -190,13 +194,13 @@ namespace NzbDrone.Core.Datastore.Migration
                                                            "FROM \"MovieFiles\" " +
                                                            "JOIN \"History\" ON \"MovieFiles\".\"MovieId\" = \"History\".\"MovieId\" " +
                                                            "WHERE \"History\".\"EventType\" = 1");
-    
+
                 var toUpdate = new List<IndexerFlagsItem>();
-    
+
                 foreach (var item in movieFiles)
                 {
                     var dict = Json.Deserialize<Dictionary<string, string>>(item.Data);
-    
+
                     if (item.SourceTitle == item.SceneName &&
                         Enum.TryParse(dict.GetValueOrDefault("indexerFlags"), true, out IndexerFlags flags))
                     {
@@ -210,7 +214,7 @@ namespace NzbDrone.Core.Datastore.Migration
                         }
                     }
                 }
-    
+
                 var updateSql = "UPDATE \"MovieFiles\" SET \"IndexerFlags\" = @IndexerFlags WHERE \"Id\" = @Id";
                 conn.Execute(updateSql, toUpdate, transaction: tran);
             }

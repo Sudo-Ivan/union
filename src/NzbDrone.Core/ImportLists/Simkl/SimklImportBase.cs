@@ -4,7 +4,6 @@ using NLog;
 using NzbDrone.Common.Extensions;
 using NzbDrone.Common.Http;
 using NzbDrone.Core.Configuration;
-using NzbDrone.Core.ImportLists.ImportListMovies;
 using NzbDrone.Core.ImportLists.Simkl.User;
 using NzbDrone.Core.Localization;
 using NzbDrone.Core.Parser;

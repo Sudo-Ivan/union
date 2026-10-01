@@ -59,6 +59,5 @@ namespace NzbDrone.Core.Test.Datastore
                 .Should()
                 .BeNull();
         }
-
 }
 }

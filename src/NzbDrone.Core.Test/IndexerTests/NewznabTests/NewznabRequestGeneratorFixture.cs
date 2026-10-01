@@ -3,9 +3,9 @@ using System.Linq;
 using FluentAssertions;
 using Moq;
 using NUnit.Framework;
-using NzbDrone.Core.IndexerSearch.Definitions;
 using NzbDrone.Core.Indexers;
 using NzbDrone.Core.Indexers.Newznab;
+using NzbDrone.Core.IndexerSearch.Definitions;
 using NzbDrone.Core.Test.Framework;
 
 namespace NzbDrone.Core.Test.IndexerTests.NewznabTests
@@ -729,6 +729,5 @@ namespace NzbDrone.Core.Test.IndexerTests.NewznabTests
             page.Url.Query.Should().NotContain(" & ");
             page.Url.Query.Should().NotContain("%26");
         }
-
 }
 }

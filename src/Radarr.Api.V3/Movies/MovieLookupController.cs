@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Http.HttpResults;
 using System.Linq;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using NzbDrone.Core.Configuration;
 using NzbDrone.Core.ImportLists.ImportExclusions;

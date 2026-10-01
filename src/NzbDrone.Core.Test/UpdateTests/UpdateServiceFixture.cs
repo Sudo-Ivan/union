@@ -441,6 +441,5 @@ namespace NzbDrone.Core.Test.UpdateTests
             updateSubFolder.GetDirectories().Should().HaveCount(1);
             updateSubFolder.GetFiles().Should().NotBeEmpty();
         }
-
 }
 }

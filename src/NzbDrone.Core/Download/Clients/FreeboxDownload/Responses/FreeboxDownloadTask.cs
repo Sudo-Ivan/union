@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 using NzbDrone.Common.Serializer;
 
@@ -52,6 +52,7 @@ namespace NzbDrone.Core.Download.Clients.FreeboxDownload.Responses
             {
                 return DownloadDirectory.DecodeBase64();
             }
+
             set
             {
                 DownloadDirectory = value.EncodeBase64();

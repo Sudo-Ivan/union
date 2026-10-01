@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using FizzWare.NBuilder;
 using FluentAssertions;
 using NUnit.Framework;
@@ -195,6 +195,5 @@ namespace NzbDrone.Core.Test.Download.TrackedDownloads
                    .Should()
                    .BeTrue();
         }
-
 }
 }

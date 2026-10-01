@@ -31,26 +31,26 @@ namespace NzbDrone.Core.Datastore.Migration
             try
             {
                 var existing = conn.Query<QualityDefinition170>("SELECT \"Id\", \"MaxSize\" FROM \"QualityDefinitions\"");
-    
+
                 var updated = new List<QualityDefinition171>();
-    
+
                 foreach (var row in existing)
                 {
                     var maxSize = row.MaxSize;
                     var preferredSize = maxSize;
-    
+
                     if (maxSize.HasValue && maxSize.Value > 5)
                     {
                         preferredSize = maxSize.Value - 5;
                     }
-    
+
                     updated.Add(new QualityDefinition171
                     {
                         Id = row.Id,
                         PreferredSize = preferredSize
                     });
                 }
-    
+
                 var updateSql = "UPDATE \"QualityDefinitions\" SET \"PreferredSize\" = @PreferredSize WHERE \"Id\" = @Id";
                 conn.Execute(updateSql, updated, transaction: tran);
             }

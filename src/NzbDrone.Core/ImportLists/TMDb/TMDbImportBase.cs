@@ -1,9 +1,9 @@
 using System;
-using NzbDrone.Core.Localization;
 using NLog;
 using NzbDrone.Common.Cloud;
 using NzbDrone.Common.Http;
 using NzbDrone.Core.Configuration;
+using NzbDrone.Core.Localization;
 using NzbDrone.Core.MetadataSource;
 using NzbDrone.Core.Parser;
 

@@ -20,7 +20,6 @@ using NzbDrone.Core.Extras.Others;
 using NzbDrone.Core.Extras.Subtitles;
 using NzbDrone.Core.History;
 using NzbDrone.Core.ImportLists;
-using NzbDrone.Core.ImportLists.Exclusions;
 using NzbDrone.Core.ImportLists.ImportListMovies;
 using NzbDrone.Core.Indexers;
 using NzbDrone.Core.Instrumentation;

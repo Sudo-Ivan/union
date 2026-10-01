@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using FizzWare.NBuilder;
@@ -232,6 +232,5 @@ namespace NzbDrone.Core.Test.MediaFiles
 
             Mocker.GetMock<IMovieService>().Verify(c => c.UpdateMovie(It.IsAny<Movie>()), Times.Never());
         }
-
 }
 }

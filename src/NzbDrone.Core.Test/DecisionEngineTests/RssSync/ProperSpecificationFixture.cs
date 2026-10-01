@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using FizzWare.NBuilder;
 using FluentAssertions;
@@ -227,6 +227,5 @@ namespace NzbDrone.Core.Test.DecisionEngineTests.RssSync
             _firstFile_movie.DateAdded = DateTime.Today;
             Subject.IsSatisfiedBy(_parseResultSingle_movie, new()).Accepted.Should().BeTrue();
         }
-
 }
 }

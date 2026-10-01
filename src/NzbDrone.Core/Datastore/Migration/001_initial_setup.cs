@@ -1,4 +1,4 @@
-﻿using FluentMigrator;
+using FluentMigrator;
 using NzbDrone.Core.Datastore.Migration.Framework;
 
 namespace NzbDrone.Core.Datastore.Migration
@@ -77,7 +77,6 @@ namespace NzbDrone.Core.Datastore.Migration
                 .WithColumn("Certification").AsString().Nullable()
                 .WithColumn("AddOptions").AsString().Nullable();
 
-
             Create.TableForModel("Episodes")
                 .WithColumn("TvDbEpisodeId").AsInt32()
                 .WithColumn("SeriesId").AsInt32()
@@ -144,7 +143,6 @@ namespace NzbDrone.Core.Datastore.Migration
                 .WithColumn("ConfigContract").AsString().Nullable()
                 .WithColumn("EnableRss").AsBoolean().Nullable()
                 .WithColumn("EnableSearch").AsBoolean().Nullable();
-
 
             Create.TableForModel("Profiles")
                 .WithColumn("Name").AsString().Unique()

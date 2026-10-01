@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using NzbDrone.Core.Parser;
 using NzbDrone.Core.Tv;
 

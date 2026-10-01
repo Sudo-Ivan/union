@@ -1,4 +1,4 @@
-﻿using FluentMigrator;
+using FluentMigrator;
 using NzbDrone.Core.Datastore.Migration.Framework;
 
 namespace NzbDrone.Core.Datastore.Migration
@@ -12,6 +12,7 @@ namespace NzbDrone.Core.Datastore.Migration
             {
             Alter.Table("ScheduledTasks").AlterColumn("Interval").AsDouble();
             }
+
             try
             {
             Execute.Sql("UPDATE \"ScheduledTasks\" SET \"Interval\" = 0.25 WHERE \"TypeName\" = 'NzbDrone.Core.Download.CheckForFinishedDownloadCommand'");

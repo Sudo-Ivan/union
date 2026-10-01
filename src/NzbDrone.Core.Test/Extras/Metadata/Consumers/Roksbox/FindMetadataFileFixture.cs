@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using FizzWare.NBuilder;
 using FluentAssertions;
 using NUnit.Framework;
@@ -129,6 +129,5 @@ namespace NzbDrone.Core.Test.Extras.Metadata.Consumers.Roksbox
 
             Subject.FindMetadataFile(_movie, path).Type.Should().Be(MetadataType.MovieImage);
         }
-
 }
 }

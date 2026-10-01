@@ -78,7 +78,6 @@ namespace NzbDrone.Core.Messaging.Events
                         int maxWorkerThreads;
                         ThreadPool.GetMaxThreads(out maxWorkerThreads, out maxCompletionPortThreads);
 
-
                         int minCompletionPortThreads;
                         int minWorkerThreads;
                         ThreadPool.GetMinThreads(out minWorkerThreads, out minCompletionPortThreads);

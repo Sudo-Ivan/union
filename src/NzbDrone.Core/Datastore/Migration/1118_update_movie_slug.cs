@@ -35,16 +35,16 @@ namespace NzbDrone.Core.Datastore.Migration
                             var title = seriesReader.GetString(1);
                             var year = seriesReader.GetInt32(2);
                             var tmdbId = seriesReader.GetInt32(3);
-    
+
                             var titleSlug = Parser.Parser.ToUrlSlug(title + "-" + tmdbId);
-    
+
                             using (var updateCmd = conn.CreateCommand())
                             {
                                 updateCmd.Transaction = tran;
                                 updateCmd.CommandText = "UPDATE \"Movies\" SET \"TitleSlug\" = ? WHERE \"Id\" = ?";
                                 updateCmd.AddParameter(titleSlug);
                                 updateCmd.AddParameter(id);
-    
+
                                 updateCmd.ExecuteNonQuery();
                             }
                         }

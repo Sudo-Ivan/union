@@ -67,6 +67,7 @@ namespace NzbDrone.Common.OAuth
                 _parameters.Add(parameter);
             }
         }
+
 #endif
 
         public WebParameterCollection(IDictionary<string, string> collection)

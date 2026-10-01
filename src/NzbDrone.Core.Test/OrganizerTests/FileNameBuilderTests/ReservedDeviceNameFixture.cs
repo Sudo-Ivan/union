@@ -135,6 +135,5 @@ namespace NzbDrone.Core.Test.OrganizerTests.FileNameBuilderTests
 
             Subject.BuildFileName(_movie, _movieFile).Should().Be($"{expected}");
         }
-
 }
 }

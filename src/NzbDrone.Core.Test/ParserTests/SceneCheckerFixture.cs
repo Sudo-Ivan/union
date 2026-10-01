@@ -1,4 +1,4 @@
-﻿using FluentAssertions;
+using FluentAssertions;
 using NUnit.Framework;
 using NzbDrone.Core.Parser;
 
@@ -49,6 +49,5 @@ namespace NzbDrone.Core.Test.ParserTests
         {
             SceneChecker.IsSceneTitle(title).Should().BeFalse();
         }
-
 }
 }

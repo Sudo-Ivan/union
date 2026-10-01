@@ -107,4 +107,5 @@ namespace NzbDrone.Core.Queue
         }
     }
 }
+
 #pragma warning restore CS0612

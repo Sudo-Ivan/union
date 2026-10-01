@@ -1,4 +1,4 @@
-﻿using NzbDrone.Core.RemotePathMappings;
+using NzbDrone.Core.RemotePathMappings;
 using Sonarr.Http.REST;
 
 namespace Sonarr.Api.V5.RemotePathMappings;

@@ -401,6 +401,7 @@ namespace NzbDrone.Common.OAuth
             var hash = algorithm.ComputeHash(data);
             return Convert.ToBase64String(hash);
         }
+
 #endif
 
         private static bool IsNullOrBlank(string value)

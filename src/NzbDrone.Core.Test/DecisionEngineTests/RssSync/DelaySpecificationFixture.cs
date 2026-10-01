@@ -11,8 +11,8 @@ using NzbDrone.Core.DecisionEngine;
 using NzbDrone.Core.DecisionEngine.Specifications;
 using NzbDrone.Core.DecisionEngine.Specifications.RssSync;
 using NzbDrone.Core.Download.Pending;
-using NzbDrone.Core.IndexerSearch.Definitions;
 using NzbDrone.Core.Indexers;
+using NzbDrone.Core.IndexerSearch.Definitions;
 using NzbDrone.Core.Languages;
 using NzbDrone.Core.MediaFiles;
 using NzbDrone.Core.Movies;
@@ -483,6 +483,5 @@ namespace NzbDrone.Core.Test.DecisionEngineTests.RssSync
 
             Subject.IsSatisfiedBy(_remoteMovie, new()).Accepted.Should().BeTrue();
         }
-
 }
 }

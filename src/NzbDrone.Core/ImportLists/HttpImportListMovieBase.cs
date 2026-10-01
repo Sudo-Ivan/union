@@ -13,7 +13,6 @@ using NzbDrone.Core.ImportLists.ImportListMovies;
 using NzbDrone.Core.Indexers.Exceptions;
 using NzbDrone.Core.Localization;
 using NzbDrone.Core.Parser;
-using NzbDrone.Core.ThingiProvider;
 using NzbDrone.Core.Validation;
 
 namespace NzbDrone.Core.ImportLists
@@ -25,7 +24,6 @@ namespace NzbDrone.Core.ImportLists
 
         protected readonly IHttpClient _httpClient;
 
-        
         public virtual int PageSize => 0;
         public virtual TimeSpan RateLimit => TimeSpan.FromSeconds(2);
 

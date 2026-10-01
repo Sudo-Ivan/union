@@ -1,4 +1,4 @@
-﻿namespace NzbDrone.Core.Download.Pending
+namespace NzbDrone.Core.Download.Pending
 {
     public enum PendingReleaseReason
     {

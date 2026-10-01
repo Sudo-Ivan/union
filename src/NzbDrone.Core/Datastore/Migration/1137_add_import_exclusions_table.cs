@@ -49,19 +49,19 @@ namespace NzbDrone.Core.Datastore.Migration
                         {
                             var key = seriesReader.GetString(0);
                             var value = seriesReader.GetString(1);
-    
+
                             var importExclusions = value.Split(',').Select(x =>
                             {
                                 return string.Format("(\"{0}\", \"{1}\")",
                                     Regex.Replace(x, @"^.*\-(.*)$", "$1"),
                                     textInfo.ToTitleCase(string.Join(" ", x.Split('-').DropLast(1))));
                             }).ToList();
-    
+
                             using (var updateCmd = conn.CreateCommand())
                             {
                                 updateCmd.Transaction = tran;
                                 updateCmd.CommandText = "INSERT INTO \"ImportExclusions\" (tmdbid, MovieTitle) VALUES " + string.Join(", ", importExclusions);
-    
+
                                 updateCmd.ExecuteNonQuery();
                             }
                         }

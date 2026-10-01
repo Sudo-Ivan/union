@@ -31,5 +31,4 @@ namespace NzbDrone.Core.Parser.Model
             return Release.Title;
         }
     }
-
 }

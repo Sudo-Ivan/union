@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using FluentValidation.Validators;
 using NzbDrone.Common.Extensions;

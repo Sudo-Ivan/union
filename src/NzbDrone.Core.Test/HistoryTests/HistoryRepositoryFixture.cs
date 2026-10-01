@@ -99,7 +99,6 @@ namespace NzbDrone.Core.Test.HistoryTests
         }
     }
 
-
     [TestFixture]
     public class HistoryRepositoryFixtureMovie : DbTest<MovieHistoryRepository, MovieHistory>
     {

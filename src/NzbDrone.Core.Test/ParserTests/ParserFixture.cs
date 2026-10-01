@@ -392,6 +392,5 @@ namespace NzbDrone.Core.Test.ParserTests
         {
             Parser.Parser.NormalizeImdbId(imdbid).Should().BeEquivalentTo(normalized);
         }
-
 }
 }

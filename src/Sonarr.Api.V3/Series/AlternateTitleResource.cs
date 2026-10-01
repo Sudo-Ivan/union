@@ -1,4 +1,4 @@
-﻿using NzbDrone.Common.Extensions;
+using NzbDrone.Common.Extensions;
 using NzbDrone.Core.DataAugmentation.Scene;
 
 namespace Sonarr.Api.V3.Series

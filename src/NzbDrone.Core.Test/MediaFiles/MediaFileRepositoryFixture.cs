@@ -75,7 +75,6 @@ namespace NzbDrone.Core.Test.MediaFiles
         }
     }
 
-
     [TestFixture]
     public class MediaFileRepositoryFixtureMovie : DbTest<MediaFileRepository, MovieFile>
     {

@@ -987,7 +987,6 @@ namespace NzbDrone.Core.Test.ParserTests
             result.Languages.Should().Contain(Language.Persian);
         }
 
-
         [TestCase("Movie.Title.1994.HDTV.x264.SK-iCZi")]
         [TestCase("Movie.Title.2019.1080p.HDTV.x265.iNTERNAL.SK-iCZi")]
         [TestCase("Movie.Title.2018.SLOVAK.DUAL.2160p.UHD.BluRay.x265-iCZi")]
@@ -1042,7 +1041,6 @@ namespace NzbDrone.Core.Test.ParserTests
             var result = LanguageParser.ParseLanguages(postTitle);
             result.Should().Contain(Language.Malayalam);
         }
-
 
         [TestCase("Movie Title 2024 1080p Urdu WEB-DL HEVC x265 BONE")]
         [TestCase("Movie.Title.2022.720p.Urdu.WEB-DL.AAC.x264-Mkvking")]
@@ -1165,6 +1163,5 @@ namespace NzbDrone.Core.Test.ParserTests
             subtitleTitleInfo.LanguageTags.Should().BeEmpty();
             subtitleTitleInfo.RawTitle.Should().BeNull();
         }
-
 }
 }

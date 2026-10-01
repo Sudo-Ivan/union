@@ -114,7 +114,6 @@ namespace NzbDrone.Core.Download.Clients.Deluge
             return actualHash.ToUpper();
         }
 
-
         protected override string AddFromMagnetLink(RemoteMovie remoteMovie, string hash, string magnetLink)
         {
             var actualHash = _proxy.AddTorrentFromMagnet(magnetLink, Settings);

@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 
 namespace NzbDrone.Core.Download.Clients.FreeboxDownload.Responses
 {
@@ -12,6 +12,7 @@ namespace NzbDrone.Core.Download.Clients.FreeboxDownload.Responses
             {
                 return DownloadDirectory.DecodeBase64();
             }
+
             set
             {
                 DownloadDirectory = value.EncodeBase64();

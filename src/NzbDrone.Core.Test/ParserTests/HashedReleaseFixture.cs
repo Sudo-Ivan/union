@@ -255,6 +255,5 @@ namespace NzbDrone.Core.Test.ParserTests
             result.Quality.Quality.Should().Be(quality);
             result.ReleaseGroup.Should().Be(releaseGroup);
         }
-
 }
 }

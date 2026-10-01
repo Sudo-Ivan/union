@@ -409,6 +409,5 @@ namespace NzbDrone.Core.Test.RootFolderTests
 
             unmappedFolders.Count.Should().Be(3);
         }
-
 }
 }

@@ -43,13 +43,13 @@ namespace NzbDrone.Core.Datastore.Migration
             try
             {
                 var existing = conn.Query<FormatTag167>("SELECT \"Id\", \"Name\", \"FormatTags\" FROM \"CustomFormats\"");
-    
+
                 var updated = new List<Specification168>();
-    
+
                 foreach (var row in existing)
                 {
                     var specs = row.FormatTags.Select(ParseFormatTag).ToList();
-    
+
                     // Use format name for spec if only one spec, otherwise use spec type and a digit
                     if (specs.Count == 1)
                     {
@@ -68,14 +68,14 @@ namespace NzbDrone.Core.Datastore.Migration
                             }
                         }
                     }
-    
+
                     updated.Add(new Specification168
                     {
                         Id = row.Id,
                         Specifications = specs
                     });
                 }
-    
+
                 var updateSql = "UPDATE \"CustomFormats\" SET \"Specifications\" = @Specifications WHERE \"Id\" = @Id";
                 conn.Execute(updateSql, updated, transaction: tran);
             }

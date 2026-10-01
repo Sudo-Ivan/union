@@ -12,6 +12,7 @@ namespace NzbDrone.Core.Datastore.Migration
             {
             Create.Index("IX_MovieMetadata_CollectionTmdbId").OnTable("MovieMetadata").OnColumn("CollectionTmdbId");
             }
+
             if (!Schema.Table("MovieTranslations").Index("IX_MovieTranslations_MovieMetadataId").Exists())
             {
             Create.Index("IX_MovieTranslations_MovieMetadataId").OnTable("MovieTranslations").OnColumn("MovieMetadataId");

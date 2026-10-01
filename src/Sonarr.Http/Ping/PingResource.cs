@@ -1,4 +1,4 @@
-﻿namespace NzbDrone.Http.Ping
+namespace NzbDrone.Http.Ping
 {
     public class PingResource
     {

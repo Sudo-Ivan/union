@@ -58,16 +58,16 @@ namespace NzbDrone.Core.Datastore.Migration
             try
             {
                 var existing = conn.Query<MediaInfoRaw>("SELECT \"Id\", \"MediaInfo\", \"SceneName\" FROM \"MovieFiles\"");
-    
+
                 var updated = new List<MediaInfoRaw>();
-    
+
                 foreach (var row in existing)
                 {
                     if (row.MediaInfo.IsNullOrWhiteSpace())
                     {
                         continue;
                     }
-    
+
                     // basic parse to check schema revision
                     // in case user already tested ffmpeg branch
                     var mediaInfoVersion = JsonSerializer.Deserialize<MediaInfoBase>(row.MediaInfo, _serializerSettings);
@@ -75,19 +75,19 @@ namespace NzbDrone.Core.Datastore.Migration
                     {
                         continue;
                     }
-    
+
                     // parse and migrate
                     var mediaInfo = JsonSerializer.Deserialize<MediaInfo198>(row.MediaInfo, _serializerSettings);
-    
+
                     var ffprobe = MigrateMediaInfo(mediaInfo, row.SceneName);
-    
+
                     updated.Add(new MediaInfoRaw
                     {
                         Id = row.Id,
                         MediaInfo = JsonSerializer.Serialize(ffprobe, _serializerSettings)
                     });
                 }
-    
+
                 var updateSql = "UPDATE \"MovieFiles\" SET \"MediaInfo\" = @MediaInfo WHERE \"Id\" = @Id";
                 conn.Execute(updateSql, updated, transaction: tran);
             }

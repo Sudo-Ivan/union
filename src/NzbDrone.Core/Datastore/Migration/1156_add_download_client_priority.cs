@@ -22,6 +22,7 @@ namespace NzbDrone.Core.Datastore.Migration
             {
             Alter.Table("DownloadClients").AddColumn("Priority").AsInt32().WithDefaultValue(1);
             }
+
             try
             {
             Execute.WithConnection(InitPriorityForBackwardCompatibility);
@@ -37,15 +38,15 @@ namespace NzbDrone.Core.Datastore.Migration
             try
             {
                 var downloadClients = conn.Query<DownloadClients156>($"SELECT \"Id\", \"Implementation\" FROM \"DownloadClients\" WHERE \"Enable\"");
-    
+
                 if (!downloadClients.Any())
                 {
                     return;
                 }
-    
+
                 var nextUsenet = 1;
                 var nextTorrent = 1;
-    
+
                 foreach (var downloadClient in downloadClients)
                 {
                     var isUsenet = _usenetImplementations.Contains(downloadClient.Implementation);
@@ -60,10 +61,10 @@ namespace NzbDrone.Core.Datastore.Migration
                         {
                             updateCmd.CommandText = "UPDATE \"DownloadClients\" SET \"Priority\" = ? WHERE \"Id\" = ?";
                         }
-    
+
                         updateCmd.AddParameter(isUsenet ? nextUsenet++ : nextTorrent++);
                         updateCmd.AddParameter(downloadClient.Id);
-    
+
                         updateCmd.ExecuteNonQuery();
                     }
                 }

@@ -279,7 +279,6 @@ namespace NzbDrone.Core.Download.Clients.Transmission
             return hash;
         }
 
-
         protected override string AddFromMagnetLink(RemoteMovie remoteMovie, string hash, string magnetLink)
         {
             _proxy.AddTorrentFromUrl(magnetLink, GetMovieDownloadDirectory(), Settings);

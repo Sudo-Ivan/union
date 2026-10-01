@@ -1,4 +1,4 @@
-﻿using FluentMigrator;
+using FluentMigrator;
 using NzbDrone.Core.Datastore.Migration.Framework;
 
 namespace NzbDrone.Core.Datastore.Migration
@@ -12,6 +12,7 @@ namespace NzbDrone.Core.Datastore.Migration
             {
             Create.Index().OnTable("AlternativeTitles").OnColumn("CleanTitle");
             }
+
             if (!Schema.Table("MovieTranslations").Index("IX_MovieTranslations_CleanTitle").Exists())
             {
             Create.Index().OnTable("MovieTranslations").OnColumn("CleanTitle");

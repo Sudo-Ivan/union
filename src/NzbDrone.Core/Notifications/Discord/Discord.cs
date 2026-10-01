@@ -514,7 +514,6 @@ namespace NzbDrone.Core.Notifications.Discord
             _proxy.SendPayload(payload, Settings);
         }
 
-
         public override void OnMovieRename(Movie movie, List<RenamedMovieFile> renamedFiles)
         {
             var attachments = new List<Embed>();
@@ -532,7 +531,6 @@ namespace NzbDrone.Core.Notifications.Discord
 
             _proxy.SendPayload(payload, Settings);
         }
-
 
         public override void OnMovieDelete(MovieDeleteMessage deleteMessage)
         {
@@ -573,7 +571,6 @@ namespace NzbDrone.Core.Notifications.Discord
             _proxy.SendPayload(payload, Settings);
         }
 
-
         public override void OnMovieFileDelete(MovieFileDeleteMessage deleteMessage)
         {
             var movie = deleteMessage.Movie;
@@ -603,7 +600,6 @@ namespace NzbDrone.Core.Notifications.Discord
 
             _proxy.SendPayload(payload, Settings);
         }
-
 
         public override void OnHealthIssue(HealthCheck.HealthCheck healthCheck)
         {
@@ -902,7 +898,6 @@ namespace NzbDrone.Core.Notifications.Discord
             _proxy.SendPayload(payload, Settings);
         }
 
-
         private void OnMovieDownload(DownloadMessage message)
         {
             var isUpgrade = message.OldMovieFiles.Count > 0;
@@ -1019,7 +1014,6 @@ namespace NzbDrone.Core.Notifications.Discord
             _proxy.SendPayload(payload, Settings);
         }
 
-
         private void OnMovieManualInteractionRequired(ManualInteractionRequiredMessage message)
         {
             var movie = message.Movie;
@@ -1113,7 +1107,6 @@ namespace NzbDrone.Core.Notifications.Discord
             _proxy.SendPayload(payload, Settings);
         }
 
-
         private static string GetLinksString(Movie movie)
         {
             if (movie?.MovieMetadata?.Value == null)
@@ -1145,7 +1138,6 @@ namespace NzbDrone.Core.Notifications.Discord
             return string.Join(" / ", links);
         }
 
-
         private string GetTitle(Movie movie)
         {
             if (movie == null)
@@ -1157,7 +1149,6 @@ namespace NzbDrone.Core.Notifications.Discord
 
             return title.Length > 256 ? $"{title.AsSpan(0, 253).TrimEnd('\\')}..." : title;
         }
-
 
         private List<string> GetTagLabels(Movie movie)
         {

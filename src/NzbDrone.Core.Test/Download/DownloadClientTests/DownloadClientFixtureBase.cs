@@ -1,7 +1,6 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading;
-using System.Threading.Tasks;
 using FluentAssertions;
 using Moq;
 using NLog;
@@ -10,8 +9,8 @@ using NzbDrone.Common.Disk;
 using NzbDrone.Common.Http;
 using NzbDrone.Core.Configuration;
 using NzbDrone.Core.Download;
-using NzbDrone.Core.IndexerSearch.Definitions;
 using NzbDrone.Core.Indexers;
+using NzbDrone.Core.IndexerSearch.Definitions;
 using NzbDrone.Core.Localization;
 using NzbDrone.Core.Movies;
 using NzbDrone.Core.Parser;
@@ -203,6 +202,5 @@ namespace NzbDrone.Core.Test.Download.DownloadClientTests
                 Mocker.Resolve<Logger>(),
                 Mocker.Resolve<ILocalizationService>());
         }
-
 }
 }

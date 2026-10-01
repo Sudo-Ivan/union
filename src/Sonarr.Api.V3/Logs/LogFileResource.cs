@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Sonarr.Http.REST;
 
 namespace Sonarr.Api.V3.Logs

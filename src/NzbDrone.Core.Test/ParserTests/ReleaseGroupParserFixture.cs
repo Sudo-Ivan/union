@@ -399,6 +399,5 @@ namespace NzbDrone.Core.Test.ParserTests
         {
             Parser.ReleaseGroupParser.ParseReleaseGroup(title).Should().BeNull();
         }
-
 }
 }

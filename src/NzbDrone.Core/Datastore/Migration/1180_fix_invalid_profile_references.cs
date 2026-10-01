@@ -34,7 +34,7 @@ namespace NzbDrone.Core.Datastore.Migration
 
                 // Union: the merged ImportLists table uses QualityProfileId
                 var listRows = conn.Query<ProfileEntity179>($"SELECT \"Id\", \"QualityProfileId\" AS \"ProfileId\" FROM \"ImportLists\"");
-    
+
                 // Only process if there are lists or movies existing in the DB
                 if (movieRows.Any() || listRows.Any())
                 {
@@ -44,9 +44,9 @@ namespace NzbDrone.Core.Datastore.Migration
                         InsertDefaultQualityProfiles(conn, tran);
                         profiles = GetProfileIds(conn);
                     }
-    
+
                     var mostCommonProfileId = 0;
-    
+
                     // If we have some movies, lets determine the most common profile used and use it for the bad entries
                     if (movieRows.Any())
                     {
@@ -57,17 +57,17 @@ namespace NzbDrone.Core.Datastore.Migration
                                                 .Select(g => g.Key)
                                                 .FirstOrDefault();
                     }
-    
+
                     // If all the movie profiles are bad or there are no movies, just use the first profile for bad movies and lists
                     if (mostCommonProfileId == 0)
                     {
                         mostCommonProfileId = profiles.First();
                     }
-    
+
                     // Correct any Movies that reference profiles that are null
                     var sql = $"UPDATE \"Movies\" SET \"ProfileId\" = {mostCommonProfileId} WHERE \"Id\" IN(SELECT \"Movies\".\"Id\" FROM \"Movies\" LEFT OUTER JOIN \"QualityProfiles\" ON \"Movies\".\"ProfileId\" = \"QualityProfiles\".\"Id\" WHERE \"QualityProfiles\".\"Id\" IS NULL)";
                     conn.Execute(sql, transaction: tran);
-    
+
                     // Correct any Lists that reference profiles that are null
                     sql = $"UPDATE \"ImportLists\" SET \"QualityProfileId\" = {mostCommonProfileId} WHERE \"Id\" IN(SELECT \"ImportLists\".\"Id\" FROM \"ImportLists\" LEFT OUTER JOIN \"QualityProfiles\" ON \"ImportLists\".\"QualityProfileId\" = \"QualityProfiles\".\"Id\" WHERE \"QualityProfiles\".\"Id\" IS NULL)";
                     conn.Execute(sql, transaction: tran);

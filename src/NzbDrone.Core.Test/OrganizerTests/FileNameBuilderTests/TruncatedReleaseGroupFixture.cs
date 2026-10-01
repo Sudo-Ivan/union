@@ -156,6 +156,5 @@ namespace NzbDrone.Core.Test.OrganizerTests.FileNameBuilderTests
             result.Length.Should().BeLessOrEqualTo(255);
             result.Should().Be("The Fantastic Life of Mr. Sisko (2024) Bluray-1080p-...ASixFourImpala");
         }
-
 }
 }

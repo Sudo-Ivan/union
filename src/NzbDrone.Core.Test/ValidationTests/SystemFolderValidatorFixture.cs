@@ -137,6 +137,5 @@ namespace NzbDrone.Core.Test.ValidationTests
 
             _validator_movie.Validate(movie).IsValid.Should().BeFalse();
         }
-
 }
 }

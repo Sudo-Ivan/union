@@ -84,7 +84,6 @@ namespace NzbDrone.Core.Download.Clients.Flood
             return result.Where(t => t.IsNotNullOrWhiteSpace());
         }
 
-
         private static IEnumerable<string> HandleTags(RemoteMovie remoteMovie, FloodSettings settings)
         {
             var result = new HashSet<string>();

@@ -271,6 +271,5 @@ namespace NzbDrone.Core.Test.Download.Pending.PendingReleaseServiceTests
 
             VerifyNoDelete();
         }
-
 }
 }

@@ -3,9 +3,9 @@ using NzbDrone.Common.Http.Proxy;
 using NzbDrone.Core.ImportLists;
 using NzbDrone.Core.MediaFiles;
 using NzbDrone.Core.MediaFiles.EpisodeImport;
+using NzbDrone.Core.MetadataSource.SkyHook.Resource;
 using NzbDrone.Core.Qualities;
 using NzbDrone.Core.Security;
-using NzbDrone.Core.MetadataSource.SkyHook.Resource;
 
 namespace NzbDrone.Core.Configuration
 {

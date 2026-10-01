@@ -1,4 +1,4 @@
-﻿using NUnit.Framework;
+using NUnit.Framework;
 using NzbDrone.Core.Notifications.Prowl;
 using NzbDrone.Core.Test.Framework;
 using NzbDrone.Test.Common;

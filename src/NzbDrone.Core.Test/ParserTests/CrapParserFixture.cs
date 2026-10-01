@@ -208,6 +208,5 @@ namespace NzbDrone.Core.Test.ParserTests
         {
             Parser.Parser.ParseMovieTitle(fileName).Should().BeNull();
         }
-
 }
 }

@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Threading;
 using System.Linq;
+using System.Threading;
 using FizzWare.NBuilder;
 using FluentAssertions;
 using Moq;
@@ -368,14 +368,14 @@ namespace NzbDrone.Core.Test.OrganizerTests.FileNameBuilderTests
                 VideoFormat = "h264",
                 AudioStreams = new List<MediaInfoAudioStreamModel>
                 {
-                    new () { Format = "dts", Language = "eng" },
-                    new () { Format = "dts", Language = "spa" }
+                    new() { Format = "dts", Language = "eng" },
+                    new() { Format = "dts", Language = "spa" }
                 },
                 SubtitleStreams = new List<MediaInfoSubtitleStreamModel>
                 {
-                    new () { Language = "eng" },
-                    new () { Language = "spa" },
-                    new () { Language = "ita" }
+                    new() { Language = "eng" },
+                    new() { Language = "spa" },
+                    new() { Language = "ita" }
                 }
             };
 
@@ -409,11 +409,11 @@ namespace NzbDrone.Core.Test.OrganizerTests.FileNameBuilderTests
                 VideoFormat = "h264",
                 AudioStreams = new List<MediaInfoAudioStreamModel>
                 {
-                    new () { Format = "dts", Channels = 6, Language = "eng" }
+                    new() { Format = "dts", Channels = 6, Language = "eng" }
                 },
                 SubtitleStreams = new List<MediaInfoSubtitleStreamModel>
                 {
-                    new () { Language = language }
+                    new() { Language = language }
                 },
                 SchemaRevision = 3
             };
@@ -432,13 +432,13 @@ namespace NzbDrone.Core.Test.OrganizerTests.FileNameBuilderTests
                 VideoFormat = "h264",
                 AudioStreams = new List<MediaInfoAudioStreamModel>
                 {
-                    new () { Format = "dts", Language = "eng" }
+                    new() { Format = "dts", Language = "eng" }
                 },
                 SubtitleStreams = new List<MediaInfoSubtitleStreamModel>
                 {
-                    new () { Language = "eng" },
-                    new () { Language = "spa" },
-                    new () { Language = "ita" }
+                    new() { Language = "eng" },
+                    new() { Language = "spa" },
+                    new() { Language = "ita" }
                 }
             };
 
@@ -457,13 +457,13 @@ namespace NzbDrone.Core.Test.OrganizerTests.FileNameBuilderTests
                 VideoMultiViewCount = 2,
                 AudioStreams = new List<MediaInfoAudioStreamModel>
                 {
-                    new () { Format = "dts", Language = "eng" }
+                    new() { Format = "dts", Language = "eng" }
                 },
                 SubtitleStreams = new List<MediaInfoSubtitleStreamModel>
                 {
-                    new () { Language = "eng" },
-                    new () { Language = "spa" },
-                    new () { Language = "ita" }
+                    new() { Language = "eng" },
+                    new() { Language = "spa" },
+                    new() { Language = "ita" }
                 }
             };
 
@@ -813,6 +813,5 @@ namespace NzbDrone.Core.Test.OrganizerTests.FileNameBuilderTests
                 SchemaRevision = schemaRevision
             };
         }
-
     }
 }

@@ -219,6 +219,5 @@ namespace NzbDrone.Core.Test.DiskSpace
             Mocker.GetMock<IDiskProvider>()
                   .Verify(v => v.GetAvailableSpace(It.IsAny<string>()), Times.Never());
         }
-
 }
 }

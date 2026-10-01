@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using NzbDrone.Core.Tv;
 
 namespace Sonarr.Api.V3.SeasonPass

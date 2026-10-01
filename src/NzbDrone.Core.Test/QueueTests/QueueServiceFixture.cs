@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using FizzWare.NBuilder;
@@ -108,6 +108,5 @@ namespace NzbDrone.Core.Test.QueueTests
 
             distinct.Should().HaveCount(1);
         }
-
 }
 }

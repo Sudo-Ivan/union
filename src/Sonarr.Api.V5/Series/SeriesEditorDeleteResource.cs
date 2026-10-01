@@ -1,4 +1,4 @@
-﻿namespace Sonarr.Api.V5.Series;
+namespace Sonarr.Api.V5.Series;
 
 public class SeriesEditorDeleteResource
 {

@@ -23,6 +23,7 @@ namespace NzbDrone.Core.ImportLists.AniList
                         lastPage
                         hasNextPage
                     }
+
                     mediaList(userName: $id, type: ANIME, status_in: $statusType) {
                         status
                         progress
@@ -33,6 +34,7 @@ namespace NzbDrone.Core.ImportLists.AniList
                                 userPreferred
                                 romaji
                             }
+
                             status
                             episodes
                             startDate {
@@ -40,6 +42,7 @@ namespace NzbDrone.Core.ImportLists.AniList
                                 month
                                 day
                             }
+
                             endDate {
                                 year
                                 month
@@ -49,6 +52,7 @@ namespace NzbDrone.Core.ImportLists.AniList
                     }
                 }
             }
+
         ";
 
         public static string BuildQuery(AniListQuery query, object data)

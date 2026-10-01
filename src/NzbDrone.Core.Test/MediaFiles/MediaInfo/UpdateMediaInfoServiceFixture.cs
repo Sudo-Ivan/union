@@ -597,6 +597,5 @@ namespace NzbDrone.Core.Test.MediaFiles.MediaInfo
             Mocker.GetMock<IMediaFileService>()
                 .Verify(v => v.Update(movieFile), Times.Never());
         }
-
 }
 }

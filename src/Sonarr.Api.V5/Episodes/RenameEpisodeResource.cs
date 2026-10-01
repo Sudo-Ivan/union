@@ -1,4 +1,4 @@
-﻿using Sonarr.Http.REST;
+using Sonarr.Http.REST;
 
 namespace Sonarr.Api.V5.Episodes;
 

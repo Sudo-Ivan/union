@@ -1,4 +1,4 @@
-﻿namespace NzbDrone.Common.Extensions
+namespace NzbDrone.Common.Extensions
 {
     public static class NullableExtensions
     {

@@ -39,6 +39,7 @@ namespace NzbDrone.Core.Datastore.Migration
             {
                 _logger.Debug(e, "Union: skipping data migration step, schema shape differs");
             }
+
             try
             {
             Execute.WithConnection(RenameRadarrListType);
@@ -47,6 +48,7 @@ namespace NzbDrone.Core.Datastore.Migration
             {
                 _logger.Debug(e, "Union: skipping data migration step, schema shape differs");
             }
+
             try
             {
             Execute.Sql("DELETE FROM \"Config\" WHERE \"Key\" IN ('TraktAuthToken', 'TraktRefreshToken', 'TraktTokenExpiry', 'NewTraktAuthToken', 'NewTraktRefreshToken', 'NewTraktTokenExpiry')");
@@ -62,9 +64,9 @@ namespace NzbDrone.Core.Datastore.Migration
             try
             {
                 var rows = conn.Query<ProviderDefinition169>($"SELECT \"Id\", \"Implementation\", \"ConfigContract\", \"Settings\" FROM \"ImportLists\" WHERE \"Implementation\" = 'RadarrLists'");
-    
+
                 var corrected = new List<ProviderDefinition169>();
-    
+
                 foreach (var row in rows)
                 {
                     corrected.Add(new ProviderDefinition169
@@ -74,7 +76,7 @@ namespace NzbDrone.Core.Datastore.Migration
                         ConfigContract = "RadarrListSettings"
                     });
                 }
-    
+
                 var updateSql = "UPDATE \"ImportLists\" SET \"Implementation\" = @Implementation, \"ConfigContract\" = @ConfigContract WHERE \"Id\" = @Id";
                 conn.Execute(updateSql, corrected, transaction: tran);
             }
@@ -89,13 +91,13 @@ namespace NzbDrone.Core.Datastore.Migration
             try
             {
                 var rows = conn.Query<ProviderDefinition169>($"SELECT \"Id\", \"Implementation\", \"ConfigContract\", \"Settings\" FROM \"ImportLists\" WHERE \"Implementation\" = 'TraktImport'");
-    
+
                 var corrected = new List<ProviderDefinition169>();
-    
+
                 foreach (var row in rows)
                 {
                     var settings = JsonSerializer.Deserialize<TraktSettings169>(row.Settings, _serializerSettings);
-    
+
                     if (settings.TraktListType == (int)TraktListType169.UserCustomList)
                     {
                         var newSettings = new TraktListSettings170
@@ -103,7 +105,7 @@ namespace NzbDrone.Core.Datastore.Migration
                             Listname = settings.Listname,
                             Username = settings.Username,
                             AuthUser = settings.Username,
-    
+
                             Scope = settings.Scope,
                             AccessToken = settings.AccessToken.IsNotNullOrWhiteSpace() ? settings.AccessToken : "",
                             RefreshToken = settings.RefreshToken.IsNotNullOrWhiteSpace() ? settings.RefreshToken : "",
@@ -117,7 +119,7 @@ namespace NzbDrone.Core.Datastore.Migration
                             TraktAdditionalParameters = settings.TraktAdditionalParameters,
                             SignIn = settings.SignIn
                         };
-    
+
                         corrected.Add(new ProviderDefinition169
                         {
                             Id = row.Id,
@@ -132,7 +134,7 @@ namespace NzbDrone.Core.Datastore.Migration
                         {
                             TraktListType = settings.TraktListType,
                             AuthUser = settings.Username,
-    
+
                             Scope = settings.Scope,
                             AccessToken = settings.AccessToken.IsNotNullOrWhiteSpace() ? settings.AccessToken : "",
                             RefreshToken = settings.RefreshToken.IsNotNullOrWhiteSpace() ? settings.RefreshToken : "",
@@ -146,7 +148,7 @@ namespace NzbDrone.Core.Datastore.Migration
                             TraktAdditionalParameters = settings.TraktAdditionalParameters,
                             SignIn = settings.SignIn
                         };
-    
+
                         corrected.Add(new ProviderDefinition169
                         {
                             Id = row.Id,
@@ -161,7 +163,7 @@ namespace NzbDrone.Core.Datastore.Migration
                         {
                             TraktListType = (int)Enum.Parse(typeof(TraktPopularListType170), Enum.GetName(typeof(TraktListType169), settings.TraktListType)),
                             AuthUser = settings.Username,
-    
+
                             Scope = settings.Scope,
                             AccessToken = settings.AccessToken.IsNotNullOrWhiteSpace() ? settings.AccessToken : "",
                             RefreshToken = settings.RefreshToken.IsNotNullOrWhiteSpace() ? settings.RefreshToken : "",
@@ -175,7 +177,7 @@ namespace NzbDrone.Core.Datastore.Migration
                             TraktAdditionalParameters = settings.TraktAdditionalParameters,
                             SignIn = settings.SignIn
                         };
-    
+
                         corrected.Add(new ProviderDefinition169
                         {
                             Id = row.Id,
@@ -185,9 +187,9 @@ namespace NzbDrone.Core.Datastore.Migration
                         });
                     }
                 }
-    
+
                 Console.WriteLine(corrected.ToJson());
-    
+
                 var updateSql = "UPDATE \"ImportLists\" SET \"Implementation\" = @Implementation, \"ConfigContract\" = @ConfigContract, \"Settings\" = @Settings WHERE \"Id\" = @Id";
                 conn.Execute(updateSql, corrected, transaction: tran);
             }

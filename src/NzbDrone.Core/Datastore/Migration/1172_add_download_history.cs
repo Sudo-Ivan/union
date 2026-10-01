@@ -31,6 +31,7 @@ namespace NzbDrone.Core.Datastore.Migration
             {
             Create.Index().OnTable("DownloadHistory").OnColumn("EventType");
             }
+
             if (!Schema.Table("DownloadHistory").Column("MovieId").Exists())
             {
                 Alter.Table("DownloadHistory").AddColumn("MovieId").AsInt32().Nullable();
@@ -40,6 +41,7 @@ namespace NzbDrone.Core.Datastore.Migration
             {
             Create.Index().OnTable("DownloadHistory").OnColumn("MovieId");
             }
+
             if (!Schema.Table("DownloadHistory").Index("IX_DownloadHistory_DownloadId").Exists())
             {
             Create.Index().OnTable("DownloadHistory").OnColumn("DownloadId");
@@ -64,7 +66,7 @@ namespace NzbDrone.Core.Datastore.Migration
                 {
                     cmd.Transaction = tran;
                     cmd.CommandText = "SELECT \"MovieId\", \"DownloadId\", \"EventType\", \"SourceTitle\", \"Date\", \"Data\" FROM \"History\" WHERE \"DownloadId\" IS NOT NULL AND \"EventType\" IN (1, 3, 4, 9) GROUP BY \"EventType\", \"DownloadId\"";
-    
+
                     using (var reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
@@ -76,21 +78,21 @@ namespace NzbDrone.Core.Datastore.Migration
                             var date = reader.GetDateTime(4);
                             var rawData = reader.GetString(5);
                             var data = Json.Deserialize<Dictionary<string, string>>(rawData);
-    
+
                             var downloadHistoryEventType = EventTypeMap[eventType];
                             var protocol = data.ContainsKey("protocol") ? Convert.ToInt32(data["protocol"]) : (int?)null;
                             var downloadHistoryData = new Dictionary<string, string>();
-    
+
                             if (data.ContainsKey("indexer"))
                             {
                                 downloadHistoryData.Add("indexer", data["indexer"]);
                             }
-    
+
                             if (data.ContainsKey("downloadClient"))
                             {
                                 downloadHistoryData.Add("downloadClient", data["downloadClient"]);
                             }
-    
+
                             using (var updateCmd = conn.CreateCommand())
                             {
                                 updateCmd.Transaction = tran;
@@ -102,7 +104,7 @@ namespace NzbDrone.Core.Datastore.Migration
                                 {
                                     updateCmd.CommandText = @"INSERT INTO ""DownloadHistory"" (""EventType"", ""MovieId"", ""DownloadId"", ""SourceTitle"", ""Date"", ""Protocol"", ""Data"") VALUES (?, ?, ?, ?, ?, ?, ?)";
                                 }
-    
+
                                 updateCmd.AddParameter(downloadHistoryEventType);
                                 updateCmd.AddParameter(movieId);
                                 updateCmd.AddParameter(downloadId);
@@ -110,7 +112,7 @@ namespace NzbDrone.Core.Datastore.Migration
                                 updateCmd.AddParameter(date);
                                 updateCmd.AddParameter(protocol);
                                 updateCmd.AddParameter(downloadHistoryData.ToJson());
-    
+
                                 updateCmd.ExecuteNonQuery();
                             }
                         }

@@ -1,8 +1,8 @@
 using System;
 using NLog;
 using NzbDrone.Common.Http;
-using NzbDrone.Core.Localization;
 using NzbDrone.Core.Configuration;
+using NzbDrone.Core.Localization;
 using NzbDrone.Core.Parser;
 
 namespace NzbDrone.Core.Indexers.TorrentPotato
@@ -14,8 +14,12 @@ namespace NzbDrone.Core.Indexers.TorrentPotato
         public override DownloadProtocol Protocol => DownloadProtocol.Torrent;
         public override TimeSpan RateLimit => TimeSpan.FromSeconds(2);
 
-        public TorrentPotato(IHttpClient httpClient, IIndexerStatusService indexerStatusService, IConfigService configService, IParsingService parsingService, Logger logger,
-            ILocalizationService localizationService)
+        public TorrentPotato(IHttpClient httpClient,
+                               IIndexerStatusService indexerStatusService,
+                               IConfigService configService,
+                               IParsingService parsingService,
+                               Logger logger,
+                               ILocalizationService localizationService)
             : base(httpClient, indexerStatusService, configService, parsingService, logger, localizationService)
         {
         }

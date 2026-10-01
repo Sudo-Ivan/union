@@ -91,6 +91,5 @@ namespace NzbDrone.Core.Test.Download.DownloadHistoryTests
             removedItems.Should().HaveCount(0);
             nonRemovedItems.Should().HaveCount(1);
         }
-
 }
 }

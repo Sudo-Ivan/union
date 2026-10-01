@@ -17,6 +17,7 @@ namespace NzbDrone.Core.Datastore.Migration
             {
                 _logger.Debug(e, "Union: skipping data migration step, schema shape differs");
             }
+
             if (Schema.Table("AlternativeTitles").Column("CleanTitle").Exists())
             {
             Alter.Table("AlternativeTitles").AlterColumn("CleanTitle").AsString().Unique();
@@ -31,7 +32,7 @@ namespace NzbDrone.Core.Datastore.Migration
                 {
                     cmd.Transaction = tran;
                     cmd.CommandText = "DELETE FROM \"AlternativeTitles\" WHERE \"Id\" NOT IN (Select Min(\"Id\") From \"AlternativeTitles\" Group By \"CleanTitle\")";
-    
+
                     cmd.ExecuteNonQuery();
                 }
             }

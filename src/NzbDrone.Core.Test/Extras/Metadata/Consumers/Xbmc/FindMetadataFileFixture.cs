@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using FizzWare.NBuilder;
 using FluentAssertions;
 using Moq;
@@ -112,6 +112,5 @@ namespace NzbDrone.Core.Test.Extras.Metadata.Consumers.Xbmc
             Mocker.GetMock<IDetectXbmcNfo>()
                   .Verify(v => v.IsXbmcNfoFile(It.IsAny<string>()), Times.Once());
         }
-
 }
 }

@@ -7,14 +7,13 @@ using NUnit.Framework;
 using NzbDrone.Common.Disk;
 using NzbDrone.Core.Datastore;
 using NzbDrone.Core.MediaFiles;
-using NzbDrone.Core.MediaFiles.EpisodeImport;
-using EpisodeRootFolderNotFoundException = NzbDrone.Core.MediaFiles.EpisodeImport.RootFolderNotFoundException;
-using MovieRootFolderNotFoundException = NzbDrone.Core.MediaFiles.MovieImport.RootFolderNotFoundException;
 using NzbDrone.Core.Movies;
 using NzbDrone.Core.Parser.Model;
 using NzbDrone.Core.Test.Framework;
 using NzbDrone.Core.Tv;
 using NzbDrone.Test.Common;
+using EpisodeRootFolderNotFoundException = NzbDrone.Core.MediaFiles.EpisodeImport.RootFolderNotFoundException;
+using MovieRootFolderNotFoundException = NzbDrone.Core.MediaFiles.MovieImport.RootFolderNotFoundException;
 
 namespace NzbDrone.Core.Test.MediaFiles
 {
@@ -325,6 +324,5 @@ namespace NzbDrone.Core.Test.MediaFiles
 
             Mocker.GetMock<IMediaFileService>().Verify(v => v.Delete(_localMovie.Movie.MovieFile, DeleteMediaFileReason.Upgrade), Times.Never());
         }
-
 }
 }

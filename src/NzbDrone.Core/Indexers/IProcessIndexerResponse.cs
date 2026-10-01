@@ -7,6 +7,10 @@ namespace NzbDrone.Core.Indexers
     public interface IParseIndexerResponse
     {
         IList<ReleaseInfo> ParseResponse(IndexerResponse indexerResponse);
-        Action<IDictionary<string, string>, DateTime?> CookiesUpdater { get => null; set { } }
+        Action<IDictionary<string, string>, DateTime?> CookiesUpdater
+        {
+            get => null;
+            set { }
+        }
     }
 }

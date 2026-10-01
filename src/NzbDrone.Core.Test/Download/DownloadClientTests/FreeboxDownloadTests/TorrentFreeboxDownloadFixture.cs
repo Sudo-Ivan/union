@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -478,6 +478,5 @@ namespace NzbDrone.Core.Test.Download.DownloadClientTests.FreeboxDownloadTests
             Mocker.GetMock<IFreeboxDownloadProxy>()
                   .Verify(v => v.AddTaskFromUrl(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<bool>(), It.IsAny<bool>(), expectedSeedRatio, It.IsAny<FreeboxDownloadSettings>()), Times.Once());
         }
-
 }
 }

@@ -1,4 +1,4 @@
-﻿using System.Net;
+using System.Net;
 using NzbDrone.Core.Exceptions;
 
 namespace NzbDrone.Core.MetadataSource.SkyHook;

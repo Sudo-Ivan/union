@@ -119,4 +119,5 @@ namespace Sonarr.Api.V3.Queue
         }
     }
 }
+
 #pragma warning restore CS0612

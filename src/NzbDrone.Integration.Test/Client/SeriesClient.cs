@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Net;
 using RestSharp;
 using Sonarr.Api.V3.Series;

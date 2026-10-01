@@ -1,4 +1,4 @@
-﻿using NzbDrone.Core.MediaFiles;
+using NzbDrone.Core.MediaFiles;
 
 namespace NzbDrone.Core.Notifications.Webhook
 {

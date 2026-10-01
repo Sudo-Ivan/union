@@ -21,7 +21,6 @@ namespace NzbDrone.Update.Test
 
         Mock<IIAppDirectoryInfo> _IAppDirectoryInfo;
 
-
         [SetUp]
         public void Setup()
         {
@@ -58,9 +57,7 @@ namespace NzbDrone.Update.Test
             WithInstalledService();
             WithServiceRunning(true);
 
-
             Mocker.Resolve<InstallUpdateService>().Start(TARGET_FOLDER);
-
 
             Mocker.GetMock<IServiceProvider>().Verify(c => c.Stop(ServiceProvider.SERVICE_NAME), Times.Once());
         }
@@ -71,9 +68,7 @@ namespace NzbDrone.Update.Test
             WithInstalledService();
             WithServiceRunning(false);
 
-
             Mocker.Resolve<InstallUpdateService>().Start(TARGET_FOLDER);
-
 
             Mocker.GetMock<IServiceProvider>().Verify(c => c.Stop(ServiceProvider.SERVICE_NAME), Times.Never());
         }
@@ -83,7 +78,6 @@ namespace NzbDrone.Update.Test
         {
 
             Mocker.Resolve<InstallUpdateService>().Start(TARGET_FOLDER);
-
 
             Mocker.GetMock<IServiceProvider>().Verify(c => c.Stop(It.IsAny<string>()), Times.Never());
         }
@@ -97,9 +91,7 @@ namespace NzbDrone.Update.Test
                 .Setup(c => c.GetProcessByName(ProcessProvider.NzbDroneProcessName))
                 .Returns(processes);
 
-
             Mocker.Resolve<InstallUpdateService>().Start(TARGET_FOLDER);
-
 
             Mocker.GetMock<IProcessProvider>().Verify(c => c.KillAll(ProcessProvider.NzbDroneProcessName), Times.Once());
         }
@@ -111,9 +103,7 @@ namespace NzbDrone.Update.Test
                 .Setup(c => c.GetProcessByName(ProcessProvider.NzbDroneProcessName))
                 .Returns(new List<ProcessInfo>());
 
-
             Mocker.Resolve<InstallUpdateService>().Start(TARGET_FOLDER);
-
 
             Mocker.GetMock<IProcessProvider>().Verify(c => c.Kill(It.IsAny<int>()), Times.Never());
         }
@@ -146,9 +136,7 @@ namespace NzbDrone.Update.Test
                 .Setup(c => c.CopyDirectory(UPDATE_FOLDER, TARGET_FOLDER))
                 .Throws(new IOException());
 
-
             Mocker.Resolve<InstallUpdateService>().Start(TARGET_FOLDER);
-
 
             Mocker.GetMock<IDiskProvider>()
                 .Verify(c => c.CopyDirectory(BACKUP_FOLDER, TARGET_FOLDER), Times.Once());
@@ -161,9 +149,7 @@ namespace NzbDrone.Update.Test
             WithInstalledService();
             WithServiceRunning(true);
 
-
             Mocker.Resolve<InstallUpdateService>().Start(TARGET_FOLDER);
-
 
             VerifyServiceRestart();
         }
@@ -174,9 +160,7 @@ namespace NzbDrone.Update.Test
             WithInstalledService();
             WithServiceRunning(false);
 
-
             Mocker.Resolve<InstallUpdateService>().Start(TARGET_FOLDER);
-
 
             VerifyProcessRestart();
         }
@@ -191,9 +175,7 @@ namespace NzbDrone.Update.Test
                 .Setup(c => c.CopyDirectory(UPDATE_FOLDER, TARGET_FOLDER))
                 .Throws(new IOException());
 
-
             Mocker.Resolve<InstallUpdateService>().Start(TARGET_FOLDER);
-
 
             VerifyServiceRestart();
             ExceptionVerification.ExpectedFatals(1);
@@ -209,9 +191,7 @@ namespace NzbDrone.Update.Test
                 .Setup(c => c.CopyDirectory(UPDATE_FOLDER, TARGET_FOLDER))
                 .Throws(new IOException());
 
-
             Mocker.Resolve<InstallUpdateService>().Start(TARGET_FOLDER);
-
 
             VerifyProcessRestart();
             ExceptionVerification.ExpectedFatals(1);
@@ -234,8 +214,7 @@ namespace NzbDrone.Update.Test
             Mocker.GetMock<IProcessProvider>()
                 .Verify(c => c.Start(TARGET_FOLDER + "Sonarr.exe"), Times.Once());
         }
-
-
     }
 }
+
 */

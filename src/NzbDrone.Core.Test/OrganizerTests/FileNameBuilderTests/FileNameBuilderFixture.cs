@@ -8,7 +8,6 @@ using FluentAssertions;
 using Moq;
 using NUnit.Framework;
 using NzbDrone.Core.CustomFormats;
-using NzbDrone.Core.Languages;
 using NzbDrone.Core.MediaFiles;
 using NzbDrone.Core.MediaFiles.MediaInfo;
 using NzbDrone.Core.Organizer;
@@ -1116,6 +1115,5 @@ namespace NzbDrone.Core.Test.OrganizerTests.FileNameBuilderTests
                 SchemaRevision = schemaRevision
             };
         }
-
     }
 }

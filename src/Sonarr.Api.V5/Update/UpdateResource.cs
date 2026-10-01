@@ -1,4 +1,4 @@
-﻿using NzbDrone.Core.Update;
+using NzbDrone.Core.Update;
 using Sonarr.Http.REST;
 
 namespace Sonarr.Api.V5.Update

@@ -243,7 +243,6 @@ namespace NzbDrone.Core.Extras.Subtitles
             return importedFiles;
         }
 
-
         public override IEnumerable<ExtraFile> CreateAfterMediaCoverUpdate(Movie movie)
         {
             return Enumerable.Empty<SubtitleFile>();

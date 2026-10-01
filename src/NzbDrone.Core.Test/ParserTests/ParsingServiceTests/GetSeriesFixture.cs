@@ -1,4 +1,4 @@
-﻿using FluentAssertions;
+using FluentAssertions;
 using Moq;
 using NUnit.Framework;
 using NzbDrone.Core.DataAugmentation.Scene;

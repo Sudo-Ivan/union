@@ -241,6 +241,7 @@ namespace NzbDrone.Core.Tv
                 predicate = "\"SeasonNumber\" > 0 AND \"SeasonNumber\" = @firstSeason";
                 parameters.Add("firstSeason", firstSeason);
             }
+
 #pragma warning disable CS0612
             else if (monitor is MonitorTypes.LastSeason or MonitorTypes.LatestSeason)
 #pragma warning restore CS0612

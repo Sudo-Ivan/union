@@ -16,6 +16,7 @@ namespace NzbDrone.Core.Datastore.Migration
             {
                 _logger.Debug(e, "Union: skipping data migration step, schema shape differs");
             }
+
             try
             {
             Execute.Sql("UPDATE \"Indexers\" SET \"Settings\" = Replace(\"Settings\", 'https://awesome-hd.me', 'https://awesome-hd.club') WHERE \"Implementation\" = 'AwesomeHD';");

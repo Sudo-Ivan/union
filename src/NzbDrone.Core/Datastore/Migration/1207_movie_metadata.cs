@@ -71,18 +71,22 @@ namespace NzbDrone.Core.Datastore.Migration
             {
             Alter.Table("Movies").AddColumn("MovieMetadataId").AsInt32().WithDefaultValue(0);
             }
+
             if (!Schema.Table("AlternativeTitles").Column("MovieMetadataId").Exists())
             {
             Alter.Table("AlternativeTitles").AddColumn("MovieMetadataId").AsInt32().WithDefaultValue(0);
             }
+
             if (!Schema.Table("Credits").Column("MovieMetadataId").Exists())
             {
             Alter.Table("Credits").AddColumn("MovieMetadataId").AsInt32().WithDefaultValue(0);
             }
+
             if (!Schema.Table("MovieTranslations").Column("MovieMetadataId").Exists())
             {
             Alter.Table("MovieTranslations").AddColumn("MovieMetadataId").AsInt32().WithDefaultValue(0);
             }
+
             if (!Schema.Table("ImportListMovies").Column("MovieMetadataId").Exists())
             {
             Alter.Table("ImportListMovies").AddColumn("MovieMetadataId").AsInt32().WithDefaultValue(0).Indexed();
@@ -92,7 +96,7 @@ namespace NzbDrone.Core.Datastore.Migration
             try
             {
             Execute.Sql(@"UPDATE ""Movies""
-                          SET ""MovieMetadataId"" = (SELECT ""MovieMetadata"".""Id"" 
+                          SET ""MovieMetadataId"" = (SELECT ""MovieMetadata"".""Id""
                                                   FROM ""MovieMetadata""
                                                   WHERE ""MovieMetadata"".""TmdbId"" = ""Movies"".""TmdbId"")");
             }
@@ -104,8 +108,8 @@ namespace NzbDrone.Core.Datastore.Migration
             try
             {
             Execute.Sql(@"UPDATE ""AlternativeTitles""
-                          SET ""MovieMetadataId"" = (SELECT ""Movies"".""MovieMetadataId"" 
-                                                  FROM ""Movies"" 
+                          SET ""MovieMetadataId"" = (SELECT ""Movies"".""MovieMetadataId""
+                                                  FROM ""Movies""
                                                   WHERE ""Movies"".""Id"" = ""AlternativeTitles"".""MovieId"")");
             }
             catch (System.Exception e)
@@ -116,8 +120,8 @@ namespace NzbDrone.Core.Datastore.Migration
             try
             {
             Execute.Sql(@"UPDATE ""Credits""
-                          SET ""MovieMetadataId"" = (SELECT ""Movies"".""MovieMetadataId"" 
-                                                  FROM ""Movies"" 
+                          SET ""MovieMetadataId"" = (SELECT ""Movies"".""MovieMetadataId""
+                                                  FROM ""Movies""
                                                   WHERE ""Movies"".""Id"" = ""Credits"".""MovieId"")");
             }
             catch (System.Exception e)
@@ -128,8 +132,8 @@ namespace NzbDrone.Core.Datastore.Migration
             try
             {
             Execute.Sql(@"UPDATE ""MovieTranslations""
-                          SET ""MovieMetadataId"" = (SELECT ""Movies"".""MovieMetadataId"" 
-                                                  FROM ""Movies"" 
+                          SET ""MovieMetadataId"" = (SELECT ""Movies"".""MovieMetadataId""
+                                                  FROM ""Movies""
                                                   WHERE ""Movies"".""Id"" = ""MovieTranslations"".""MovieId"")");
             }
             catch (System.Exception e)
@@ -140,8 +144,8 @@ namespace NzbDrone.Core.Datastore.Migration
             try
             {
             Execute.Sql(@"UPDATE ""ImportListMovies""
-                          SET ""MovieMetadataId"" = (SELECT ""MovieMetadata"".""Id"" 
-                                                  FROM ""MovieMetadata"" 
+                          SET ""MovieMetadataId"" = (SELECT ""MovieMetadata"".""Id""
+                                                  FROM ""MovieMetadata""
                                                   WHERE ""MovieMetadata"".""TmdbId"" = ""ImportListMovies"".""TmdbId"")");
             }
             catch (System.Exception e)
@@ -160,10 +164,12 @@ namespace NzbDrone.Core.Datastore.Migration
             {
             Delete.Column("MovieId").FromTable("AlternativeTitles");
             }
+
             if (Schema.Table("Credits").Column("MovieId").Exists())
             {
             Delete.Column("MovieId").FromTable("Credits");
             }
+
             if (Schema.Table("MovieTranslations").Column("MovieId").Exists())
             {
             Delete.Column("MovieId").FromTable("MovieTranslations");

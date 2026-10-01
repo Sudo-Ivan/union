@@ -805,6 +805,7 @@ namespace NzbDrone.Core.Parser
 
             return result.DistinctBy(e => e.Id).ToList();
         }
+
         public ParsedMovieInfo ParseMinimalPathMovieInfo(string path)
         {
             var fileInfo = new FileInfo(path);

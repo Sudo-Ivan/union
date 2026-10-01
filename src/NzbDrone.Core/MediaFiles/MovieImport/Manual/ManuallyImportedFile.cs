@@ -1,4 +1,4 @@
-﻿using NzbDrone.Core.Download.TrackedDownloads;
+using NzbDrone.Core.Download.TrackedDownloads;
 
 namespace NzbDrone.Core.MediaFiles.MovieImport.Manual
 {

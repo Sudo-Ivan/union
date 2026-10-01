@@ -10,7 +10,6 @@ using NzbDrone.Core.ImportLists.ImportExclusions;
 using NzbDrone.Core.ImportLists.ImportListMovies;
 using NzbDrone.Core.Movies;
 using NzbDrone.Core.Test.Framework;
-using NzbDrone.Test.Common;
 
 namespace NzbDrone.Core.Test.ImportListTests
 {

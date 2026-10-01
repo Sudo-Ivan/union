@@ -12,6 +12,7 @@ namespace NzbDrone.Core.Datastore.Migration
             {
             Alter.Table("DelayProfiles").AddColumn("BypassIfAboveCustomFormatScore").AsBoolean().WithDefaultValue(false);
             }
+
             if (!Schema.Table("DelayProfiles").Column("MinimumCustomFormatScore").Exists())
             {
             Alter.Table("DelayProfiles").AddColumn("MinimumCustomFormatScore").AsInt32().Nullable();

@@ -12,6 +12,7 @@ namespace NzbDrone.Core.Datastore.Migration
             {
             Alter.Table("Notifications").AddColumn("OnHealthIssue").AsBoolean().WithDefaultValue(false);
             }
+
             if (!Schema.Table("Notifications").Column("IncludeHealthWarnings").Exists())
             {
             Alter.Table("Notifications").AddColumn("IncludeHealthWarnings").AsBoolean().WithDefaultValue(false);

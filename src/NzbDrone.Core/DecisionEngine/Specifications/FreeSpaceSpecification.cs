@@ -1,5 +1,5 @@
-using System.IO;
 using System;
+using System.IO;
 using NLog;
 using NzbDrone.Common.Cache;
 using NzbDrone.Common.Disk;

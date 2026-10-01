@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using NLog;
 using NzbDrone.Core.Configuration;
 using NzbDrone.Core.Parser.Model;

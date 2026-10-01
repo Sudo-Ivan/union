@@ -20,6 +20,7 @@ namespace NzbDrone.Core.ProgressMessaging
             {
                 return _commandModel ?? _commandModelAsync.Value;
             }
+
             set
             {
                 _commandModel = value;

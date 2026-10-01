@@ -41,6 +41,7 @@ namespace NzbDrone.Core.Datastore.Migration
             {
                 _logger.Debug(e, "Union: skipping data migration step, schema shape differs");
             }
+
             try
             {
             Execute.WithConnection(RenameTraktListType);
@@ -49,6 +50,7 @@ namespace NzbDrone.Core.Datastore.Migration
             {
                 _logger.Debug(e, "Union: skipping data migration step, schema shape differs");
             }
+
             try
             {
             Execute.WithConnection(FixConfig);
@@ -64,13 +66,13 @@ namespace NzbDrone.Core.Datastore.Migration
             try
             {
                 var rows = conn.Query<ProviderDefinition166>($"SELECT \"Id\", \"Implementation\", \"ConfigContract\", \"Settings\" FROM \"ImportLists\" WHERE \"Implementation\" = 'TMDbPopularImport'");
-    
+
                 var corrected = new List<ProviderDefinition166>();
-    
+
                 foreach (var row in rows)
                 {
                     var settings = JsonSerializer.Deserialize<TMDbPopularSettings165>(row.Settings, _serializerSettings);
-    
+
                     var newSettings = new TMDbPopularSettings166
                     {
                         TMDbListType = settings.ListType,
@@ -84,7 +86,7 @@ namespace NzbDrone.Core.Datastore.Migration
                             LanguageCode = settings.FilterCriteria.LanguageCode
                         }
                     };
-    
+
                     corrected.Add(new ProviderDefinition166
                     {
                         Id = row.Id,
@@ -93,7 +95,7 @@ namespace NzbDrone.Core.Datastore.Migration
                         Settings = JsonSerializer.Serialize(newSettings, _serializerSettings)
                     });
                 }
-    
+
                 var updateSql = "UPDATE \"ImportLists\" SET \"Settings\" = @Settings WHERE \"Id\" = @Id";
                 conn.Execute(updateSql, corrected, transaction: tran);
             }
@@ -108,13 +110,13 @@ namespace NzbDrone.Core.Datastore.Migration
             try
             {
                 var rows = conn.Query<ProviderDefinition166>($"SELECT \"Id\", \"Implementation\", \"ConfigContract\", \"Settings\" FROM \"ImportLists\" WHERE \"Implementation\" = 'TraktImport'");
-    
+
                 var corrected = new List<ProviderDefinition166>();
-    
+
                 foreach (var row in rows)
                 {
                     var settings = JsonSerializer.Deserialize<TraktSettings165>(row.Settings, _serializerSettings);
-    
+
                     var newSettings = new TraktSettings166
                     {
                         AccessToken = settings.AccessToken,
@@ -132,7 +134,7 @@ namespace NzbDrone.Core.Datastore.Migration
                         TraktAdditionalParameters = settings.TraktAdditionalParameters,
                         SignIn = settings.SignIn
                     };
-    
+
                     corrected.Add(new ProviderDefinition166
                     {
                         Id = row.Id,
@@ -141,7 +143,7 @@ namespace NzbDrone.Core.Datastore.Migration
                         Settings = JsonSerializer.Serialize(newSettings, _serializerSettings)
                     });
                 }
-    
+
                 var updateSql = "UPDATE \"ImportLists\" SET \"Settings\" = @Settings WHERE \"Id\" = @Id";
                 conn.Execute(updateSql, corrected, transaction: tran);
             }
@@ -156,20 +158,20 @@ namespace NzbDrone.Core.Datastore.Migration
             try
             {
                 var rows = conn.Query<ProviderDefinition166>($"SELECT \"Id\", \"Implementation\", \"ConfigContract\", \"Settings\" FROM \"ImportLists\" WHERE \"Implementation\" = 'TMDbImport'");
-    
+
                 var corrected = new List<ProviderDefinition166>();
-    
+
                 foreach (var row in rows)
                 {
                     var settings = JsonSerializer.Deserialize<TMDbSettings165>(row.Settings, _serializerSettings);
-    
+
                     if (settings.ListId.IsNotNullOrWhiteSpace())
                     {
                         var newSettings = new TMDbListSettings166
                         {
                             ListId = settings.ListId
                         };
-    
+
                         corrected.Add(new ProviderDefinition166
                         {
                             Id = row.Id,
@@ -193,7 +195,7 @@ namespace NzbDrone.Core.Datastore.Migration
                                 LanguageCode = settings.LanguageCode
                             }
                         };
-    
+
                         corrected.Add(new ProviderDefinition166
                         {
                             Id = row.Id,
@@ -203,7 +205,7 @@ namespace NzbDrone.Core.Datastore.Migration
                         });
                     }
                 }
-    
+
                 var updateSql = "UPDATE \"ImportLists\" SET \"Implementation\" = @Implementation, \"ConfigContract\" = @ConfigContract, \"Settings\" = @Settings WHERE \"Id\" = @Id";
                 conn.Execute(updateSql, corrected, transaction: tran);
             }

@@ -22,10 +22,12 @@ namespace NzbDrone.Core.Datastore.Migration
             {
             IfDatabase("sqlite").Alter.Column("Id").OnTable("History").AsInt32().PrimaryKey().Identity();
             }
+
             if (!Schema.Table("Blocklist").Index("IX_Blocklist_QualityId").Exists())
             {
             IfDatabase("sqlite").Alter.Column("Id").OnTable("Blocklist").AsInt32().PrimaryKey().Identity();
             }
+
             IfDatabase("sqlite").Alter.Column("Id").OnTable("MovieFiles").AsInt32().PrimaryKey().Identity();
             IfDatabase("sqlite").Alter.Column("Id").OnTable("CustomFormats").AsInt32().PrimaryKey().Identity();
         }

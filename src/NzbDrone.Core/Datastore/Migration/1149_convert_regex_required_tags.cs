@@ -26,7 +26,7 @@ namespace NzbDrone.Core.Datastore.Migration
             try
             {
                 var updater = new CustomFormatUpdater149(conn, tran);
-    
+
                 updater.ReplaceInTags(OriginalRegex, match =>
                 {
                     var modifiers = "";
@@ -34,25 +34,25 @@ namespace NzbDrone.Core.Datastore.Migration
                     {
                         modifiers += "N";
                     }
-    
+
                     if (match.Groups["m_r"].Success)
                     {
                         modifiers += "RX";
                     }
-    
+
                     if (match.Groups["m_re"].Success)
                     {
                         modifiers += "RQ";
                     }
-    
+
                     if (!string.IsNullOrEmpty(modifiers))
                     {
                         modifiers = "_" + modifiers;
                     }
-    
+
                     return $"{match.Groups["type"].Value}{modifiers}_{match.Groups["value"].Value}";
                 });
-    
+
                 updater.Commit();
             }
             catch (System.Exception e)

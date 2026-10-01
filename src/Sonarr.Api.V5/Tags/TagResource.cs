@@ -1,4 +1,4 @@
-﻿using NzbDrone.Core.Tags;
+using NzbDrone.Core.Tags;
 using Sonarr.Http.REST;
 
 namespace Sonarr.Api.V5.Tags;

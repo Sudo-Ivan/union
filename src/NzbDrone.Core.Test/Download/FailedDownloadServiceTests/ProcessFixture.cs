@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using FizzWare.NBuilder;
 using FluentAssertions;
 using Moq;
@@ -142,6 +142,5 @@ namespace NzbDrone.Core.Test.Download.FailedDownloadServiceTests
                 .Setup(s => s.Find(_trackedDownload.DownloadItem.DownloadId, MovieHistoryEventType.Grabbed))
                 .Returns(new List<MovieHistory>());
         }
-
 }
 }

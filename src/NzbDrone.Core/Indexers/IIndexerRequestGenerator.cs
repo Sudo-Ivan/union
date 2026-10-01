@@ -48,8 +48,16 @@ namespace NzbDrone.Core.Indexers
             throw new NotSupportedException();
         }
 
-        Func<IDictionary<string, string>> GetCookies { get => null; set { } }
+        Func<IDictionary<string, string>> GetCookies
+        {
+            get => null;
+            set { }
+        }
 
-        Action<IDictionary<string, string>, DateTime?> CookiesUpdater { get => null; set { } }
+        Action<IDictionary<string, string>, DateTime?> CookiesUpdater
+        {
+            get => null;
+            set { }
+        }
     }
 }

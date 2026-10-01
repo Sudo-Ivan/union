@@ -1,4 +1,4 @@
-﻿namespace Sonarr.Http.Extensions
+namespace Sonarr.Http.Extensions
 {
     public static class AccessControlHeaders
     {

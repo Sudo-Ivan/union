@@ -254,7 +254,6 @@ namespace NzbDrone.Core.Organizer
             return Path.Combine(seasonPath, fileName);
         }
 
-
         public string BuildFileName(Movie movie, MovieFile movieFile, NamingConfig namingConfig = null, List<CustomFormat> customFormats = null)
         {
             if (namingConfig == null)

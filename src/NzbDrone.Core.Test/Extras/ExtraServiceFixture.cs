@@ -448,6 +448,5 @@ namespace NzbDrone.Core.Test.Extras
             Mocker.GetMock<IDiskProvider>().Verify(v => v.GetFiles(_releaseFolder, true), Times.Never);
             Mocker.GetMock<IDiskProvider>().Verify(v => v.GetFiles(_releaseFolder, false), Times.Once);
         }
-
 }
 }

@@ -10,9 +10,9 @@ using NUnit.Framework;
 using NzbDrone.Common.Extensions;
 using NzbDrone.Core.DataAugmentation.Scene;
 using NzbDrone.Core.DecisionEngine;
+using NzbDrone.Core.Indexers;
 using NzbDrone.Core.IndexerSearch;
 using NzbDrone.Core.IndexerSearch.Definitions;
-using NzbDrone.Core.Indexers;
 using NzbDrone.Core.Movies;
 using NzbDrone.Core.Movies.Translations;
 using NzbDrone.Core.Test.Framework;
@@ -963,6 +963,5 @@ namespace NzbDrone.Core.Test.IndexerSearchTests
 
             criteria.Count.Should().Be(0);
         }
-
 }
 }

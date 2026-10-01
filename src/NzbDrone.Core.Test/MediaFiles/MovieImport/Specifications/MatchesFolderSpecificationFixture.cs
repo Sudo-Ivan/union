@@ -56,7 +56,6 @@ namespace NzbDrone.Core.Test.MediaFiles.MovieImport.Specifications
             Subject.IsSatisfiedBy(_localMovie, null).Accepted.Should().BeTrue();
         }
 
-
         [Test]
         public void should_be_rejected_if_file_and_folder_do_not_have_same_episode()
         {

@@ -1,4 +1,4 @@
-﻿using NzbDrone.Core.Download;
+using NzbDrone.Core.Download;
 using NzbDrone.Core.Parser.Model;
 
 namespace NzbDrone.Core.MediaFiles.EpisodeImport

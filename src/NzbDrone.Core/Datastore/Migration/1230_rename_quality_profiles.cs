@@ -12,10 +12,12 @@ namespace NzbDrone.Core.Datastore.Migration
             {
             Rename.Table("Profiles").To("QualityProfiles");
             }
+
             if (Schema.Table("Movies").Column("ProfileId").Exists() && !Schema.Table("Movies").Column("QualityProfileId").Exists())
             {
             Rename.Column("ProfileId").OnTable("Movies").To("QualityProfileId");
             }
+
             if (Schema.Table("ImportLists").Column("ProfileId").Exists() && !Schema.Table("ImportLists").Column("QualityProfileId").Exists())
             {
             Rename.Column("ProfileId").OnTable("ImportLists").To("QualityProfileId");

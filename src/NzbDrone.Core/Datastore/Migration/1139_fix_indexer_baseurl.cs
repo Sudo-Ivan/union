@@ -1,4 +1,4 @@
-﻿using System.Data;
+using System.Data;
 using FluentMigrator;
 using Newtonsoft.Json.Linq;
 using NzbDrone.Common.Extensions;
@@ -30,24 +30,24 @@ namespace NzbDrone.Core.Datastore.Migration
                 {
                     cmd.Transaction = tran;
                     cmd.CommandText = "SELECT \"Id\", \"Settings\" FROM \"Indexers\" WHERE \"ConfigContract\" IN ('NewznabSettings', 'TorznabSettings', 'IPTorrentsSettings', 'OmgwtfnzbsSettings')";
-    
+
                     using (var reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
                         {
                             var id = reader.GetInt32(0);
                             var settings = reader.GetString(1);
-    
+
                             if (settings.IsNotNullOrWhiteSpace())
                             {
                                 var jsonObject = Json.Deserialize<JObject>(settings);
-    
+
                                 if (jsonObject.Property("url") != null)
                                 {
                                     jsonObject.AddFirst(new JProperty("baseUrl", jsonObject["url"]));
                                     jsonObject.Remove("url");
                                     settings = jsonObject.ToJson();
-    
+
                                     using (var updateCmd = conn.CreateCommand())
                                     {
                                         updateCmd.Transaction = tran;

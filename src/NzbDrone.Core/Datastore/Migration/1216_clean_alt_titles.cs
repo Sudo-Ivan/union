@@ -12,14 +12,17 @@ namespace NzbDrone.Core.Datastore.Migration
             {
             Delete.Column("Language").FromTable("AlternativeTitles");
             }
+
             if (Schema.Table("AlternativeTitles").Column("Votes").Exists())
             {
             Delete.Column("Votes").FromTable("AlternativeTitles");
             }
+
             if (Schema.Table("AlternativeTitles").Column("VoteCount").Exists())
             {
             Delete.Column("VoteCount").FromTable("AlternativeTitles");
             }
+
             if (Schema.Table("AlternativeTitles").Column("SourceId").Exists())
             {
             Delete.Column("SourceId").FromTable("AlternativeTitles");

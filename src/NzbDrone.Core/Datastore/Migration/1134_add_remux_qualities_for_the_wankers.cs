@@ -1,4 +1,4 @@
-﻿using System.Data;
+using System.Data;
 using FluentMigrator;
 using NzbDrone.Core.Datastore.Migration.Framework;
 
@@ -26,7 +26,7 @@ namespace NzbDrone.Core.Datastore.Migration
                 var updater = new ProfileUpdater125(conn, tran);
                 updater.SplitQualityAppend(19, 31); // Remux2160p    AFTER     Bluray2160p
                 updater.SplitQualityAppend(7, 30);  // Remux1080p    AFTER     Bluray1080p
-    
+
                 updater.Commit();
             }
             catch (System.Exception e)

@@ -242,6 +242,5 @@ namespace NzbDrone.Core.Test.Extras.Others
 
             results.Count.Should().Be(1);
         }
-
 }
 }

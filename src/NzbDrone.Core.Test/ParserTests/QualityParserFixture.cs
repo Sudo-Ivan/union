@@ -1040,6 +1040,5 @@ namespace NzbDrone.Core.Test.ParserTests
             var version = proper ? 2 : 1;
             result.Revision.Version.Should().Be(version);
         }
-
 }
 }

@@ -1,4 +1,4 @@
-﻿/*
+/*
 using System;
 using System.Collections.Generic;
 using FizzWare.NBuilder;
@@ -23,19 +23,16 @@ namespace NzbDrone.Core.Test.JobTests
             _disabledJob = new DisabledJob();
         }
 
-
         private void Initialize()
         {
             Subject.Handle(new ApplicationStartedEvent());
         }
-
 
         [Test]
         public void Init_should_add_defintaions()
         {
             IEnumerable<IJob> baseFakeJobs = new List<IJob> { _fakeJob };
             Mocker.SetConstant(baseFakeJobs);
-
 
             Initialize();
 
@@ -117,7 +114,6 @@ namespace NzbDrone.Core.Test.JobTests
 
             Initialize();
 
-
             AllStoredModels.Should().HaveCount(1);
             StoredModel.Name.Should().Be(newJob.GetType().FullName);
             StoredModel.Name.Should().Be(newJob.Name);
@@ -125,7 +121,6 @@ namespace NzbDrone.Core.Test.JobTests
             StoredModel.Success.Should().Be(oldJob.Success);
             StoredModel.LastExecution.Should().Be(oldJob.LastExecution);
         }
-
 
         [Test]
         public void pending_job_should_get_jobs_that_have_matured()
@@ -137,13 +132,10 @@ namespace NzbDrone.Core.Test.JobTests
              .With(c => c.LastExecution = DateTime.Now.AddMinutes(-5))
              .Build();
 
-
             Storage.Insert(oldJob);
-
 
             Subject.GetPendingJobs().Should().HaveCount(1);
         }
-
 
         [Test]
         public void pending_job_should_not_get_jobs_that_havent_matured()
@@ -155,9 +147,7 @@ namespace NzbDrone.Core.Test.JobTests
              .With(c => c.LastExecution = DateTime.Now.AddMinutes(-5))
              .Build();
 
-
             Storage.Insert(recent);
-
 
             Subject.GetPendingJobs().Should().BeEmpty();
         }
@@ -173,10 +163,9 @@ namespace NzbDrone.Core.Test.JobTests
 
                     WaitForQueue();
 
-
                     disabledJob.ExecutionCount.Should().Be(0);
                 }#1#
-
     }
 }
+
 */

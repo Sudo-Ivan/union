@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using FizzWare.NBuilder;
@@ -400,6 +400,5 @@ namespace NzbDrone.Core.Test.MediaCoverTests
             Mocker.GetMock<IImageResizer>()
                   .Verify(v => v.Resize(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>()), Times.Exactly(2));
         }
-
 }
 }

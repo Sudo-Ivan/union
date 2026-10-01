@@ -3,8 +3,8 @@ using Equ;
 using NzbDrone.Core.Movies;
 using NzbDrone.Core.ThingiProvider;
 using MovieMonitorTypes = NzbDrone.Core.Movies.MonitorTypes;
-using SeriesMonitorTypes = NzbDrone.Core.Tv.MonitorTypes;
 using NewItemMonitorTypes = NzbDrone.Core.Tv.NewItemMonitorTypes;
+using SeriesMonitorTypes = NzbDrone.Core.Tv.MonitorTypes;
 using SeriesTypes = NzbDrone.Core.Tv.SeriesTypes;
 
 namespace NzbDrone.Core.ImportLists

@@ -88,6 +88,7 @@ namespace NzbDrone.Common.Extensions
 
             source.Add(item);
         }
+
         #nullable disable
 
         public static bool Empty<TSource>(this IEnumerable<TSource> source)

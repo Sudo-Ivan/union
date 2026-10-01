@@ -25,10 +25,12 @@ namespace NzbDrone.Core.Datastore.Migration
             {
             Alter.Table("SubtitleFiles").AddColumn("Title").AsString().Nullable();
             }
+
             if (!Schema.Table("SubtitleFiles").Column("Copy").Exists())
             {
             Alter.Table("SubtitleFiles").AddColumn("Copy").AsInt32().WithDefaultValue(0);
             }
+
             try
             {
             Execute.WithConnection(UpdateTitles);
@@ -44,12 +46,12 @@ namespace NzbDrone.Core.Datastore.Migration
             try
             {
                 var updates = new List<object>();
-    
+
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.Transaction = tran;
                     cmd.CommandText = "SELECT \"SubtitleFiles\".\"Id\", \"SubtitleFiles\".\"RelativePath\", \"MovieFiles\".\"RelativePath\", \"MovieFiles\".\"OriginalFilePath\" FROM \"SubtitleFiles\" JOIN \"MovieFiles\" ON \"SubtitleFiles\".\"MovieFileId\" = \"MovieFiles\".\"Id\"";
-    
+
                     using var reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
@@ -57,9 +59,9 @@ namespace NzbDrone.Core.Datastore.Migration
                         var relativePath = reader.GetString(1);
                         var movieFileRelativePath = reader.GetString(2);
                         var movieFileOriginalFilePath = reader[3] as string;
-    
+
                         var subtitleTitleInfo = CleanSubtitleTitleInfo(movieFileRelativePath, movieFileOriginalFilePath, relativePath);
-    
+
                         updates.Add(new
                         {
                             Id = id,
@@ -70,7 +72,7 @@ namespace NzbDrone.Core.Datastore.Migration
                         });
                     }
                 }
-    
+
                 var updateSubtitleFilesSql = "UPDATE \"SubtitleFiles\" SET \"Title\" = @Title, \"Copy\" = @Copy, \"Language\" = @Language, \"LanguageTags\" = @LanguageTags, \"LastUpdated\" = CURRENT_TIMESTAMP WHERE \"Id\" = @Id";
                 conn.Execute(updateSubtitleFilesSql, updates, transaction: tran);
             }

@@ -1,4 +1,4 @@
-﻿namespace NzbDrone.Common.Expansive
+namespace NzbDrone.Common.Expansive
 {
     internal class Tree<T> : TreeNode<T>
     {

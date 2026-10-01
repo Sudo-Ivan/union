@@ -76,6 +76,5 @@ namespace NzbDrone.Core.Test.Datastore.Converters
 
             Subject.Parse(data).Should().BeOfType<RefreshMovieCommand>();
         }
-
 }
 }

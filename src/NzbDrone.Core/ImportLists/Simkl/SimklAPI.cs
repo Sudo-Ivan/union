@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
-using NzbDrone.Core.ImportLists;
 using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace NzbDrone.Core.ImportLists.Simkl
 {

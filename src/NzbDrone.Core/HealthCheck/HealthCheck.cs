@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text.RegularExpressions;
 using NzbDrone.Common.Http;
 using NzbDrone.Core.Datastore;

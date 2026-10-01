@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using FluentAssertions;
 using Moq;
 using NUnit.Framework;
@@ -131,6 +131,5 @@ namespace NzbDrone.Core.Test.DecisionEngineTests
 
             Subject.IsSatisfiedBy(_remoteMovie, new()).Accepted.Should().Be(false);
         }
-
 }
 }

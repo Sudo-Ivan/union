@@ -318,6 +318,5 @@ namespace NzbDrone.Core.Test.DecisionEngineTests.RssSync
             Mocker.GetMock<IPendingReleaseService>()
                 .Verify(s => s.GetPendingQueue(), Times.Once);
         }
-
 }
 }

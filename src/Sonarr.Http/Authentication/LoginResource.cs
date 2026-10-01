@@ -1,4 +1,4 @@
-﻿namespace Sonarr.Http.Authentication
+namespace Sonarr.Http.Authentication
 {
     public class LoginResource
     {

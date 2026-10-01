@@ -1,4 +1,4 @@
-﻿namespace NzbDrone.Core.MediaFiles.MovieImport
+namespace NzbDrone.Core.MediaFiles.MovieImport
 {
     public enum DetectSampleResult
     {

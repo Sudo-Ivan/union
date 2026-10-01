@@ -137,6 +137,5 @@ namespace NzbDrone.Core.Test.MetadataSource.SkyHook
             movie.Runtime.Should().BeGreaterThan(0);
             movie.TmdbId.Should().BeGreaterThan(0);
         }
-
 }
 }

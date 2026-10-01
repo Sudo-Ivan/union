@@ -1,5 +1,4 @@
 using System;
-using NzbDrone.Core.Localization;
 using System.Collections.Generic;
 using System.Linq;
 using FluentValidation.Results;
@@ -7,6 +6,7 @@ using NLog;
 using NzbDrone.Common.Extensions;
 using NzbDrone.Core.Configuration;
 using NzbDrone.Core.ImportLists.ImportListMovies;
+using NzbDrone.Core.Localization;
 using NzbDrone.Core.Parser;
 using NzbDrone.Core.Validation;
 

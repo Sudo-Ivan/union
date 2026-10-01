@@ -1,4 +1,4 @@
-﻿namespace NzbDrone.Core.Notifications.Webhook
+namespace NzbDrone.Core.Notifications.Webhook
 {
     public class WebhookPayload
     {

@@ -1,4 +1,4 @@
-﻿namespace NzbDrone.Core.Indexers
+namespace NzbDrone.Core.Indexers
 {
     public static class IndexerDefaults
     {

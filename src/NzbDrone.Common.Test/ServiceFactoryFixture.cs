@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using DryIoc;
 using DryIoc.Microsoft.DependencyInjection;
 using FluentAssertions;

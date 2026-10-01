@@ -363,6 +363,5 @@ namespace NzbDrone.Core.Test.HealthCheck.Checks
 
             ExceptionVerification.ExpectedErrors(0);
         }
-
 }
 }

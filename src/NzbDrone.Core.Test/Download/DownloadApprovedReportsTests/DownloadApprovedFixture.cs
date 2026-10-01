@@ -556,6 +556,5 @@ namespace NzbDrone.Core.Test.Download.DownloadApprovedReportsTests
 
             ExceptionVerification.ExpectedWarns(1);
         }
-
 }
 }

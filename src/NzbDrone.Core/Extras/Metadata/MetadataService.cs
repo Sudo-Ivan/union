@@ -806,7 +806,6 @@ namespace NzbDrone.Core.Extras.Metadata
             }
         }
 
-
         private MetadataFile GetMetadataFile(Movie movie, List<MetadataFile> existingMetadataFiles, Func<MetadataFile, bool> predicate)
         {
             var matchingMetadataFiles = existingMetadataFiles.Where(predicate).ToList();

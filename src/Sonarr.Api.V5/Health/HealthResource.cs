@@ -1,4 +1,4 @@
-﻿using NzbDrone.Core.HealthCheck;
+using NzbDrone.Core.HealthCheck;
 using Sonarr.Http.REST;
 
 namespace Sonarr.Api.V5.Health;

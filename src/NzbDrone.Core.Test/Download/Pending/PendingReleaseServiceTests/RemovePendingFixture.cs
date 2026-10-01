@@ -219,6 +219,5 @@ namespace NzbDrone.Core.Test.Download.Pending.PendingReleaseServiceTests
 
             AssertRemoved(1);
         }
-
 }
 }

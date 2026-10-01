@@ -1,4 +1,4 @@
-﻿using System.Data;
+using System.Data;
 using System.Text.RegularExpressions;
 using FluentMigrator;
 using NzbDrone.Core.Datastore.Migration.Framework;
@@ -23,12 +23,12 @@ namespace NzbDrone.Core.Datastore.Migration
             try
             {
                 var updater = new CustomFormatUpdater149(conn, tran);
-    
+
                 updater.ReplaceInTags(DoubleUnderscore, match =>
                 {
                     return $"{match.Groups["type"].Value}_{match.Groups["value"].Value}";
                 });
-    
+
                 updater.Commit();
             }
             catch (System.Exception e)

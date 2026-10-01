@@ -1221,6 +1221,5 @@ namespace NzbDrone.Core.Test.DecisionEngineTests
             qualifiedReports.Skip(2).First().RemoteMovie.Should().Be(remoteMovie1);
             qualifiedReports.Last().RemoteMovie.Should().Be(remoteMovie3);
         }
-
 }
 }

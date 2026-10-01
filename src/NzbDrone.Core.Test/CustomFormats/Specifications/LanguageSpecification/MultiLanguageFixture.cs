@@ -118,6 +118,5 @@ namespace NzbDrone.Core.Test.CustomFormats.Specifications.LanguageSpecification
                 Filename = "Movie.Title.2024"
             };
         }
-
 }
 }

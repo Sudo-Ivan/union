@@ -1,6 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
+using System.Text.RegularExpressions;
+using FluentMigrator;
 using FluentMigrator.Model;
 using FluentMigrator.Runner.Processors.SQLite;
 
@@ -121,9 +125,57 @@ namespace NzbDrone.Core.Datastore.Migration.Framework
                 column.IsIdentity = upper.Contains("AUTOINCREMENT");
                 column.IsNullable = !upper.Contains("NOT NULL") && !upper.Contains("PRIMARY KEY");
                 column.IsUnique = upper.Contains("UNIQUE");
+
+                column.DefaultValue = ParseDefaultValue(reader.Buffer);
             }
 
             return column;
+        }
+
+        private static readonly Regex DefaultValueRegex = new Regex(@"DEFAULT\s+(?<value>'([^']|'')*'|""[^""]*""|\([^)]*\)|[^\s,)]+)", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+
+        private static object ParseDefaultValue(string columnDefinition)
+        {
+            var match = DefaultValueRegex.Match(columnDefinition);
+
+            if (!match.Success)
+            {
+                return null;
+            }
+
+            var literal = match.Groups["value"].Value.Trim();
+
+            if (literal.StartsWith("(") && literal.EndsWith(")"))
+            {
+                literal = literal.Substring(1, literal.Length - 2).Trim();
+            }
+
+            if (literal.StartsWith("'") && literal.EndsWith("'") && literal.Length > 1)
+            {
+                return literal.Substring(1, literal.Length - 2).Replace("''", "'");
+            }
+
+            if (literal.Equals("NULL", StringComparison.OrdinalIgnoreCase))
+            {
+                return null;
+            }
+
+            if (literal.Equals("CURRENT_TIMESTAMP", StringComparison.OrdinalIgnoreCase))
+            {
+                return SystemMethods.CurrentUTCDateTime;
+            }
+
+            if (long.TryParse(literal, NumberStyles.Integer, CultureInfo.InvariantCulture, out var integerValue))
+            {
+                return integerValue;
+            }
+
+            if (double.TryParse(literal, NumberStyles.Float, CultureInfo.InvariantCulture, out var floatValue))
+            {
+                return floatValue;
+            }
+
+            return literal;
         }
 
         protected virtual IndexDefinition ParseCreateIndexStatement(SqliteSyntaxReader reader)

@@ -1,4 +1,4 @@
-﻿using NzbDrone.Common.Http;
+using NzbDrone.Common.Http;
 
 namespace NzbDrone.Core.ImportLists.RadarrList2.StevenLu
 {

@@ -437,6 +437,7 @@ namespace NzbDrone.Core.Configuration
             {
                 SetValue("EnableSsl", false);
             }
+
 #pragma warning disable CS0618 // Type or member is obsolete
             if (AuthenticationMethod == AuthenticationType.Basic)
 #pragma warning restore CS0618 // Type or member is obsolete

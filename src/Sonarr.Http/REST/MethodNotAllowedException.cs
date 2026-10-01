@@ -1,4 +1,4 @@
-﻿using System.Net;
+using System.Net;
 using Sonarr.Http.Exceptions;
 
 namespace Sonarr.Http.REST

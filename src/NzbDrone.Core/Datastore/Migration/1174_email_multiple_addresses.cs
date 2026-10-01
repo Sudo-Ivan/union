@@ -44,13 +44,13 @@ namespace NzbDrone.Core.Datastore.Migration
             try
             {
                 var rows = conn.Query<ProviderDefinition166>($"SELECT \"Id\", \"Settings\" FROM \"Notifications\" WHERE \"Implementation\" = 'Email'");
-    
+
                 var corrected = new List<ProviderDefinition166>();
-    
+
                 foreach (var row in rows)
                 {
                     var settings = JsonSerializer.Deserialize<EmailSettings173>(row.Settings, _serializerSettings);
-    
+
                     var newSettings = new EmailSettings174
                     {
                         Server = settings.Server,
@@ -63,14 +63,14 @@ namespace NzbDrone.Core.Datastore.Migration
                         CC = Array.Empty<string>(),
                         Bcc = Array.Empty<string>()
                     };
-    
+
                     corrected.Add(new ProviderDefinition166
                     {
                         Id = row.Id,
                         Settings = JsonSerializer.Serialize(newSettings, _serializerSettings)
                     });
                 }
-    
+
                 var updateSql = "UPDATE \"Notifications\" SET \"Settings\" = @Settings WHERE \"Id\" = @Id";
                 conn.Execute(updateSql, corrected, transaction: tran);
             }

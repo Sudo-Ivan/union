@@ -1,4 +1,4 @@
-﻿using NzbDrone.Core.Tv;
+using NzbDrone.Core.Tv;
 
 namespace NzbDrone.Core.Parser.Model
 {

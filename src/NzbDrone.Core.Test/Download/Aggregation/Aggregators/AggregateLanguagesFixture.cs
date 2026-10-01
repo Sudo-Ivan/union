@@ -748,6 +748,5 @@ namespace NzbDrone.Core.Test.Download.Aggregation.Aggregators
             Mocker.GetMock<IIndexerFactory>().Verify(c => c.FindByName("MyIndexer1"), Times.Once());
             Mocker.GetMock<IIndexerFactory>().VerifyNoOtherCalls();
         }
-
 }
 }

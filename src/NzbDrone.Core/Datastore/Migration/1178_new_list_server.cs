@@ -43,6 +43,7 @@ namespace NzbDrone.Core.Datastore.Migration
             {
                 _logger.Debug(e, "Union: skipping data migration step, schema shape differs");
             }
+
             try
             {
             Execute.WithConnection(FixStevenLuLists);
@@ -58,18 +59,18 @@ namespace NzbDrone.Core.Datastore.Migration
             try
             {
                 var rows = conn.Query<NetImportDefinition178>($"SELECT * FROM \"ImportLists\" WHERE \"ConfigContract\" = 'RadarrListSettings'");
-    
+
                 var radarrUrls = new List<string>
                 {
                     "https://api.radarr.video/v2",
                     "https://staging.api.radarr.video"
                 };
-    
+
                 foreach (var row in rows)
                 {
                     var settings = JsonSerializer.Deserialize<RadarrListSettings177>(row.Settings, _serializerSettings);
                     object newSettings;
-    
+
                     if (!radarrUrls.Contains(settings.APIURL.TrimEnd('/')))
                     {
                         // Combine root and path in new settings
@@ -120,15 +121,15 @@ namespace NzbDrone.Core.Datastore.Migration
                             }
                         }
                     }
-    
+
                     row.Settings = JsonSerializer.Serialize(newSettings, _serializerSettings);
                 }
-    
+
                 var updateSql = "UPDATE \"ImportLists\" SET \"Implementation\" = @Implementation, " +
                     "\"ConfigContract\" = @ConfigContract, " +
                     "\"Settings\" = @Settings " +
                     "WHERE \"Id\" = @Id";
-    
+
                 conn.Execute(updateSql, rows, transaction: tran);
             }
             catch (System.Exception e)
@@ -142,19 +143,19 @@ namespace NzbDrone.Core.Datastore.Migration
             try
             {
                 var rows = conn.Query<NetImportDefinition178>($"SELECT * FROM \"ImportLists\" WHERE \"ConfigContract\" = 'StevenLuSettings'");
-    
+
                 var updated = new List<NetImportDefinition178>();
-    
+
                 var scores = new[] { 5, 6, 7, 8, 50, 60, 70, 80 };
-    
+
                 foreach (var row in rows)
                 {
                     var settings = JsonSerializer.Deserialize<StevenLuSettings178>(row.Settings, _serializerSettings);
-    
+
                     if (settings.Link.StartsWith("https://s3.amazonaws.com/popular-movies"))
                     {
                         var newSettings = new StevenLu2Settings178();
-    
+
                         // convert to 2
                         if (settings.Link == "https://s3.amazonaws.com/popular-movies/movies.json")
                         {
@@ -176,13 +177,13 @@ namespace NzbDrone.Core.Datastore.Migration
                                 updated.Add(row);
                             }
                         }
-    
+
                         row.ConfigContract = "StevenLu2Settings";
                         row.Implementation = "StevenLu2Import";
                         row.Settings = JsonSerializer.Serialize(newSettings, _serializerSettings);
                     }
                 }
-    
+
                 var updateSql = "UPDATE \"ImportLists\" SET \"Implementation\" = @Implementation, " +
                     "\"ConfigContract\" = @ConfigContract, " +
                     "\"Settings\" = @Settings " +

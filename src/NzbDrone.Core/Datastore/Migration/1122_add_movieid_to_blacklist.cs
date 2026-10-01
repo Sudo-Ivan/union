@@ -1,4 +1,4 @@
-﻿using FluentMigrator;
+using FluentMigrator;
 using NzbDrone.Core.Datastore.Migration.Framework;
 
 namespace NzbDrone.Core.Datastore.Migration
@@ -12,10 +12,12 @@ namespace NzbDrone.Core.Datastore.Migration
             {
             Alter.Table("Blocklist").AddColumn("MovieId").AsInt32().Nullable().WithDefaultValue(0);
             }
+
             if (Schema.Table("Blocklist").Column("SeriesId").Exists() && !Schema.Table("Blocklist").Index("IX_Blocklist_QualityId").Exists())
             {
             Alter.Table("Blocklist").AlterColumn("SeriesId").AsInt32().Nullable();
             }
+
             if (Schema.Table("Blocklist").Column("EpisodeIds").Exists() && !Schema.Table("Blocklist").Index("IX_Blocklist_QualityId").Exists())
             {
             Alter.Table("Blocklist").AlterColumn("EpisodeIds").AsString().Nullable();

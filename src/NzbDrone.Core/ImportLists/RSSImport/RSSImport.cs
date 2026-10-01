@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using NLog;
 using NzbDrone.Common.Http;
-using NzbDrone.Core.Localization;
 using NzbDrone.Core.Configuration;
+using NzbDrone.Core.ImportLists.ImportListMovies;
+using NzbDrone.Core.Localization;
 using NzbDrone.Core.Parser;
 using NzbDrone.Core.ThingiProvider;
-using NzbDrone.Core.ImportLists.ImportListMovies;
 
 namespace NzbDrone.Core.ImportLists.RSSImport
 {

@@ -136,6 +136,5 @@ namespace NzbDrone.Core.Test.NotificationTests.Xbmc
 
             Mocker.GetMock<IXbmcService>().Verify(v => v.Clean(It.IsAny<XbmcSettings>()), Times.Once());
         }
-
 }
 }

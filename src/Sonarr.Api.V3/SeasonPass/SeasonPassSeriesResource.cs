@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Sonarr.Api.V3.Series;
 
 namespace Sonarr.Api.V3.SeasonPass

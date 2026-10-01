@@ -13,6 +13,7 @@ namespace NzbDrone.Core.Datastore.Migration
             {
             Create.Index("IX_MovieFiles_MovieId").OnTable("MovieFiles").OnColumn("MovieId");
             }
+
             if (!Schema.Table("AlternativeTitles").Index("IX_AlternativeTitles_MovieId").Exists())
             {
             Create.Index("IX_AlternativeTitles_MovieId").OnTable("AlternativeTitles").OnColumn("MovieId");
@@ -23,10 +24,12 @@ namespace NzbDrone.Core.Datastore.Migration
             {
             Create.Index("IX_Movies_CleanTitle").OnTable("Movies").OnColumn("CleanTitle");
             }
+
             if (!Schema.Table("Movies").Index("IX_Movies_ImdbId").Exists())
             {
             Create.Index("IX_Movies_ImdbId").OnTable("Movies").OnColumn("ImdbId");
             }
+
             if (!Schema.Table("Movies").Index("IX_Movies_TmdbId").Exists())
             {
             Create.Index("IX_Movies_TmdbId").OnTable("Movies").OnColumn("TmdbId");

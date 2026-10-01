@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using FizzWare.NBuilder;
 using FluentAssertions;
 using NUnit.Framework;

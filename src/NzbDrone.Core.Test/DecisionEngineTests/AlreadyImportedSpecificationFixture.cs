@@ -23,6 +23,10 @@ namespace NzbDrone.Core.Test.DecisionEngineTests
         private const int FIRST_EPISODE_ID = 1;
         private const string TITLE = "Series.Title.S01E01.720p.HDTV.x264-Sonarr";
 
+        private const int FIRST_MOVIE_ID = 1;
+
+        private const string TITLEMovie = "Movie.Title.2018.720p.HDTV.x264-Radarr";
+
         private Series _series;
         private QualityModel _hdtv720p;
         private QualityModel _hdtv1080p;
@@ -195,10 +199,6 @@ namespace NzbDrone.Core.Test.DecisionEngineTests
 
         // Movie-domain members merged from Radarr
 
-        private const int FIRST_MOVIE_ID = 1;
-
-        private const string TITLEMovie = "Movie.Title.2018.720p.HDTV.x264-Radarr";
-
         private Movie _movie;
 
         private RemoteMovie _remoteMovie;
@@ -351,6 +351,5 @@ namespace NzbDrone.Core.Test.DecisionEngineTests
 
             Subject.IsSatisfiedBy(_remoteMovie, new()).Accepted.Should().BeFalse();
         }
-
 }
 }

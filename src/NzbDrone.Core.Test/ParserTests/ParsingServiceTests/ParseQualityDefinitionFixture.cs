@@ -183,12 +183,9 @@ namespace NzbDrone.Core.Test.ParserTests.ParsingServiceTests
                 }
             );
 
-
-
             var result = Subject.ParseMovieInfo(title, new List<object>());
             result.Quality.QualityDefinition.Title.Should().Be(definitionName);
         }
-
 
         [TestCase("My Movie 2017 German English", Language.English, Language.German)]
         //[TestCase("Movie.2016.MULTi.1080p.BluRay.x264-ANONA", Language.English, Language.French)] fails since no mention of french!

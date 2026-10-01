@@ -66,6 +66,5 @@ namespace NzbDrone.Core.Test.Datastore
             public int ReadOnly { get; private set; }
             public int WriteOnly { private get; set; }
         }
-
 }
 }

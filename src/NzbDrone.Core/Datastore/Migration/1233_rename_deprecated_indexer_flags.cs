@@ -16,6 +16,7 @@ namespace NzbDrone.Core.Datastore.Migration
             {
                 _logger.Debug(e, "Union: skipping data migration step, schema shape differs");
             }
+
             try
             {
             Execute.Sql("UPDATE \"IndexerStatus\" SET \"LastRssSyncReleaseInfo\" = REPLACE(REPLACE(\"LastRssSyncReleaseInfo\", 'hdB_Internal', 'g_Internal'), 'ahD_Internal', 'g_Internal') WHERE \"LastRssSyncReleaseInfo\" IS NOT NULL");
@@ -24,6 +25,7 @@ namespace NzbDrone.Core.Datastore.Migration
             {
                 _logger.Debug(e, "Union: skipping data migration step, schema shape differs");
             }
+
             try
             {
             Execute.Sql("UPDATE \"PendingReleases\" SET \"Release\" = REPLACE(REPLACE(\"Release\", 'hdB_Internal', 'g_Internal'), 'ahD_Internal', 'g_Internal') WHERE \"Release\" IS NOT NULL");
@@ -32,6 +34,7 @@ namespace NzbDrone.Core.Datastore.Migration
             {
                 _logger.Debug(e, "Union: skipping data migration step, schema shape differs");
             }
+
             try
             {
             Execute.Sql("UPDATE \"History\" SET \"Data\" = REPLACE(REPLACE(\"Data\", 'HDB_Internal', 'G_Internal'), 'AHD_Internal', 'G_Internal') WHERE \"Data\" IS NOT NULL");

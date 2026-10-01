@@ -574,6 +574,5 @@ namespace NzbDrone.Core.Test.ParserTests.ParsingServiceTests
             Subject.Map(_umlautInfo, "", 0, _movieSearchCriteria).Movie.Should().Be(_movieSearchCriteria.Movie);
             Subject.Map(_umlautAltInfo, "", 0, _movieSearchCriteria).Movie.Should().Be(_movieSearchCriteria.Movie);
         }
-
 }
 }

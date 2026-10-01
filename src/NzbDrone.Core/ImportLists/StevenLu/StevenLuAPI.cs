@@ -1,4 +1,4 @@
-﻿namespace NzbDrone.Core.ImportLists.StevenLu
+namespace NzbDrone.Core.ImportLists.StevenLu
 {
     public class StevenLuResponse
     {

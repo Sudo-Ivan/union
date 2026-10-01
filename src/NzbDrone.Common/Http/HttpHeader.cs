@@ -109,6 +109,7 @@ namespace NzbDrone.Common.Http
             {
                 return GetSingleValue("Content-Length", Convert.ToInt64);
             }
+
             set
             {
                 SetSingleValue("Content-Length", value);
@@ -121,6 +122,7 @@ namespace NzbDrone.Common.Http
             {
                 return GetSingleValue("Content-Type");
             }
+
             set
             {
                 SetSingleValue("Content-Type", value);
@@ -133,6 +135,7 @@ namespace NzbDrone.Common.Http
             {
                 return GetSingleValue("Accept");
             }
+
             set
             {
                 SetSingleValue("Accept", value);

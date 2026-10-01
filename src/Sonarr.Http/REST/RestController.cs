@@ -69,6 +69,7 @@ namespace Sonarr.Http.REST
         {
             throw new NotImplementedException();
         }
+
         #nullable disable
 
         public override void OnActionExecuting(ActionExecutingContext context)

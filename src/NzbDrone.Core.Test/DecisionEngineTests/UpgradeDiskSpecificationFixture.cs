@@ -755,6 +755,5 @@ namespace NzbDrone.Core.Test.DecisionEngineTests
 
             Subject.IsSatisfiedBy(_parseResultSingle_movie, new()).Accepted.Should().BeFalse();
         }
-
 }
 }

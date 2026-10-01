@@ -162,6 +162,5 @@ namespace NzbDrone.Core.Test.Blocklisting
             removedMovieBlocklists.Should().HaveCount(0);
             nonRemovedMovieBlocklists.Should().HaveCount(1);
         }
-
 }
 }

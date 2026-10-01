@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using NLog;
 using NzbDrone.Common.Http;
-using NzbDrone.Core.Localization;
 using NzbDrone.Core.Configuration;
+using NzbDrone.Core.Localization;
 using NzbDrone.Core.Parser;
 
 namespace NzbDrone.Core.Indexers.PassThePopcorn

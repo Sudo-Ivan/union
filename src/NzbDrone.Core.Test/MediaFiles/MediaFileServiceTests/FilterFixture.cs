@@ -274,6 +274,5 @@ namespace NzbDrone.Core.Test.MediaFiles.MediaFileServiceTests
             Subject.FilterExistingFiles(files, _series_movie).Should().NotContain(files.First().ToLower());
             Subject.FilterExistingFiles(files, _series_movie).Should().Contain(files.First());
         }
-
 }
 }

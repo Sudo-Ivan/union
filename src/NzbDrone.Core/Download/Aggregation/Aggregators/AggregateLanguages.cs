@@ -131,6 +131,7 @@ namespace NzbDrone.Core.Download.Aggregation.Aggregators
 
             return remoteEpisode;
         }
+
         public RemoteMovie Aggregate(RemoteMovie remoteMovie)
         {
             var parsedMovieInfo = remoteMovie.ParsedMovieInfo;

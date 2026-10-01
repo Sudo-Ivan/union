@@ -1,4 +1,4 @@
-﻿using FluentMigrator;
+using FluentMigrator;
 using NzbDrone.Core.Datastore.Migration.Framework;
 
 namespace NzbDrone.Core.Datastore.Migration
@@ -12,6 +12,7 @@ namespace NzbDrone.Core.Datastore.Migration
             {
             Alter.Table("Movies").AddColumn("Collection").AsString().Nullable();
             }
+
             if (Schema.Table("Movies").Column("Actors").Exists())
             {
             Delete.Column("Actors").FromTable("Movies");

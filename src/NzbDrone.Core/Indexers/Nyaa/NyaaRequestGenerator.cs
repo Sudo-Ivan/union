@@ -34,7 +34,6 @@ namespace NzbDrone.Core.Indexers.Nyaa
             return pageableRequests;
         }
 
-
         public IndexerPageableRequestChain GetSearchRequests(MovieSearchCriteria searchCriteria)
         {
             var pageableRequests = new IndexerPageableRequestChain();

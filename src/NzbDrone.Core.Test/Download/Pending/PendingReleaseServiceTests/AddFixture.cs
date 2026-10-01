@@ -360,6 +360,5 @@ namespace NzbDrone.Core.Test.Download.Pending.PendingReleaseServiceTests
 
             VerifyInsert();
         }
-
 }
 }

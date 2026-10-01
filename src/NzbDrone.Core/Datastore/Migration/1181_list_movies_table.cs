@@ -12,6 +12,7 @@ namespace NzbDrone.Core.Datastore.Migration
             {
             Rename.Table("ImportLists").To("ImportLists");
             }
+
             if (Schema.Table("ImportListStatus").Exists() && !Schema.Table("ImportListStatus").Exists())
             {
             Rename.Table("ImportListStatus").To("ImportListStatus");

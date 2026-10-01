@@ -1,4 +1,4 @@
-﻿using NLog;
+using NLog;
 using NzbDrone.Core.Datastore;
 using NzbDrone.Core.Indexers;
 using NzbDrone.Core.Parser.Model;

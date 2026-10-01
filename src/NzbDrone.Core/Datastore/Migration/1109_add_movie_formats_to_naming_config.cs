@@ -13,6 +13,7 @@ namespace NzbDrone.Core.Datastore.Migration
             {
             Alter.Table("NamingConfig").AddColumn("StandardMovieFormat").AsString().Nullable();
             }
+
             if (!Schema.Table("NamingConfig").Column("MovieFolderFormat").Exists())
             {
             Alter.Table("NamingConfig").AddColumn("MovieFolderFormat").AsString().Nullable();
@@ -44,13 +45,13 @@ namespace NzbDrone.Core.Datastore.Migration
                             var movieTitlePattern = "";
                             var movieYearPattern = "({Release Year})";
                             var qualityFormat = "[{Quality Title}]";
-    
+
                             movieTitlePattern = "{Movie Title}";
-    
+
                             var standardMovieFormat = string.Format("{0} {1} {2}", movieTitlePattern, movieYearPattern, qualityFormat);
-    
+
                             var movieFolderFormat = string.Format("{0} {1}", movieTitlePattern, movieYearPattern);
-    
+
                             using (var updateCmd = conn.CreateCommand())
                             {
                                 var text = string.Format("UPDATE \"NamingConfig\" " +
@@ -58,7 +59,7 @@ namespace NzbDrone.Core.Datastore.Migration
                                                          "\"MovieFolderFormat\" = '{1}'",
                                                          standardMovieFormat,
                                                          movieFolderFormat);
-    
+
                                 updateCmd.Transaction = tran;
                                 updateCmd.CommandText = text;
                                 updateCmd.ExecuteNonQuery();

@@ -1,4 +1,4 @@
-﻿using FluentAssertions;
+using FluentAssertions;
 using NUnit.Framework;
 using NzbDrone.Core.Parser;
 using NzbDrone.Core.Test.Framework;
@@ -100,6 +100,5 @@ namespace NzbDrone.Core.Test.ParserTests
             var parsed = QualityParser.ParseQuality(title);
             parsed.Quality.Resolution.Should().Be((int)Resolution.R2160p);
         }
-
 }
 }

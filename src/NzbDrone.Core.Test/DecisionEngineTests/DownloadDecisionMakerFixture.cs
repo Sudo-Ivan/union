@@ -536,6 +536,5 @@ namespace NzbDrone.Core.Test.DecisionEngineTests
 
             ExceptionVerification.ExpectedErrors(1);
         }
-
 }
 }

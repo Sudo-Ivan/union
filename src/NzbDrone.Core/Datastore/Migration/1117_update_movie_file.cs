@@ -28,23 +28,23 @@ namespace NzbDrone.Core.Datastore.Migration
                         {
                             var id = seriesReader.GetInt32(0);
                             var relativePath = seriesReader.GetString(1);
-    
+
                             var result = Parser.Parser.ParseMovieTitle(relativePath);
-    
+
                             var edition = "";
-    
+
                             if (result != null)
                             {
                                 edition = result.Edition ?? Parser.Parser.ParseEdition(result.SimpleReleaseTitle);
                             }
-    
+
                             using (var updateCmd = conn.CreateCommand())
                             {
                                 updateCmd.Transaction = tran;
                                 updateCmd.CommandText = "UPDATE \"MovieFiles\" SET \"Edition\" = ? WHERE \"Id\" = ?";
                                 updateCmd.AddParameter(edition);
                                 updateCmd.AddParameter(id);
-    
+
                                 updateCmd.ExecuteNonQuery();
                             }
                         }

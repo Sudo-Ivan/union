@@ -1372,7 +1372,6 @@ namespace NzbDrone.Core.Parser
         // Movie parsing members (Radarr)
         // ---------------------------------------------------------------
 
-
         private static readonly Regex EditionRegex = new Regex(@"\(?\b(?<edition>(((Recut.|Extended.|Ultimate.)?(Director.?s|Collector.?s|Theatrical|Ultimate|Extended|Despecialized|(Special|Rouge|Final|Assembly|Imperial|Diamond|Signature|Hunter|Rekall)(?=(.(Cut|Edition|Version)))|\d{2,3}(th)?.Anniversary)(?:.(Cut|Edition|Version))?(.(Extended|Uncensored|Remastered|Unrated|Uncut|Open.?Matte|IMAX|Fan.?Edit))?|((Uncensored|Remastered|Unrated|Uncut|Open?.Matte|IMAX|Fan.?Edit|Restored|((2|3|4)in1))))))\b\)?", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         private static readonly Regex ReportEditionRegex = new Regex(@"^.+?" + EditionRegex, RegexOptions.Compiled | RegexOptions.IgnoreCase);
@@ -1447,7 +1446,6 @@ namespace NzbDrone.Core.Parser
                                                                 RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
         private static readonly Regex SimpleReleaseTitleRegex = new Regex(@"\s*(?:[<>?*|])", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-
 
         private static readonly Regex SpecialCharRegex = new Regex(@"(\&|\:|\\|\/)+", RegexOptions.Compiled);
 
@@ -1692,8 +1690,6 @@ namespace NzbDrone.Core.Parser
             return t;
         }
 
-
-
         public static string ToUrlSlug(string value, bool invalidDashReplacement = false, string trimEndChars = "-_", string deduplicateChars = "-_")
         {
             // First to lower case
@@ -1751,8 +1747,6 @@ namespace NzbDrone.Core.Parser
             return title.Trim().ToLower();
         }
 
-
-
         public static string SimplifyReleaseTitle(this string title)
         {
             return SimpleReleaseTitleRegex.Replace(title, string.Empty);
@@ -1776,8 +1770,6 @@ namespace NzbDrone.Core.Parser
 
             return null;
         }
-
-
 
         private static ParsedMovieInfo ParseMovieMatchCollection(MatchCollection matchCollection)
         {
@@ -1868,11 +1860,5 @@ namespace NzbDrone.Core.Parser
 
             return result;
         }
-
-
-
-
-
-
     }
 }

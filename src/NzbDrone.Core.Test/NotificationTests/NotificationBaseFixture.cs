@@ -254,6 +254,5 @@ namespace NzbDrone.Core.Test.NotificationTests
             notification.SupportsOnApplicationUpdate.Should().BeFalse();
             notification.SupportsOnManualInteractionRequired.Should().BeFalse();
         }
-
 }
 }

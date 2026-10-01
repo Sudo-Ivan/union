@@ -67,6 +67,5 @@ namespace NzbDrone.Integration.Test.ApiTests
 
             return true;
         }
-
     }
 }

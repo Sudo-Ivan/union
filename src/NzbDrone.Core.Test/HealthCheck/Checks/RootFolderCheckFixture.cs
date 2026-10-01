@@ -136,6 +136,5 @@ namespace NzbDrone.Core.Test.HealthCheck.Checks
 
             Subject.Check().ShouldBeError();
         }
-
 }
 }
