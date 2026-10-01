@@ -1,0 +1,85 @@
+using System;
+using System.Collections.Generic;
+using NLog;
+using NzbDrone.Common.Cloud;
+using NzbDrone.Common.Http;
+using NzbDrone.Core.Localization;
+using NzbDrone.Core.Configuration;
+using NzbDrone.Core.Parser;
+using NzbDrone.Core.ThingiProvider;
+using NzbDrone.Core.ImportLists.ImportListMovies;
+
+namespace NzbDrone.Core.ImportLists.RadarrList2.IMDbList
+{
+    public class IMDbListImport : HttpImportListMovieBase<IMDbListSettings>
+    {
+        private readonly IHttpRequestBuilderFactory _radarrMetadata;
+
+        public override string Name => "IMDb Lists";
+
+        public override ImportListType ListType => ImportListType.Other;
+        public override TimeSpan MinRefreshInterval => TimeSpan.FromHours(12);
+        public override bool Enabled => true;
+        public override bool EnableAuto => false;
+
+        public IMDbListImport(IRadarrCloudRequestBuilder requestBuilder,
+                              IHttpClient httpClient,
+                              IImportListStatusService importListStatusService,
+                              IConfigService configService,
+                              IParsingService parsingService,
+                              ILocalizationService localizationService,
+                              Logger logger)
+        : base(httpClient, importListStatusService, configService, parsingService, localizationService, logger)
+        {
+            _radarrMetadata = requestBuilder.RadarrMetadata;
+        }
+
+        public override IEnumerable<ProviderDefinition> DefaultDefinitions
+        {
+            get
+            {
+                foreach (var def in base.DefaultDefinitions)
+                {
+                    yield return def;
+                }
+
+                yield return new ImportListDefinition
+                {
+                    Name = "IMDb Top 250",
+                    Enabled = Enabled,
+                    EnableAuto = true,
+                    QualityProfileId = 1,
+                    Implementation = GetType().Name,
+                    MinRefreshInterval = MinRefreshInterval,
+                    Settings = new IMDbListSettings { ListId = "top250" },
+                };
+                yield return new ImportListDefinition
+                {
+                    Name = "IMDb Popular Movies",
+                    Enabled = Enabled,
+                    EnableAuto = true,
+                    QualityProfileId = 1,
+                    Implementation = GetType().Name,
+                    MinRefreshInterval = MinRefreshInterval,
+                    Settings = new IMDbListSettings { ListId = "popular" },
+                };
+            }
+        }
+
+        public override IImportListRequestGenerator GetRequestGenerator()
+        {
+            return new IMDbListRequestGenerator()
+            {
+                Settings = Settings,
+                Logger = _logger,
+                HttpClient = _httpClient,
+                RequestBuilder = _radarrMetadata
+            };
+        }
+
+        public override IParseImportListResponse<ImportListMovie> GetParser()
+        {
+            return new IMDbListParser(Settings, _logger);
+        }
+    }
+}

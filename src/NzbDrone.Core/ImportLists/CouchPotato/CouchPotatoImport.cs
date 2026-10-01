@@ -1,0 +1,35 @@
+using System;
+using NLog;
+using NzbDrone.Common.Http;
+using NzbDrone.Core.Localization;
+using NzbDrone.Core.Configuration;
+using NzbDrone.Core.Parser;
+using NzbDrone.Core.ImportLists.ImportListMovies;
+
+namespace NzbDrone.Core.ImportLists.CouchPotato
+{
+    public class CouchPotatoImport : HttpImportListMovieBase<CouchPotatoSettings>
+    {
+        public override string Name => "CouchPotato";
+
+        public override ImportListType ListType => ImportListType.Program;
+        public override TimeSpan MinRefreshInterval => TimeSpan.FromMinutes(30);
+        public override bool Enabled => true;
+        public override bool EnableAuto => false;
+
+        public CouchPotatoImport(IHttpClient httpClient, IImportListStatusService importListStatusService, IConfigService configService, IParsingService parsingService, ILocalizationService localizationService, Logger logger)
+            : base(httpClient, importListStatusService, configService, parsingService, localizationService, logger)
+        {
+        }
+
+        public override IImportListRequestGenerator GetRequestGenerator()
+        {
+            return new CouchPotatoRequestGenerator() { Settings = Settings };
+        }
+
+        public override IParseImportListResponse<ImportListMovie> GetParser()
+        {
+            return new CouchPotatoParser();
+        }
+    }
+}

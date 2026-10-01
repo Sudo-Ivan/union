@@ -1,0 +1,56 @@
+using System.Collections.Generic;
+using NzbDrone.Core.Datastore;
+using NzbDrone.Core.Messaging.Events;
+using NzbDrone.Core.Movies;
+using NzbDrone.Core.Tv;
+
+namespace NzbDrone.Core.Download.Pending
+{
+    public interface IPendingReleaseRepository : IBasicRepository<PendingRelease>
+    {
+        void DeleteBySeriesIds(List<int> seriesIds);
+        List<PendingRelease> AllBySeriesId(int seriesId);
+        void DeleteByMovieIds(List<int> movieIds);
+        List<PendingRelease> AllByMovieId(int movieId);
+        List<PendingRelease> WithoutFallback();
+    }
+
+    public class PendingReleaseRepository : BasicRepository<PendingRelease>, IPendingReleaseRepository
+    {
+        public PendingReleaseRepository(IMainDatabase database, IEventAggregator eventAggregator)
+            : base(database, eventAggregator)
+        {
+        }
+
+        public void DeleteBySeriesIds(List<int> seriesIds)
+        {
+            Delete(r => seriesIds.Contains(r.SeriesId));
+        }
+
+        public void DeleteByMovieIds(List<int> movieIds)
+        {
+            Delete(x => movieIds.Contains(x.MovieId));
+        }
+
+        public List<PendingRelease> AllBySeriesId(int seriesId)
+        {
+            return Query(p => p.SeriesId == seriesId);
+        }
+
+        public List<PendingRelease> AllByMovieId(int movieId)
+        {
+            return Query(x => x.MovieId == movieId);
+        }
+
+        public List<PendingRelease> WithoutFallback()
+        {
+            var builder = new SqlBuilder(_database.DatabaseType)
+                .LeftJoin<PendingRelease, Series>((p, s) => p.SeriesId == s.Id)
+                .LeftJoin<PendingRelease, Movie>((p, m) => p.MovieId == m.Id)
+                .Where<PendingRelease>(p => p.Reason != PendingReleaseReason.Fallback)
+                .Where("(\"Series\".\"Id\" IS NOT NULL OR \"Movies\".\"Id\" IS NOT NULL)");
+
+            return Query(builder);
+        }
+    }
+}

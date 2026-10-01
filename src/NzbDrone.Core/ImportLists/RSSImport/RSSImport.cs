@@ -1,0 +1,69 @@
+using System;
+using System.Collections.Generic;
+using NLog;
+using NzbDrone.Common.Http;
+using NzbDrone.Core.Localization;
+using NzbDrone.Core.Configuration;
+using NzbDrone.Core.Parser;
+using NzbDrone.Core.ThingiProvider;
+using NzbDrone.Core.ImportLists.ImportListMovies;
+
+namespace NzbDrone.Core.ImportLists.RSSImport
+{
+    public class RSSImport : HttpImportListMovieBase<RSSImportSettings>
+    {
+        public override string Name => "RSS List";
+
+        public override ImportListType ListType => ImportListType.Advanced;
+        public override TimeSpan MinRefreshInterval => TimeSpan.FromHours(12);
+        public override bool Enabled => true;
+        public override bool EnableAuto => false;
+
+        public RSSImport(IHttpClient httpClient, IImportListStatusService importListStatusService, IConfigService configService, IParsingService parsingService, ILocalizationService localizationService, Logger logger)
+            : base(httpClient, importListStatusService, configService, parsingService, localizationService, logger)
+        {
+        }
+
+        public override IEnumerable<ProviderDefinition> DefaultDefinitions
+        {
+            get
+            {
+                foreach (var def in base.DefaultDefinitions)
+                {
+                    yield return def;
+                }
+
+                yield return new ImportListDefinition
+                {
+                    Name = "IMDb List",
+                    Enabled = Enabled,
+                    EnableAuto = true,
+                    QualityProfileId = 1,
+                    Implementation = GetType().Name,
+                    MinRefreshInterval = MinRefreshInterval,
+                    Settings = new RSSImportSettings { Link = "https://rss.imdb.com/list/YOURLISTID" },
+                };
+                yield return new ImportListDefinition
+                {
+                    Name = "IMDb Watchlist",
+                    Enabled = Enabled,
+                    EnableAuto = true,
+                    QualityProfileId = 1,
+                    Implementation = GetType().Name,
+                    MinRefreshInterval = MinRefreshInterval,
+                    Settings = new RSSImportSettings { Link = "https://rss.imdb.com/user/IMDBUSERID/watchlist" },
+                };
+            }
+        }
+
+        public override IImportListRequestGenerator GetRequestGenerator()
+        {
+            return new RSSImportRequestGenerator() { Settings = Settings };
+        }
+
+        public override IParseImportListResponse<ImportListMovie> GetParser()
+        {
+            return new RSSImportParser(Settings, _logger);
+        }
+    }
+}

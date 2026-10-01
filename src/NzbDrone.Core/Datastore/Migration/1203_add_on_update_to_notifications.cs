@@ -1,0 +1,17 @@
+using FluentMigrator;
+using NzbDrone.Core.Datastore.Migration.Framework;
+
+namespace NzbDrone.Core.Datastore.Migration
+{
+    [Migration(1203)]
+    public class add_on_update_to_notifications_r : NzbDroneMigrationBase
+    {
+        protected override void MainDbUpgrade()
+        {
+            if (!Schema.Table("Notifications").Column("OnApplicationUpdate").Exists())
+            {
+            Alter.Table("Notifications").AddColumn("OnApplicationUpdate").AsBoolean().WithDefaultValue(false);
+            }
+        }
+    }
+}

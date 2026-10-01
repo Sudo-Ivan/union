@@ -1,0 +1,37 @@
+using System;
+using NzbDrone.Core.Localization;
+using NLog;
+using NzbDrone.Common.Cloud;
+using NzbDrone.Common.Http;
+using NzbDrone.Core.Configuration;
+using NzbDrone.Core.MetadataSource;
+using NzbDrone.Core.Parser;
+
+namespace NzbDrone.Core.ImportLists.TMDb
+{
+    public abstract class TMDbImportListBase<TSettings> : HttpImportListMovieBase<TSettings>
+        where TSettings : TMDbSettingsBase<TSettings>, new()
+    {
+        public override ImportListType ListType => ImportListType.TMDB;
+        public override TimeSpan MinRefreshInterval => TimeSpan.FromHours(12);
+        public override int PageSize => 20;
+        protected override bool UsePreGeneratedPages => true;
+
+        public readonly ISearchForNewMovie _skyhookProxy;
+        public readonly IHttpRequestBuilderFactory _requestBuilder;
+
+        protected TMDbImportListBase(IRadarrCloudRequestBuilder requestBuilder,
+                                    IHttpClient httpClient,
+                                    IImportListStatusService importListStatusService,
+                                    IConfigService configService,
+                                    IParsingService parsingService,
+                                    ISearchForNewMovie skyhookProxy,
+                                    ILocalizationService localizationService,
+                                    Logger logger)
+            : base(httpClient, importListStatusService, configService, parsingService, localizationService, logger)
+        {
+            _skyhookProxy = skyhookProxy;
+            _requestBuilder = requestBuilder.TMDB;
+        }
+    }
+}
