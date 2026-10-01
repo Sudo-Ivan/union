@@ -35,7 +35,7 @@ Multi-arch image for amd64 and arm64. zstd compressed layers, non-root, cosign k
 
 ## Building
 
-You need the .NET 10 SDK and Node 24.
+You need the .NET 10 SDK and Node 26.
 
 ```sh
 yarn install --frozen-lockfile && yarn build
